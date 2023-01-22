@@ -7,6 +7,8 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Savannabits\PrimevueDatatables\PrimevueDatatables;
+use Illuminate\Http\JsonResponse;
 
 class RoleController extends Controller
 {
@@ -20,16 +22,20 @@ class RoleController extends Controller
 
     public function index()
     {
-        $roles = (new Role)->newQuery();
-        $roles->where('status', '!=', 'DEL')->latest();
-        $roles = $roles->paginate(100)->onEachSide(2)->appends(request()->query());
         return Inertia::render('Admin/Role/Index', [
-            'roles' => $roles,
             'can' => [
                 'create' => Auth::user()->can('role create'),
                 'edit' => Auth::user()->can('role edit'),
                 'delete' => Auth::user()->can('role delete'),
             ]
+        ]);
+    }
+
+    public function getRoleData(Request $request): JsonResponse {
+        $roles = Role::where('status', '!=', 'DEL')->latest();
+        return response()->json([
+            'success' => true,
+            'payload' => PrimevueDatatables::of($roles)->make()
         ]);
     }
 
@@ -44,12 +50,14 @@ class RoleController extends Controller
         $role = new Role();
         $this->assignValue($request, $role);
         if ($role->save())
-            return redirect()->route('role.index')->with('message', 'Role Added Successfully');
+            return response()->json([
+                'success' => true,
+            ]);
     }
 
     public function show(Role $role)
     {
-        return Inertia::render('Admin/Role/Show', [
+        return Inertia::render('Admin/Role/Detail', [
             'role' => $role,
         ]);
     }
@@ -66,20 +74,26 @@ class RoleController extends Controller
         $this->validateRequest($request);
         $this->assignValue($request, $role);
         if ($role->save())
-            return redirect()->route('role.index')->with('message', 'Role Updated Successfully');
+            return response()->json([
+                'success' => true,
+            ]);
     }
 
     public function destroy(Role $role)
     {
         $role->status = 'DEL';
         if ($role->save())
-            return redirect()->route('role.index')->with('message', 'Role Deleted Successfully');
+            return response()->json([
+                'success' => true,
+            ]);
     }
 
-    public function deleteMultiple(Request $request){
+    public function deleteMultipleRecord(Request $request){
         $roleIdList = array_column($request->roleList, 'id');
         if(Role::whereIn('id', $roleIdList)->update(['status' => 'DEL']))
-            return redirect()->route('role.index')->with('message', 'Role Updated Successfully');
+            return response()->json([
+                'success' => true,
+            ]);
     }
 
     private function validateRequest($request)

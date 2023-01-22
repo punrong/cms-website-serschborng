@@ -45,7 +45,8 @@ Route::group([
 ], function () {
     Route::resource('user', 'UserController');
     Route::resource('role', 'RoleController');
-    Route::delete('role/delete/multiple', [RoleController::class, 'deleteMultiple'])->name('role.deletemultiple');
+    Route::delete('role/delete/multiple', [RoleController::class, 'deleteMultipleRecord'])->name('role.deleteMultipleRecord');
+    Route::get('role/index/data', [RoleController::class, 'getRoleData'])->name('role.getData');
     Route::resource('permission', 'PermissionController');
     Route::resource('post', 'PostController');
 });
