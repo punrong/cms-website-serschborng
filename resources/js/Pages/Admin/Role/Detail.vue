@@ -32,9 +32,11 @@
                                 <p>{{ props.role.status }}</p>
                             </div>
 
-                            <div class="flex items-center gap-4">
-                                <PrimaryButton @click="edit(props.role.id)">Edit</PrimaryButton
-                                >
+                            <div class="flex items-center mt-2 gap-4">
+                                <Button
+                                    label="Edit"
+                                    @click="edit(props.role.id)"
+                                />
                             </div>
 
                     </section>
@@ -45,10 +47,7 @@
 </template>
 
 <script setup>
-    import BreezeAuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-    import { Head } from "@inertiajs/inertia-vue3";
     import InputLabel from "@/Components/InputLabel.vue";
-    import PrimaryButton from "@/Components/PrimaryButton.vue";
     import { Inertia } from "@inertiajs/inertia";
 
     const props = defineProps({
