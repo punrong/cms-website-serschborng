@@ -1,5 +1,4 @@
 <script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 const props = defineProps({
   permissions: {
@@ -14,7 +13,7 @@ const props = defineProps({
 </script>
 <template>
     <Head title="Permission" />
-    <BreezeAuthenticatedLayout>
+    <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Permission
@@ -66,5 +65,5 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-    </BreezeAuthenticatedLayout>
+    </AuthenticatedLayout>
 </template>

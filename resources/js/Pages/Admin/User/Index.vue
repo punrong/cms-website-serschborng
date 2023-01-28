@@ -1,5 +1,5 @@
 <!-- <script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 const props = defineProps({
   users: {
@@ -14,7 +14,7 @@ const props = defineProps({
 </script> -->
 <template>
     <Head title="Users" />
-    <BreezeAuthenticatedLayout>
+    <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Users
@@ -70,16 +70,14 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-    </BreezeAuthenticatedLayout>
+    </AuthenticatedLayout>
 </template>
 <script>
 
-import BreezeAuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 
 export default {
     components:{
-        BreezeAuthenticatedLayout,
         Head
     },
     props: {

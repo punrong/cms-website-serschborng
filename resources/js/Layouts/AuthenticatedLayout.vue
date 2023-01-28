@@ -1,15 +1,3 @@
-<script setup>
-import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import BreezeNavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/inertia-vue3';
-
-const showingNavigationDropdown = ref(false);
-</script>
-
 <template>
     <div>
         <div class="min-h-screen bg-gray-100">
@@ -35,16 +23,16 @@ const showingNavigationDropdown = ref(false);
                                 <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('user.index')" :active="route().current('user.index')">
+                                <BreezeNavLink :href="route('user.index')" :active="route().current('user.index') || route().current('user.show') || route().current('user.create') || route().current('user.edit')">
                                     Users
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('permission.index')" :active="route().current('permission.index')">
+                                <BreezeNavLink :href="route('permission.index')" :active="route().current('permission.index') || route().current('permission.show') || route().current('permission.create') || route().current('permission.edit')">
                                     Permission
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('role.index')" :active="route().current('role.index')">
+                                <BreezeNavLink :href="route('role.index')" :active="route().current('role.index') || route().current('role.show') || route().current('role.create') || route().current('role.edit')">
                                     Role
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('post.index')" :active="route().current('post.index')">
+                                <BreezeNavLink :href="route('post.index')" :active="route().current('post.index') || route().current('post.show') || route().current('post.create') || route().current('post.edit')">
                                     Post
                                 </BreezeNavLink>
                             </div>
@@ -165,3 +153,29 @@ const showingNavigationDropdown = ref(false);
         </div>
     </div>
 </template>
+
+<script>
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import Dropdown from '@/Components/Dropdown.vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
+import BreezeNavLink from '@/Components/NavLink.vue';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import { Link } from '@inertiajs/inertia-vue3';
+
+export default{
+    components: {
+        ApplicationLogo,
+        Dropdown,
+        DropdownLink,
+        BreezeNavLink,
+        ResponsiveNavLink,
+        Link
+    },
+    data(){
+        return{
+            showingNavigationDropdown: false,
+        }
+    }
+}
+</script>
+
