@@ -1,4 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const FormKitVariants = require('@formkit/themes/tailwindcss')
+
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -7,6 +9,7 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+        './node_modules/@formkit/themes/dist/tailwindcss/genesis/index.cjs'
     ],
 
     theme: {
@@ -17,5 +20,5 @@ module.exports = {
         },
     },
 
-    plugins: [require('@tailwindcss/forms')],
+    plugins: [require('@tailwindcss/forms'), FormKitVariants],
 };
