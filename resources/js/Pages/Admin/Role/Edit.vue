@@ -1,6 +1,6 @@
 <template>
     <Head title="Role" />
-    <BreezeAuthenticatedLayout>
+    <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Role
@@ -8,99 +8,105 @@
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <section>
-                        <header>
-                            <h2 class="text-lg font-medium text-gray-900">
-                                Role Information
-                            </h2>
-
-                            <p class="mt-1 text-sm text-gray-600">
-                                Add your role
-                            </p>
-                        </header>
-
-                        <form
-                            @submit.prevent="
-                                form.put(route('role.update',role.id))
-                            "
-                            class="mt-6 space-y-6"
+                <div class="overflow-hidden bg-white py-4 shadow sm:rounded-lg">
+                    <div class="px-4 pb-4 sm:px-6">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">
+                            Update Role Information
+                        </h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                            Role details
+                        </p>
+                    </div>
+                    <div class="px-4">
+                        <FormKit
+                            type="form"
+                            @submit="onSubmit"
+                            :actions="false"
+                            :config="{
+                                // config override applies to all nested FormKit components
+                                classes: {
+                                    label: 'block mb-1 font-bold text-base',
+                                    input: 'w-full rounded-md py-2',
+                                    help: 'text-xs text-gray-500',
+                                    message: 'text-red-500 text-sm font-bold',
+                                    messages: 'pt-2',
+                                },
+                            }"
                         >
-                            <div>
-                                <InputLabel for="name" value="Name" />
-
-                                <TextInput
-                                    id="name"
+                            <div class="grid grid-cols-2 gap-x-4">
+                                <FormKit
                                     type="text"
-                                    class="mt-1 block w-full"
-                                    v-model="form.name"
-                                    required
-                                    autofocus
+                                    label="Name"
+                                    v-model="formData.name"
+                                    validation="required"
+                                    :classes="{
+                                        outer: 'pb-4',
+                                        input: 'border border-gray-400 px-2 mb-1',
+                                    }"
                                 />
-
-                                <InputError
-                                    class="mt-2"
-                                    :message="form.errors.name"
-                                />
-                            </div>
-
-                            <div>
-                                <InputLabel for="status" value="Status" />
-
-                                <select id='status' class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" v-model="form.status">
-                                    <option value="ACT">Active</option>
-                                    <option value="DSBL">Disabled</option>
-                                </select>
-
-                                <InputError
-                                    class="mt-2"
-                                    :message="form.errors.status"
+                                <FormKit
+                                    type="select"
+                                    label="Status"
+                                    :options="statuses"
+                                    v-model="formData.status"
+                                    validation="required"
+                                    :classes="{
+                                        outer: 'pb-4',
+                                        input: 'border border-gray-400 px-2 mb-1',
+                                    }"
                                 />
                             </div>
-
-                            <div class="flex items-center gap-4">
-                                <PrimaryButton :disabled="form.processing"
-                                    >Update</PrimaryButton
-                                >
-
-                                <Transition
-                                    enter-from-class="opacity-0"
-                                    leave-to-class="opacity-0"
-                                    class="transition ease-in-out"
-                                >
-                                    <p
-                                        v-if="form.recentlySuccessful"
-                                        class="text-sm text-gray-600"
-                                    >
-                                        Updated.
-                                    </p>
-                                </Transition>
-                            </div>
-                        </form>
-                    </section>
+                            <FormKit
+                                type="submit"
+                                label="Update"
+                                :classes="{
+                                    outer: 'm-0',
+                                    input: 'bg-blue-500 text-white font-bold px-3 w-auto',
+                                }"
+                            />
+                        </FormKit>
+                    </div>
                 </div>
             </div>
         </div>
-    </BreezeAuthenticatedLayout>
+    </AuthenticatedLayout>
 </template>
 
-<script setup>
-    import { useForm } from "@inertiajs/inertia-vue3";
-    import InputError from "@/Components/InputError.vue";
-    import InputLabel from "@/Components/InputLabel.vue";
-    import TextInput from "@/Components/TextInput.vue";
-    import PrimaryButton from "@/Components/PrimaryButton.vue";
+<script>
+import axios from "axios";
+import { Inertia } from "@inertiajs/inertia";
 
-    const props = defineProps({
+export default {
+    data() {
+        return {
+            formData: {},
+            statuses: {
+                ACT: "ACTIVE",
+                DSBL: "DISABLED",
+            },
+        };
+    },
+    props: {
         role: {
             type: Object,
             default: () => ({}),
         },
-    });
-
-    const form = useForm({
-        name: props.role.name,
-        status: props.role.status
-    });
-
+    },
+    methods: {
+        initForm() {
+            this.formData = this.role;
+        },
+        onSubmit() {
+            axios
+                .put(route("role.update", this.formData.id), this.formData)
+                .then((res) => {
+                    if (res.data.success) Inertia.get(route("role.index"));
+                })
+                .catch((err) => console.log(err));
+        },
+    },
+    created() {
+        this.initForm();
+    },
+};
 </script>

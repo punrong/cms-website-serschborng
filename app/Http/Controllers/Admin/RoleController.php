@@ -31,7 +31,7 @@ class RoleController extends Controller
         ]);
     }
 
-    public function getRoleData(Request $request): JsonResponse {
+    public function getRoleData(): JsonResponse {
         $roles = Role::where('status', '!=', 'DEL')->latest();
         return response()->json([
             'success' => true,
@@ -88,9 +88,10 @@ class RoleController extends Controller
             ]);
     }
 
-    public function deleteMultipleRecord(Request $request){
+    public function deleteMultipleRecord(Request $request)
+    {
         $roleIdList = array_column($request->roleList, 'id');
-        if(Role::whereIn('id', $roleIdList)->update(['status' => 'DEL']))
+        if (Role::whereIn('id', $roleIdList)->update(['status' => 'DEL']))
             return response()->json([
                 'success' => true,
             ]);

@@ -1,6 +1,6 @@
 <template>
     <Head title="Role" />
-    <BreezeAuthenticatedLayout>
+    <AuthenticatedLayout>
         <template #header>
             <h4 class="font-black text-2xl px-1 md:px-4">Roles</h4>
         </template>
@@ -8,29 +8,36 @@
             <div class="rounded w-full p-2 bg-white">
                 <Toolbar class="mb-4">
                     <template #start>
-                        <Button
+                        <FormKit
+                            type="button"
                             label="New"
-                            icon="pi pi-plus"
-                            class="p-button-success"
-                            style="margin-right: 5px"
                             @click="addNew"
+                            :classes="{
+                                outer: 'm-0',
+                                input: 'bg-blue-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2',
+                            }"
                         />
-                        <Button
+                        <FormKit
+                            type="button"
                             label="Delete"
-                            icon="pi pi-trash"
-                            class="p-button-danger"
                             @click="confirmMultipleDeleteSelected"
-                            :disabled="
-                                !selectedRoles || !selectedRoles.length
-                            "
+                            :disabled="!selectedRoles || !selectedRoles.length"
+                            :classes="{
+                                outer: 'm-0',
+                                input: (!selectedRoles || !selectedRoles.length) ? 'bg-red-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2 opacity-50' : 'bg-red-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2',
+                            }"
                         />
                     </template>
 
                     <template #end>
-                        <Button
+                        <FormKit
+                            type="button"
                             label="Export"
-                            icon="pi pi-upload"
                             @click="exportCSV($event)"
+                            :classes="{
+                                outer: 'm-0',
+                                input: 'bg-green-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2',
+                            }"
                         />
                     </template>
                 </Toolbar>
@@ -74,7 +81,7 @@
                         <template #body="slotProps">
                             <span
                                 :class="
-                                    'text-white p-2 ' +
+                                    'text-white p-2 rounded-md ' +
                                     (slotProps.data.status === 'ACT'
                                         ? 'bg-green-500'
                                         : 'bg-red-500')
@@ -91,10 +98,9 @@
                                 :showClear="true"
                             >
                                 <template #value="slotProps">
-                                    <span
-                                        v-if="slotProps.value"
-                                        >{{ slotProps.value }}</span
-                                    >
+                                    <span v-if="slotProps.value">{{
+                                        slotProps.value
+                                    }}</span>
                                     <span v-else>{{
                                         slotProps.placeholder
                                     }}</span>
@@ -130,7 +136,11 @@
                                 v-if="can.delete"
                                 icon="pi pi-trash"
                                 class="p-button-rounded p-button-danger"
-                                @click="confirmSingleDeleteSelected(slotProps.data.id)"
+                                @click="
+                                    confirmSingleDeleteSelected(
+                                        slotProps.data.id
+                                    )
+                                "
                             />
                         </template>
                     </Column>
@@ -168,11 +178,10 @@
                 />
             </template>
         </Dialog>
-    </BreezeAuthenticatedLayout>
+    </AuthenticatedLayout>
 </template>
 
 <script>
-
 import route from "ziggy-js";
 import { Inertia } from "@inertiajs/inertia";
 import DataTable from "../../../components/DataTable.vue";
@@ -233,24 +242,29 @@ export default {
         confirmMultipleDeleteSelected() {
             this.deleteRolesDialog = true;
         },
-        confirmSingleDeleteSelected(id){
+        confirmSingleDeleteSelected(id) {
             this.deleteRolesDialog = true;
             this.isDeleteSingleRole = true;
             this.deleteId = id;
         },
-        deleteRoles(){
-            if(this.isDeleteSingleRole)
-                axios.delete(route('role.destroy', this.deleteId))
-                .then(res => {
-                    if(res.data.success)
-                        this.$refs.roleTbl.loadLazyData();
-                })
+        deleteRoles() {
+            if (this.isDeleteSingleRole)
+                axios
+                    .delete(route("role.destroy", this.deleteId))
+                    .then((res) => {
+                        if (res.data.success) this.$refs.roleTbl.loadLazyData();
+                    });
             else
-                axios.delete(route('role.deleteMultipleRecord', { roleList: this.selectedRoles}))
-                    .then(res => {
-                        if(res.data.success)
-                            this.$refs.roleTbl.loadLazyData();
+                axios
+                    .delete(
+                        route("role.deleteMultipleRecord", {
+                            roleList: this.selectedRoles,
+                        })
+                    )
+                    .then((res) => {
+                        if (res.data.success) this.$refs.roleTbl.loadLazyData();
                     })
+                    .catch((err) => console.log(err));
 
             this.deleteId = null;
             this.selectedRoles = null;
@@ -260,8 +274,8 @@ export default {
         exportCSV() {
             this.$refs.roleTbl.exportCSV();
         },
-        deleteBtnStatus(val){
-            this.selectedRoles = val
+        deleteBtnStatus(val) {
+            this.selectedRoles = val;
         },
     },
 

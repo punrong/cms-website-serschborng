@@ -1,6 +1,6 @@
 <template>
     <Head title="Role" />
-    <BreezeAuthenticatedLayout>
+    <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Role
@@ -8,57 +8,78 @@
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <section>
-                        <header>
-                            <h2 class="text-lg font-medium text-gray-900">
-                                Role
-                            </h2>
-
-                            <p class="mt-1 text-sm text-gray-600">
-                                View role information
-                            </p>
-                        </header>
-                        <section class="mt-6 space-y-6">
-
-                        </section>
-                            <div>
-                                <InputLabel for="name" value="Name" />
-                                <p>{{ props.role.name }}</p>
+                <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+                    <div class="px-4 py-5 sm:px-6">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">
+                            Role Information
+                        </h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                            Role details
+                        </p>
+                    </div>
+                    <div class="border-t border-gray-200">
+                        <dl>
+                            <div
+                                class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                            >
+                                <dt class="text-md font-medium text-gray-500">
+                                    Name
+                                </dt>
+                                <dd
+                                    class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0"
+                                >
+                                    {{ role.name }}
+                                </dd>
                             </div>
-
-                            <div>
-                                <InputLabel for="status" value="Status" />
-                                <p>{{ props.role.status }}</p>
+                            <div
+                                class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                            >
+                                <dt class="text-md font-medium text-gray-500">
+                                    Status
+                                </dt>
+                                <dd
+                                    class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0"
+                                >
+                                    {{ role.status }}
+                                </dd>
                             </div>
-
-                            <div class="flex items-center mt-2 gap-4">
-                                <Button
+                            <div class="bg-gray-50 p-2">
+                                <div
+                                    class="flex items-center mt-2 gap-4 justify-end"
+                                >
+                                <FormKit
+                                    type="button"
                                     label="Edit"
-                                    @click="edit(props.role.id)"
+                                    @click="edit(role.id)"
+                                    :classes="{
+                                        outer: 'text-right m-0',
+                                        input: 'bg-blue-500 text-white font-bold px-3 mb-2 w-auto rounded-md py-2',
+                                    }"
                                 />
+                                </div>
                             </div>
-
-                    </section>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </div>
-    </BreezeAuthenticatedLayout>
+    </AuthenticatedLayout>
 </template>
 
-<script setup>
-    import InputLabel from "@/Components/InputLabel.vue";
-    import { Inertia } from "@inertiajs/inertia";
+<script>
+import { Inertia } from "@inertiajs/inertia";
 
-    const props = defineProps({
+export default {
+    props: {
         role: {
             type: Object,
             default: () => ({}),
         },
-    });
-
-    function edit(id){
-        Inertia.get(route('role.edit', id))
-    }
-
+    },
+    methods: {
+        edit(id) {
+            Inertia.get(route("role.edit", id));
+        },
+    },
+};
 </script>
