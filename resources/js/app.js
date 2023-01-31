@@ -1,5 +1,3 @@
-import Router from "@/router";
-import store from "@/store";
 import "tw-elements";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCircleArrowLeft, faSearch, faSignOut } from "@fortawesome/free-solid-svg-icons";
@@ -50,8 +48,6 @@ createInertiaApp({
             .component("Dialog", Dialog)
             .component("FontAwesomeIcon", FontAwesomeIcon)
             .component("Head", Head)
-            .use(Router)
-            .use(store)
             .mount(el);
     },
 });
