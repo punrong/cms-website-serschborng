@@ -2,9 +2,15 @@
     <Head title="Role" />
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Role
-            </h2>
+            <FormKit
+                type="button"
+                label="Back"
+                @click="back()"
+                :classes="{
+                    outer: 'm-0',
+                    input: 'bg-blue-500 text-white font-bold px-3 mb-2 w-auto rounded-md py-2',
+                }"
+            />
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -23,7 +29,6 @@
                             @submit="onSubmit"
                             :actions="false"
                             :config="{
-                                // config override applies to all nested FormKit components
                                 classes: {
                                     label: 'block mb-1 font-bold text-base',
                                     input: 'w-full rounded-md py-2',
@@ -60,7 +65,7 @@
                                 type="submit"
                                 label="Update"
                                 :classes="{
-                                    outer: 'm-0',
+                                    outer: 'm-0 text-right',
                                     input: 'bg-blue-500 text-white font-bold px-3 w-auto',
                                 }"
                             />
@@ -75,6 +80,7 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
+import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
     data() {
@@ -103,6 +109,11 @@ export default {
                     if (res.data.success) Inertia.get(route("role.index"));
                 })
                 .catch((err) => console.log(err));
+        },
+        back(){
+            let urlPrev = usePage().props.value.urlPrev
+            if (urlPrev !== 'empty') 
+				Inertia.visit(urlPrev)
         },
     },
     created() {

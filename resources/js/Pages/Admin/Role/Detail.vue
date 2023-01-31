@@ -2,9 +2,15 @@
     <Head title="Role" />
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Role
-            </h2>
+            <FormKit
+                type="button"
+                label="Back"
+                @click="back()"
+                :classes="{
+                    outer: 'm-0',
+                    input: 'bg-blue-500 text-white font-bold px-3 mb-2 w-auto rounded-md py-2',
+                }"
+            />
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -68,6 +74,7 @@
 
 <script>
 import { Inertia } from "@inertiajs/inertia";
+import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
     props: {
@@ -79,6 +86,11 @@ export default {
     methods: {
         edit(id) {
             Inertia.get(route("role.edit", id));
+        },
+        back(){
+            let urlPrev = usePage().props.value.urlPrev
+            if (urlPrev !== 'empty') 
+				Inertia.visit(urlPrev)
         },
     },
 };

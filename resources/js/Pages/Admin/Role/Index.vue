@@ -2,7 +2,7 @@
     <Head title="Role" />
     <AuthenticatedLayout>
         <template #header>
-            <h4 class="font-black text-2xl px-1 md:px-4">Roles</h4>
+            <h4 class="font-black text-2xl">Roles</h4>
         </template>
         <div class="mx-auto flex container items-center justify-center mt-4">
             <div class="rounded w-full p-2 bg-white">

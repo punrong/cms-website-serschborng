@@ -32,10 +32,9 @@ class RoleController extends Controller
     }
 
     public function getRoleData(): JsonResponse {
-        $roles = Role::where('status', '!=', 'DEL')->latest();
         return response()->json([
             'success' => true,
-            'payload' => PrimevueDatatables::of($roles)->make()
+            'payload' => PrimevueDatatables::of(Role::select('id', 'name', 'status')->where('status', '!=', 'DEL')->latest())->make()
         ]);
     }
 
