@@ -8,5 +8,6 @@ class Permission extends OriginalPermission
         'guard_name',
         'updated_at',
         'created_at',
+        'status'
     ];
 }

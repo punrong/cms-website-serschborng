@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -43,10 +44,18 @@ Route::group([
     'prefix' => 'admin',
     'middleware' => ['auth'],
 ], function () {
+    // User
     Route::resource('user', 'UserController');
+
+    // Role
     Route::resource('role', 'RoleController');
     Route::delete('role/delete/multiple', [RoleController::class, 'deleteMultipleRecord'])->name('role.deleteMultipleRecord');
     Route::get('role/index/data', [RoleController::class, 'getRoleData'])->name('role.getData');
+
+    // Permission
     Route::resource('permission', 'PermissionController');
+    Route::delete('permission/delete/multiple', [PermissionController::class, 'deleteMultipleRecord'])->name('permission.deleteMultipleRecord');
+    Route::get('permission/index/data', [PermissionController::class, 'getPermissionData'])->name('permission.getData');
+
     Route::resource('post', 'PostController');
 });
