@@ -21,9 +21,9 @@ class PermissionController extends Controller
     {
         return Inertia::render('Admin/Permission/Index', [
             'can' => [
-                'create' => Auth::user()->can('role create'),
-                'edit' => Auth::user()->can('role edit'),
-                'delete' => Auth::user()->can('role delete'),
+                'create' => Auth::user()->can('permission create'),
+                'edit' => Auth::user()->can('permission edit'),
+                'delete' => Auth::user()->can('permission delete'),
             ]
         ]);
     }

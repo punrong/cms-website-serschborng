@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,8 @@ Route::group([
 ], function () {
     // User
     Route::resource('user', 'UserController');
+    Route::delete('user/delete/multiple', [UserController::class, 'deleteMultipleRecord'])->name('user.deleteMultipleRecord');
+    Route::get('user/index/data', [UserController::class, 'getUserData'])->name('user.getData');
 
     // Role
     Route::resource('role', 'RoleController');
