@@ -86,7 +86,6 @@
 
 <script>
 import { Inertia } from "@inertiajs/inertia";
-import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
     props: {

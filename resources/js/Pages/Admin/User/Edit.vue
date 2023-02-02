@@ -120,13 +120,13 @@ export default {
             axios
                 .put(route("user.update", this.formData.id), this.formData)
                 .then((res) => {
-                    if (res.data.success) Inertia.get(route("user.index"));
+                    if (res.data.success) Inertia.visit(route("user.index"));
                 })
                 .catch((err) => console.log(err));
         },
         back(){
             if(this.isTriggeredFromTable)
-                Inertia.get(route("user.index"));
+                Inertia.visit(route("user.index"));
             else
                 Inertia.get(route("user.show", this.formData.id));
         },

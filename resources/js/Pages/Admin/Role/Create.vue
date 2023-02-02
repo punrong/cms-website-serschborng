@@ -100,7 +100,7 @@ export default {
             axios
                 .post(route("role.store"), this.formData)
                 .then((res) => {
-                    if (res.data.success) Inertia.get(route("role.index"));
+                    if (res.data.success) Inertia.visit(route("role.index"));
                 })
                 .catch((err) => console.log(err));
         },

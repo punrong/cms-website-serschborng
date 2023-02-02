@@ -109,13 +109,13 @@ export default {
             axios
                 .put(route("role.update", this.formData.id), this.formData)
                 .then((res) => {
-                    if (res.data.success) Inertia.get(route("role.index"));
+                    if (res.data.success) Inertia.visit(route("role.index"));
                 })
                 .catch((err) => console.log(err));
         },
         back(){
             if(this.isTriggeredFromTable)
-                Inertia.get(route("role.index"));
+                Inertia.visit(route("role.index"));
             else
                 Inertia.get(route("role.show", this.formData.id));
         },

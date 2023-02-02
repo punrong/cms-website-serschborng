@@ -81,7 +81,6 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
     data() {
@@ -101,7 +100,7 @@ export default {
             axios
                 .post(route("permission.store"), this.formData)
                 .then((res) => {
-                    if (res.data.success) Inertia.get(route("permission.index"));
+                    if (res.data.success) Inertia.visit(route("permission.index"));
                 })
                 .catch((err) => console.log(err));
         },
