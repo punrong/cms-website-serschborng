@@ -220,7 +220,7 @@ export default {
         },
 
         edit(id) {
-            Inertia.get(route("user.edit", id));
+            Inertia.get(route("user.edit", id), {isTriggeredFromTable: true});
         },
         initFilters() {
             this.filters = {

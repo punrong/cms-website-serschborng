@@ -57,10 +57,11 @@ class UserController extends Controller
         ]);
     }
 
-    public function edit(User $user)
+    public function edit(User $user, Request $request)
     {
         return Inertia::render('Admin/User/Edit', [
-            'user' => $user
+            'user' => $user,
+            'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
         ]);
     }
 

@@ -100,9 +100,7 @@ export default {
             Inertia.get(route("user.edit", id));
         },
         back(){
-            let urlPrev = usePage().props.value.urlPrev
-            if (urlPrev !== 'empty') 
-				Inertia.visit(urlPrev)
+            Inertia.visit(route('user.index'))
         },
     },
 };

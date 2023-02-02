@@ -107,6 +107,10 @@ export default {
             type: Object,
             default: () => ({}),
         },
+        isTriggeredFromTable: {
+            type: Boolean,
+            default: false
+        }
     },
     methods: {
         initForm() {
@@ -121,9 +125,10 @@ export default {
                 .catch((err) => console.log(err));
         },
         back(){
-            let urlPrev = usePage().props.value.urlPrev
-            if (urlPrev !== 'empty') 
-				Inertia.visit(urlPrev)
+            if(this.isTriggeredFromTable)
+                Inertia.get(route("user.index"));
+            else
+                Inertia.get(route("user.show", this.formData.id));
         },
     },
     created() {
