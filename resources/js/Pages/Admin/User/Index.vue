@@ -9,6 +9,7 @@
                 <Toolbar class="mb-4">
                     <template #start>
                         <FormKit
+                            v-if="can.create"
                             type="button"
                             label="New"
                             @click="addNew"
@@ -18,6 +19,7 @@
                             }"
                         />
                         <FormKit
+                            v-if="can.delete"
                             type="button"
                             label="Delete"
                             @click="confirmMultipleDeleteSelected"
@@ -61,6 +63,24 @@
                     >
                         <template #body="{ data }">
                             {{ data.name }}
+                        </template>
+                        <template #filter="{ filterModel }">
+                            <InputText
+                                type="text"
+                                v-model="filterModel.value"
+                                class="p-column-filter"
+                                placeholder="Search by name"
+                            />
+                        </template>
+                    </Column>
+                    <Column
+                        field="email"
+                        header="Email"
+                        :sortable="true"
+                        style="min-width: 12rem"
+                    >
+                        <template #body="{ data }">
+                            {{ data.email }}
                         </template>
                         <template #filter="{ filterModel }">
                             <InputText
@@ -226,6 +246,12 @@ export default {
             this.filters = {
                 global: { value: null, matchMode: FilterMatchMode.CONTAINS },
                 name: {
+                    operator: FilterOperator.AND,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                    ],
+                },
+                email: {
                     operator: FilterOperator.AND,
                     constraints: [
                         { value: null, matchMode: FilterMatchMode.STARTS_WITH },

@@ -9,6 +9,7 @@
                 <Toolbar class="mb-4">
                     <template #start>
                         <FormKit
+                            v-if="can.create"
                             type="button"
                             label="New"
                             @click="addNew"
@@ -18,6 +19,7 @@
                             }"
                         />
                         <FormKit
+                            v-if="can.delete"
                             type="button"
                             label="Delete"
                             @click="confirmMultipleDeleteSelected"
