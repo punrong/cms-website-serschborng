@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Savannabits\PrimevueDatatables\PrimevueDatatables;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function __construct()
@@ -95,17 +96,27 @@ class UserController extends Controller
 
     private function validateRequest($request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string',
-            'status' => 'required',
-        ]);
+        if($request->password)
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'status' => 'required',
+            ]);
+        else
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'status' => 'required',
+            ]);
     }
 
     private function assignValue($request, $user)
     {
         $user->name = $request->name;
         $user->email = $request->email;
+        if($request->password)
+            $user->password = Hash::make($request->password);
         $user->status = $request->status;
     }
 }

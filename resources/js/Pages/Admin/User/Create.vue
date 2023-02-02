@@ -71,6 +71,25 @@
                                         input: 'border border-gray-400 px-2 mb-1',
                                     }"
                                 />
+                                <FormKit type="group">
+                                    <FormKit
+                                        type="password"
+                                        name="password"
+                                        label="Password"
+                                        v-model="formData.password"
+                                        help="Enter a new password"
+                                        validation="required"
+                                    />
+                                    <FormKit
+                                        type="password"
+                                        name="password_confirm"
+                                        label="Confirm password"
+                                        v-model="formData.password_confirmation"
+                                        help="Confirm your new password"
+                                        validation="required|confirm"
+                                        validation-label="Password confirmation"
+                                    />
+                                </FormKit>
                             </div>
                             <FormKit
                                 type="submit"
@@ -91,7 +110,6 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
     data() {
@@ -100,6 +118,8 @@ export default {
                 name: null,
                 email: null,
                 status: "ACT",
+                password: null,
+                password_confirmation: null
             },
             statuses: {
                 ACT: "ACTIVE",
@@ -112,7 +132,7 @@ export default {
             axios
                 .post(route("user.store"), this.formData)
                 .then((res) => {
-                    if (res.data.success) Inertia.get(route("user.index"));
+                    if (res.data.success) Inertia.visit(route("user.index"));
                 })
                 .catch((err) => console.log(err));
         },
