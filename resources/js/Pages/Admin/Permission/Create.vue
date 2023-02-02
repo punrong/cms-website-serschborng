@@ -106,9 +106,7 @@ export default {
                 .catch((err) => console.log(err));
         },
         back(){
-            let urlPrev = usePage().props.value.urlPrev
-            if (urlPrev !== 'empty') 
-				Inertia.visit(urlPrev)
+            Inertia.visit(route('permission.index'))
         },
     },
 };

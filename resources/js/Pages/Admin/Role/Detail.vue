@@ -74,7 +74,6 @@
 
 <script>
 import { Inertia } from "@inertiajs/inertia";
-import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
     props: {
@@ -88,9 +87,7 @@ export default {
             Inertia.get(route("role.edit", id));
         },
         back(){
-            let urlPrev = usePage().props.value.urlPrev
-            if (urlPrev !== 'empty') 
-				Inertia.visit(urlPrev)
+            Inertia.visit(route('role.index'))
         },
     },
 };

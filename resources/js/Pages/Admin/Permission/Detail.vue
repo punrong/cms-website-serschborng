@@ -88,9 +88,7 @@ export default {
             Inertia.get(route("permission.edit", id));
         },
         back(){
-            let urlPrev = usePage().props.value.urlPrev
-            if (urlPrev !== 'empty') 
-				Inertia.visit(urlPrev)
+            Inertia.visit(route('permission.index'))
         },
     },
 };

@@ -80,7 +80,6 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
     data() {
@@ -97,6 +96,10 @@ export default {
             type: Object,
             default: () => ({}),
         },
+        isTriggeredFromTable: {
+            type: Boolean,
+            default: false
+        }
     },
     methods: {
         initForm() {
@@ -111,9 +114,10 @@ export default {
                 .catch((err) => console.log(err));
         },
         back(){
-            let urlPrev = usePage().props.value.urlPrev
-            if (urlPrev !== 'empty') 
-				Inertia.visit(urlPrev)
+            if(this.isTriggeredFromTable)
+                Inertia.get(route("role.index"));
+            else
+                Inertia.get(route("role.show", this.formData.id));
         },
     },
     created() {

@@ -58,10 +58,11 @@ class PermissionController extends Controller
         ]);
     }
 
-    public function edit(Permission $permission)
+    public function edit(Permission $permission, Request $request)
     {
         return Inertia::render('Admin/Permission/Edit', [
-            'permission' => $permission
+            'permission' => $permission,
+            'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
         ]);
     }
 

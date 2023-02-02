@@ -61,10 +61,11 @@ class RoleController extends Controller
         ]);
     }
 
-    public function edit(Role $role)
+    public function edit(Role $role, Request $request)
     {
         return Inertia::render('Admin/Role/Edit', [
-            'role' => $role
+            'role' => $role,
+            'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
         ]);
     }
 

@@ -81,7 +81,6 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
     data() {
@@ -106,9 +105,7 @@ export default {
                 .catch((err) => console.log(err));
         },
         back(){
-            let urlPrev = usePage().props.value.urlPrev
-            if (urlPrev !== 'empty') 
-				Inertia.visit(urlPrev)
+			Inertia.visit(route('role.index'))
         },
     },
 };
