@@ -28,10 +28,13 @@ class UserController extends Controller
         ]);
     }
 
-    public function getUserData(): JsonResponse {
+    public function getUserData(Request $request): JsonResponse {
+        $sortField = $request->sortField ?? 'id';
+        $sortOrder = $request->sortOrder ?? 'desc';
+
         return response()->json([
             'success' => true,
-            'payload' => PrimevueDatatables::of(User::select('id', 'name', 'email', 'status')->where('status', '!=', 'DEL')->orderBy('id', 'desc'))->make()
+            'payload' => PrimevueDatatables::of(User::select('id', 'name', 'email', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
         ]);
     }
 
