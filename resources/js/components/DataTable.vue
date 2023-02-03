@@ -8,7 +8,7 @@
         :rows="10"
         :filters="filters"
         v-model:filters="filters"
-        v-model:selection="selectedProducts"
+        v-model:selection="selectedRecords"
         ref="dt"
         :loading="loading"
         :total-records="totalRecords"
@@ -120,8 +120,8 @@ export default defineComponent({
         const totalRecords = ref(0);
         const records = ref();
         const filtersProp = toRef(props, "columnFilters");
-        const selectedProducts = ref({});
-        watch(selectedProducts, (val) =>{
+        const selectedRecords = ref([]);
+        watch(selectedRecords, (val) =>{
             context.emit('deleteBtnStatus', val)
         })
         const filters = ref({});
@@ -187,7 +187,7 @@ export default defineComponent({
             totalRecords,
             records,
             filters,
-            selectedProducts,
+            selectedRecords,
             lazyParams,
             loadLazyData,
             onPage,
