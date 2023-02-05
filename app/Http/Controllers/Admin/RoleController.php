@@ -97,6 +97,10 @@ class RoleController extends Controller
             ]);
     }
 
+    public function getRoleList(){
+        return Role::getRoleList();
+    }
+
     private function validateRequest($request)
     {
         $request->validate([

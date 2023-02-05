@@ -10,4 +10,8 @@ class Role extends OriginalRole
         'updated_at',
         'created_at',
     ];
+
+    public static function getRoleList(){
+        return Role::where('status', 'ACT')->orderBy('id', 'asc')->pluck('name', 'id');
+    }
 }

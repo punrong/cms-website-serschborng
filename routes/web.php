@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\PostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -41,24 +42,30 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::group([
-    'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => 'admin',
     'middleware' => ['auth'],
 ], function () {
     // User
-    Route::resource('user', 'UserController');
-    Route::delete('user/delete/multiple', [UserController::class, 'deleteMultipleRecord'])->name('user.deleteMultipleRecord');
-    Route::get('user/index/data', [UserController::class, 'getUserData'])->name('user.getData');
+    Route::resource('user', UserController::class);
+    Route::group(['prefix' => 'user/api'], function (){
+        Route::delete('delete/multiple', [UserController::class, 'deleteMultipleRecord'])->name('user.deleteMultipleRecord');
+        Route::get('get/user/data', [UserController::class, 'getUserData'])->name('user.getData');
+    });
 
     // Role
-    Route::resource('role', 'RoleController');
-    Route::delete('role/delete/multiple', [RoleController::class, 'deleteMultipleRecord'])->name('role.deleteMultipleRecord');
-    Route::get('role/index/data', [RoleController::class, 'getRoleData'])->name('role.getData');
+    Route::resource('role', RoleController::class);
+    Route::group(['prefix' => 'role/api'], function (){
+        Route::delete('delete/multiple', [RoleController::class, 'deleteMultipleRecord'])->name('role.deleteMultipleRecord');
+        Route::get('get/role/data', [RoleController::class, 'getRoleData'])->name('role.getData');
+        Route::get('get/rolelist', [RoleController::class, 'getRoleList'])->name('role.getRoleList');
+    });
 
     // Permission
-    Route::resource('permission', 'PermissionController');
-    Route::delete('permission/delete/multiple', [PermissionController::class, 'deleteMultipleRecord'])->name('permission.deleteMultipleRecord');
-    Route::get('permission/index/data', [PermissionController::class, 'getPermissionData'])->name('permission.getData');
+    Route::resource('permission', PermissionController::class);
+    Route::group(['prefix' => 'permission/api'], function (){
+        Route::delete('delete/multiple', [PermissionController::class, 'deleteMultipleRecord'])->name('permission.deleteMultipleRecord');
+        Route::get('get/permission/data', [PermissionController::class, 'getPermissionData'])->name('permission.getData');
+    });
 
-    Route::resource('post', 'PostController');
+    Route::resource('post', PostController::class);
 });
