@@ -41,11 +41,13 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'status' => 'PND'
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        //TODO: to assign default role to new user before authenticate
+        // Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }
