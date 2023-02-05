@@ -70,6 +70,18 @@
                                         input: 'border border-gray-400 px-2 mb-1',
                                     }"
                                 />
+                                <FormKit
+                                    type="select"
+                                    label="Role"
+                                    :options="roleList"
+                                    v-model="formData.role"
+                                    placeholder="Select a role"
+                                    validation="required"
+                                    :classes="{
+                                        outer: 'pb-4',
+                                        input: 'border border-gray-400 px-2 mb-1',
+                                    }"
+                                />
                             </div>
                             <FormKit
                                 type="submit"
@@ -90,7 +102,6 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
     data() {
@@ -98,8 +109,10 @@ export default {
             formData: {},
             statuses: {
                 ACT: "ACTIVE",
+                PND: "PENDING",
                 DSBL: "DISABLED",
             },
+            roleList: {}
         };
     },
     props: {
@@ -130,9 +143,17 @@ export default {
             else
                 Inertia.get(route("user.show", this.formData.id));
         },
+        getRoleList(){
+            axios.get(route('role.getRoleList')).then(res =>{
+                this.roleList = res.data
+            })
+        }
     },
     created() {
         this.initForm();
     },
+    mounted(){
+        this.getRoleList()
+    }
 };
 </script>

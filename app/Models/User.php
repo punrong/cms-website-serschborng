@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\ModelHasRoles;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -44,4 +46,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function assignUserRole($userId, $role){
+        $userRole = ModelHasRoles::where('model_id', $userId)->first();
+        if($userRole){
+            $userRole->role_id = $role;
+            if($userRole->save())
+                return true;
+        }
+        else{
+            $newUserRole = new ModelHasRoles();
+            $newUserRole->role_id = $role;
+            $newUserRole->model_type = 'App\Models\User';
+            $newUserRole->model_id = $userId;
+            if($newUserRole->save())
+                return true;
+        }
+        return false;
+    }
+
+    public static function getUserRoleId($userId){
+        return ModelHasRoles::where('model_id', $userId)->value('role_id');
+    }
+
+    public static function getUserRoleName($userId){
+        $roleId = ModelHasRoles::where('model_id', $userId)->value('role_id');
+        return Role::where('id', $roleId)->value('name');
+    }
 }

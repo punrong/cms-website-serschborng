@@ -71,6 +71,18 @@
                                         input: 'border border-gray-400 px-2 mb-1',
                                     }"
                                 />
+                                <FormKit
+                                    type="select"
+                                    label="Role"
+                                    :options="roleList"
+                                    v-model="formData.role"
+                                    placeholder="Select a role"
+                                    validation="required"
+                                    :classes="{
+                                        outer: 'pb-4',
+                                        input: 'border border-gray-400 px-2 mb-1',
+                                    }"
+                                />
                                 <FormKit type="group">
                                     <FormKit
                                         type="password"
@@ -118,13 +130,16 @@ export default {
                 name: null,
                 email: null,
                 status: "ACT",
+                role: null,
                 password: null,
                 password_confirmation: null
             },
             statuses: {
                 ACT: "ACTIVE",
+                PND: "PENDING",
                 DSBL: "DISABLED",
             },
+            roleList: {}
         };
     },
     methods: {
@@ -139,9 +154,14 @@ export default {
         back(){
             Inertia.visit(route('user.index'))
         },
+        getRoleList(){
+            axios.get(route('role.getRoleList')).then(res =>{
+                this.roleList = res.data
+            })
+        }
     },
+    mounted(){
+        this.getRoleList()
+    }
 };
 </script>
-
-<style scoped>
-</style>

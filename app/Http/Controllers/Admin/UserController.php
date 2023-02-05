@@ -45,14 +45,17 @@ class UserController extends Controller
         $this->validateRequest($request);
         $user = new User();
         $this->assignValue($request, $user);
-        if ($user->save())
-            return response()->json([
-                'success' => true,
-            ]);
+        if ($user->save())  
+            if(User::assignUserRole($user->id, $request->role))
+                return response()->json([
+                    'success' => true,
+                ]);
+
     }
 
     public function show(User $user)
     {
+        $user->role = User::getUserRoleName($user->id);
         return Inertia::render('Admin/User/Detail', [
             'user' => $user,
         ]);
@@ -60,6 +63,8 @@ class UserController extends Controller
 
     public function edit(User $user, Request $request)
     {
+        $user->role = User::getUserRoleId($user->id);
+        info($user);
         return Inertia::render('Admin/User/Edit', [
             'user' => $user,
             'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
@@ -70,7 +75,7 @@ class UserController extends Controller
     {
         $this->validateRequest($request);
         $this->assignValue($request, $user);
-        if ($user->save())
+        if ($user->save() && User::assignUserRole($user->id, $request->role))
             return response()->json([
                 'success' => true,
             ]);
@@ -102,12 +107,14 @@ class UserController extends Controller
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
                 'status' => 'required',
+                'role' => 'required',
             ]);
         else
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'status' => 'required',
+                'role' => 'required'
             ]);
     }
 

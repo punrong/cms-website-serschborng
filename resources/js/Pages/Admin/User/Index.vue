@@ -216,7 +216,7 @@ export default {
         return {
             apiUrl: route("user.getData"),
             searchableCols: ["name", "status"],
-            statuses: ["ACT", "DSBL"],
+            statuses: ["ACT", "PND", "DSBL"],
             filters: null,
             deleteUsersDialog: false,
             selectedUsers: null,
