@@ -31,10 +31,13 @@ class RoleController extends Controller
         ]);
     }
 
-    public function getRoleData(): JsonResponse {
+    public function getRoleData(Request $request): JsonResponse {
+        $sortField = $request->sortField ?? 'id';
+        $sortOrder = $request->sortOrder ?? 'desc';
+
         return response()->json([
             'success' => true,
-            'payload' => PrimevueDatatables::of(Role::select('id', 'name', 'status')->where('status', '!=', 'DEL')->orderBy('id', 'desc'))->make()
+            'payload' => PrimevueDatatables::of(Role::select('id', 'name', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
         ]);
     }
 

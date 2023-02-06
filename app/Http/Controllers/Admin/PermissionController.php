@@ -28,10 +28,13 @@ class PermissionController extends Controller
         ]);
     }
 
-    public function getPermissionData(): JsonResponse {
+    public function getPermissionData(Request $request): JsonResponse {
+        $sortField = $request->sortField ?? 'id';
+        $sortOrder = $request->sortOrder ?? 'desc';
+
         return response()->json([
             'success' => true,
-            'payload' => PrimevueDatatables::of(Permission::select('id', 'name', 'status')->where('status', '!=', 'DEL')->orderBy('id', 'desc'))->make()
+            'payload' => PrimevueDatatables::of(Permission::select('id', 'name', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
         ]);
     }
 

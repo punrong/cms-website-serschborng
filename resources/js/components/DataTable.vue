@@ -140,9 +140,9 @@ export default defineComponent({
                 const res = await axios.get(apiUrl.value, {
                     params: {
                         dt_params: JSON.stringify(lazyParams.value),
-                        searchable_columns: JSON.stringify(
-                            searchableColumns.value
-                        ),
+                        searchable_columns: JSON.stringify(searchableColumns.value),
+                        sortField: lazyParams.value.sortField,
+                        sortOrder: lazyParams.value.sortOrder
                     },
                 });
 
@@ -162,6 +162,11 @@ export default defineComponent({
         };
         const onSort = (event) => {
             lazyParams.value = event;
+            if(lazyParams.value.sortField)
+                if(lazyParams.value.sortOrder == 1)
+                    lazyParams.value.sortOrder = 'desc'
+                else
+                    lazyParams.value.sortOrder = 'asc'
             lazyParams.value.filters = {
                 first: 0,
                 filters: filters.value,
@@ -174,7 +179,6 @@ export default defineComponent({
             // reset pagination
             lazyParams.value.originalEvent = { first: 0, page: 0 };
             onPage(lazyParams.value);
-            loadLazyData();
         };
 
         const exportCSV = () => {

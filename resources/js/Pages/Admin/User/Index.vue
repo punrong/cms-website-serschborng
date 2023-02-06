@@ -96,7 +96,6 @@
                         header="Status"
                         :filterMenuStyle="{ width: '14rem' }"
                         style="min-width: 12rem"
-                        :sortable="true"
                     >
                         <template #body="slotProps">
                             <span
@@ -215,7 +214,7 @@ export default {
     data() {
         return {
             apiUrl: route("user.getData"),
-            searchableCols: ["name", "status"],
+            searchableCols: ["name", "email"],
             statuses: ["ACT", "PND", "DSBL"],
             filters: null,
             deleteUsersDialog: false,
