@@ -62,6 +62,20 @@
                                     }"
                                 />
                             </div>
+                            <div>
+                                <span class="block mb-1 font-bold text-base"
+                                    >Permissions</span
+                                >
+                                <div class="w-full rounded-md py-2">
+                                    <MultiSelect
+                                        v-model="formData.permissions"
+                                        optionValue="value"
+                                        :options="permissionList"
+                                        optionLabel="name"
+                                        placeholder="Select permissions"
+                                    />
+                                </div>
+                            </div>
                             <FormKit
                                 type="submit"
                                 label="Create"
@@ -88,11 +102,13 @@ export default {
             formData: {
                 name: null,
                 status: "ACT",
+                permissions: null,
             },
             statuses: {
                 ACT: "ACTIVE",
                 DSBL: "DISABLED",
             },
+            permissionList: null,
         };
     },
     methods: {
@@ -107,9 +123,25 @@ export default {
         back(){
 			Inertia.visit(route('role.index'))
         },
+        getPermissionList() {
+            axios.get(route("permission.getPermissionList")).then((res) => {
+                this.permissionList = res.data;
+            });
+        },
+    },
+    mounted() {
+        this.getPermissionList();
     },
 };
 </script>
 
 <style scoped>
+.p-multiselect {
+    width: 100%;
+    border-width: 1px;
+    border-radius: 0.375rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-bottom: 0.25rem;
+}
 </style>

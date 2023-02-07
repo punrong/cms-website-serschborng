@@ -52,13 +52,15 @@ class RoleController extends Controller
         $role = new Role();
         $this->assignValue($request, $role);
         if ($role->save())
-            return response()->json([
-                'success' => true,
-            ]);
+            if(Role::assignRolePermissions($role->id, $request->permissions))
+                return response()->json([
+                    'success' => true,
+                ]);
     }
 
     public function show(Role $role)
     {
+        $role->permissions = Role::getRolePermissions($role->id);
         return Inertia::render('Admin/Role/Detail', [
             'role' => $role,
         ]);
@@ -66,6 +68,7 @@ class RoleController extends Controller
 
     public function edit(Role $role, Request $request)
     {
+        $role->permissions = Role::getRolePermissionIdList($role->id);
         return Inertia::render('Admin/Role/Edit', [
             'role' => $role,
             'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
@@ -76,7 +79,7 @@ class RoleController extends Controller
     {
         $this->validateRequest($request);
         $this->assignValue($request, $role);
-        if ($role->save())
+        if ($role->save() && Role::assignRolePermissions($role->id, $request->permissions))
             return response()->json([
                 'success' => true,
             ]);
@@ -109,6 +112,7 @@ class RoleController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'status' => 'required',
+            'permissions' => 'required'
         ]);
     }
 

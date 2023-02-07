@@ -61,6 +61,20 @@
                                     }"
                                 />
                             </div>
+                            <div>
+                                <span class="block mb-1 font-bold text-base"
+                                    >Permissions</span
+                                >
+                                <div class="w-full rounded-md py-2">
+                                    <MultiSelect
+                                        v-model="formData.permissions"
+                                        optionValue="value"
+                                        :options="permissionList"
+                                        optionLabel="name"
+                                        placeholder="Select permissions"
+                                    />
+                                </div>
+                            </div>
                             <FormKit
                                 type="submit"
                                 label="Update"
@@ -89,6 +103,7 @@ export default {
                 ACT: "ACTIVE",
                 DSBL: "DISABLED",
             },
+            permissionList: null,
         };
     },
     props: {
@@ -98,8 +113,8 @@ export default {
         },
         isTriggeredFromTable: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     methods: {
         initForm() {
@@ -113,15 +128,33 @@ export default {
                 })
                 .catch((err) => console.log(err));
         },
-        back(){
-            if(this.isTriggeredFromTable)
+        back() {
+            if (this.isTriggeredFromTable) 
                 Inertia.visit(route("role.index"));
-            else
+            else 
                 Inertia.get(route("role.show", this.formData.id));
+        },
+        getPermissionList() {
+            axios.get(route("permission.getPermissionList")).then((res) => {
+                this.permissionList = res.data;
+            });
         },
     },
     created() {
         this.initForm();
     },
+    mounted() {
+        this.getPermissionList();
+    },
 };
 </script>
+<style scoped>
+.p-multiselect {
+    width: 100%;
+    border-width: 1px;
+    border-radius: 0.375rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+</style>

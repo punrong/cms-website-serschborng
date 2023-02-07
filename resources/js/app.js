@@ -16,6 +16,7 @@ import Dropdown from 'primevue/dropdown';
 import Toolbar from 'primevue/toolbar';
 import Dialog from 'primevue/dialog';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import MultiSelect from 'primevue/multiselect';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import 'primevue/resources/themes/fluent-light/theme.css';
@@ -46,6 +47,7 @@ createInertiaApp({
             .component("Dropdown", Dropdown)
             .component("Toolbar", Toolbar)
             .component("Dialog", Dialog)
+            .component("MultiSelect", MultiSelect)
             .component("FontAwesomeIcon", FontAwesomeIcon)
             .component("Head", Head)
             .mount(el);
