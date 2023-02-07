@@ -97,6 +97,10 @@ class PermissionController extends Controller
             ]);
     }
 
+    public function getPermissionList(){
+        return Permission::getPermissionList();
+    }
+
     private function validateRequest($request)
     {
         $request->validate([
