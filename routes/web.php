@@ -65,6 +65,7 @@ Route::group([
     Route::group(['prefix' => 'permission/api'], function (){
         Route::delete('delete/multiple', [PermissionController::class, 'deleteMultipleRecord'])->name('permission.deleteMultipleRecord');
         Route::get('get/permission/data', [PermissionController::class, 'getPermissionData'])->name('permission.getData');
+        Route::get('get/permissionlist', [PermissionController::class, 'getPermissionList'])->name('permission.getPermissionList');
     });
 
     Route::resource('post', PostController::class);

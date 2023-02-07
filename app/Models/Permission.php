@@ -10,4 +10,8 @@ class Permission extends OriginalPermission
         'created_at',
         'status'
     ];
+
+    public static function getPermissionList(){
+        return Permission::select( 'name', 'id as value')->where('status', 'ACT')->orderBy('id', 'asc')->get();
+    }
 }
