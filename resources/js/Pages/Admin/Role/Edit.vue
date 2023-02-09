@@ -73,6 +73,7 @@
                                         optionLabel="name"
                                         placeholder="Select permissions"
                                     />
+                                    <InputError class="text-red-500 text-sm font-bold" :message="errorMsg" />
                                 </div>
                             </div>
                             <FormKit
@@ -94,8 +95,12 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
+import InputError from '@/Components/InputError.vue';
 
 export default {
+    components:{
+        InputError
+    },
     data() {
         return {
             formData: {},
@@ -104,6 +109,7 @@ export default {
                 DSBL: "DISABLED",
             },
             permissionList: null,
+            errorMsg: null,
         };
     },
     props: {
@@ -126,7 +132,9 @@ export default {
                 .then((res) => {
                     if (res.data.success) Inertia.visit(route("role.index"));
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    this.errorMsg = err.response.data.message
+                })
         },
         back() {
             if (this.isTriggeredFromTable) 
