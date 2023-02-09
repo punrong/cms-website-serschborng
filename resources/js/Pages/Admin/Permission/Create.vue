@@ -75,6 +75,7 @@
                 </div>
             </div>
         </div>
+        <Toast />
     </AuthenticatedLayout>
 </template>
 
@@ -102,7 +103,9 @@ export default {
                 .then((res) => {
                     if (res.data.success) Inertia.visit(route("permission.index"));
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    this.$toast.add({severity:'error', summary: 'Error Message', detail:err.response.data.message, life: 3000});
+                })
         },
         back(){
             Inertia.visit(route('permission.index'))

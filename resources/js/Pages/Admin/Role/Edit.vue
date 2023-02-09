@@ -89,6 +89,7 @@
                 </div>
             </div>
         </div>
+        <Toast />
     </AuthenticatedLayout>
 </template>
 
@@ -133,7 +134,9 @@ export default {
                     if (res.data.success) Inertia.visit(route("role.index"));
                 })
                 .catch((err) => {
-                    this.errorMsg = err.response.data.message
+                    if(err.response.status === 422)
+                        this.errorMsg = err.response.data.message
+                    this.$toast.add({severity:'error', summary: 'Error Message', detail:err.response.data.message, life: 3000});
                 })
         },
         back() {
@@ -145,6 +148,8 @@ export default {
         getPermissionList() {
             axios.get(route("permission.getPermissionList")).then((res) => {
                 this.permissionList = res.data;
+            }).catch((err) => {
+                this.$toast.add({severity:'error', summary: 'Error Message', detail:err.response.data.message, life: 3000});
             });
         },
     },

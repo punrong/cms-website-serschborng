@@ -74,13 +74,13 @@
                 </div>
             </div>
         </div>
+        <Toast />
     </AuthenticatedLayout>
 </template>
 
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
     data() {
@@ -112,7 +112,9 @@ export default {
                 .then((res) => {
                     if (res.data.success) Inertia.visit(route("permission.index"));
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    this.$toast.add({severity:'error', summary: 'Error Message', detail:err.response.data.message, life: 3000});
+                })
         },
         back(){
             if(this.isTriggeredFromTable)

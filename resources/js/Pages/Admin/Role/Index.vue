@@ -179,6 +179,7 @@
                 />
             </template>
         </Dialog>
+        <Toast />
     </AuthenticatedLayout>
 </template>
 
@@ -254,6 +255,8 @@ export default {
                     .delete(route("role.destroy", this.deleteId))
                     .then((res) => {
                         if (res.data.success) this.$refs.roleTbl.loadLazyData();
+                    }).catch((err) => {
+                        this.$toast.add({severity:'error', summary: 'Error Message', detail:err.response.data.message, life: 3000});
                     });
             else
                 axios
@@ -265,7 +268,9 @@ export default {
                     .then((res) => {
                         if (res.data.success) this.$refs.roleTbl.loadLazyData();
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => {
+                        this.$toast.add({severity:'error', summary: 'Error Message', detail:err.response.data.message, life: 3000});
+                    })
 
             this.deleteId = null;
             this.selectedRoles = null;

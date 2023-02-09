@@ -17,6 +17,8 @@ import Toolbar from 'primevue/toolbar';
 import Dialog from 'primevue/dialog';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import MultiSelect from 'primevue/multiselect';
+import ToastService from 'primevue/toastservice';
+import Toast from 'primevue/toast';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import 'primevue/resources/themes/fluent-light/theme.css';
@@ -40,6 +42,7 @@ createInertiaApp({
                     theme: 'genesis',
                 },
               }))
+            .use(ToastService)
             .component("Column", Column)
             .component("AuthenticatedLayout", AuthenticatedLayout)
             .component("Button", Button)
@@ -50,6 +53,7 @@ createInertiaApp({
             .component("MultiSelect", MultiSelect)
             .component("FontAwesomeIcon", FontAwesomeIcon)
             .component("Head", Head)
+            .component("Toast", Toast)
             .mount(el);
     },
 });
