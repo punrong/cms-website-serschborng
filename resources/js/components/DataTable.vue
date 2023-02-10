@@ -36,6 +36,36 @@
                             class="p-button-text p-button-plain"
                             icon="pi pi-refresh"
                         />
+                        <FormKit
+                            v-if="can.create"
+                            type="button"
+                            label="New"
+                            @click='$emit("addNew")'
+                            :classes="{
+                                outer: 'm-0',
+                                input: 'bg-blue-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2',
+                            }"
+                        />
+                        <FormKit
+                            v-if="can.delete"
+                            type="button"
+                            label="Delete"
+                            @click="$emit('confirmMultipleDeleteSelected')"
+                            :disabled="!selectedRecords || !selectedRecords.length"
+                            :classes="{
+                                outer: 'm-0',
+                                input: (!selectedRecords || !selectedRecords.length) ? 'bg-red-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2 opacity-50' : 'bg-red-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2',
+                            }"
+                        />
+                        <FormKit
+                            type="button"
+                            label="Export"
+                            @click="exportCSV($event)"
+                            :classes="{
+                                outer: 'm-0',
+                                input: 'bg-green-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2',
+                            }"
+                        />
                         <slot name="header">
                             <h5 class="font-semibold">{{ title }}</h5>
                         </slot>
@@ -82,6 +112,10 @@ export default defineComponent({
         apiUrl: String,
         title: String,
         refresh: String,
+        can: {
+            type: Object,
+            default: () => ({}),
+        },
         searchableColumns: {
             type: Array,
             default: [],

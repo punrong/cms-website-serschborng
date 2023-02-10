@@ -1,6 +1,6 @@
 import "tw-elements";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCircleArrowLeft, faSearch, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft, faSignOut, faHouse, faTableColumns, faUsers, faUniversalAccess, faPeopleRoof, faMailBulk, faGear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp, h } from 'vue';
 import { createInertiaApp, Head } from '@inertiajs/inertia-vue3';
@@ -25,9 +25,16 @@ import 'primevue/resources/themes/fluent-light/theme.css';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Sers Chborng';
 
+library.add(faHouse);
 library.add(faCircleArrowLeft);
-library.add(faSearch);
 library.add(faSignOut);
+library.add(faTableColumns);
+library.add(faUsers);
+library.add(faUniversalAccess);
+library.add(faPeopleRoof);
+library.add(faMailBulk)
+library.add(faGear)
+
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -41,7 +48,7 @@ createInertiaApp({
                 config: {
                     theme: 'genesis',
                 },
-              }))
+            }))
             .use(ToastService)
             .component("Column", Column)
             .component("AuthenticatedLayout", AuthenticatedLayout)
