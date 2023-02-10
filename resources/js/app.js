@@ -13,9 +13,8 @@ import Column from 'primevue/column';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
-import Toolbar from 'primevue/toolbar';
 import Dialog from 'primevue/dialog';
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import MenuSideBar from "@/Layouts/MenuSideBar.vue";
 import MultiSelect from 'primevue/multiselect';
 import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast';
@@ -51,11 +50,10 @@ createInertiaApp({
             }))
             .use(ToastService)
             .component("Column", Column)
-            .component("AuthenticatedLayout", AuthenticatedLayout)
+            .component("MenuSideBar", MenuSideBar)
             .component("Button", Button)
             .component("InputText", InputText)
             .component("Dropdown", Dropdown)
-            .component("Toolbar", Toolbar)
             .component("Dialog", Dialog)
             .component("MultiSelect", MultiSelect)
             .component("FontAwesomeIcon", FontAwesomeIcon)
