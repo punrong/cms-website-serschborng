@@ -17,6 +17,9 @@
                         src="../../assets/logo.png"
                     />
                 </div>
+                <div class="flex items-center justify-center rounded-md py-2 text-gray-300 text-lg block font-bold">
+                    <span>Hello, {{ $page.props.auth.user.name }} !</span>
+                </div>
                 <ul v-for="(menu, index) in menuList">
                     <li
                         v-if="menu.can"
