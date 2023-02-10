@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,10 @@ Route::group([
     'prefix' => 'admin',
     'middleware' => ['auth'],
 ], function () {
+
+    Route::group(['prefix' => 'api'], function(){
+        Route::get('get/menusidebar/permissions', [AuthenticatedSessionController::class, 'getMenuSideBarPermission'])->name('menusidebar.getPermissions');
+    });
     // User
     Route::resource('user', UserController::class);
     Route::group(['prefix' => 'user/api'], function (){
