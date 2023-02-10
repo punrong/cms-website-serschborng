@@ -13,7 +13,7 @@ const props = defineProps({
 </script>
 <template>
     <Head title="Post" />
-    <AuthenticatedLayout>
+    <MenuSideBar>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Post
@@ -69,5 +69,5 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </MenuSideBar>
 </template>
