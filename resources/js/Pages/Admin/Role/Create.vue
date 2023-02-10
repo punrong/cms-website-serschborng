@@ -1,25 +1,31 @@
 <template>
     <Head title="Role" />
-    <AuthenticatedLayout>
+    <MenuSideBar>
         <div class="mx-auto flex container items-center justify-center mt-4">
             <div class="rounded w-full p-2 bg-white">
-                <Toolbar>
-                    <template #start>
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">
-                            Role Information
-                        </h3>
-                    </template>
-                </Toolbar>
                 <FormKit
                     type="button"
-                    label="Back"
-                    @click="back()"
+                    label="Go Back"
+                    @click="goBack()"
                     :classes="{
-                        outer: 'mt-4 mb-2',
+                        outer: 'mb-2',
                         input: 'bg-blue-500 text-white font-bold px-3 mb-2 w-auto rounded-md py-2',
                     }"
                 />
-                <div class="px-4">
+                <div class="px-4 bg-white shadow sm:rounded-lg">
+                    <div
+                        class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                    >
+                        <header>
+                            <h2 class="text-lg font-medium text-gray-900">
+                                Create NewRole
+                            </h2>
+
+                            <p class="mt-1 text-sm text-gray-600">
+                                Add role's name, status and permissions
+                            </p>
+                        </header>
+                    </div>
                     <FormKit
                         type="form"
                         @submit="onSubmit"
@@ -80,7 +86,7 @@
                             label="Create"
                             :classes="{
                                 outer: 'm-0 text-right',
-                                input: 'bg-blue-500 text-white font-bold px-3 w-auto',
+                                input: 'bg-blue-500 text-white font-bold px-3 w-auto mb-2',
                             }"
                         />
                     </FormKit>
@@ -88,7 +94,7 @@
             </div>
         </div>
         <Toast />
-    </AuthenticatedLayout>
+    </MenuSideBar>
 </template>
 
 <script>
@@ -133,7 +139,7 @@ export default {
                     });
                 });
         },
-        back() {
+        goBack() {
             Inertia.visit(route("role.index"));
         },
         getPermissionList() {
