@@ -1,13 +1,17 @@
 <template>
     <Head title="Permission" />
-    <AuthenticatedLayout>
+    <MenuSideBar>
         <div class="mx-auto flex container items-center justify-center mt-4">
             <div class="rounded w-full p-2 bg-white">
-                <Toolbar class="mb-4">
-                    <template #start>
-                        <h4 class="font-black text-2xl">Permissions</h4>
-                    </template>
-                </Toolbar>
+                <div
+                    class="bg-white shadow sm:rounded-lg px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                >
+                    <header>
+                        <h2 class="text-2xl font-bold text-gray-900">
+                            Permission
+                        </h2>
+                    </header>
+                </div>
                 <DataTable
                     ref="permissionTbl"
                     :apiUrl="apiUrl"
@@ -21,6 +25,7 @@
                     "
                 >
                     <Column
+                        v-if="can.delete"
                         selectionMode="multiple"
                         headerStyle="width: 3em"
                     ></Column>
@@ -82,7 +87,6 @@
                         </template>
                     </Column>
                     <Column
-                        v-if="can.edit | can.delete"
                         field="actions"
                         header="Actions"
                         :exportable="false"
@@ -149,7 +153,7 @@
             </template>
         </Dialog>
         <Toast />
-    </AuthenticatedLayout>
+    </MenuSideBar>
 </template>
 
 <script>
