@@ -1,46 +1,11 @@
 <template>
     <Head title="User" />
     <AuthenticatedLayout>
-        <template #header>
-            <h4 class="font-black text-2xl">Users</h4>
-        </template>
         <div class="mx-auto flex container items-center justify-center mt-4">
             <div class="rounded w-full p-2 bg-white">
                 <Toolbar class="mb-4">
                     <template #start>
-                        <FormKit
-                            v-if="can.create"
-                            type="button"
-                            label="New"
-                            @click="addNew"
-                            :classes="{
-                                outer: 'm-0',
-                                input: 'bg-blue-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2',
-                            }"
-                        />
-                        <FormKit
-                            v-if="can.delete"
-                            type="button"
-                            label="Delete"
-                            @click="confirmMultipleDeleteSelected"
-                            :disabled="!selectedUsers || !selectedUsers.length"
-                            :classes="{
-                                outer: 'm-0',
-                                input: (!selectedUsers || !selectedUsers.length) ? 'bg-red-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2 opacity-50' : 'bg-red-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2',
-                            }"
-                        />
-                    </template>
-
-                    <template #end>
-                        <FormKit
-                            type="button"
-                            label="Export"
-                            @click="exportCSV($event)"
-                            :classes="{
-                                outer: 'm-0',
-                                input: 'bg-green-500 rounded-md text-white font-bold px-3 py-2 w-auto mr-2',
-                            }"
-                        />
+                        <h4 class="font-black text-2xl">Users</h4>
                     </template>
                 </Toolbar>
                 <DataTable
@@ -48,7 +13,11 @@
                     :apiUrl="apiUrl"
                     :columnFilters="filters"
                     :searchableColumns="searchableCols"
-                    :rowHover="true"
+                    :can="can"
+                    @addNew="addNew"
+                    @confirmMultipleDeleteSelected="
+                        confirmMultipleDeleteSelected
+                    "
                     @deleteBtnStatus="deleteBtnStatus"
                 >
                     <Column
@@ -240,7 +209,7 @@ export default {
         },
 
         edit(id) {
-            Inertia.get(route("user.edit", id), {isTriggeredFromTable: true});
+            Inertia.get(route("user.edit", id), { isTriggeredFromTable: true });
         },
         initFilters() {
             this.filters = {
@@ -279,8 +248,14 @@ export default {
                     .delete(route("user.destroy", this.deleteId))
                     .then((res) => {
                         if (res.data.success) this.$refs.userTbl.loadLazyData();
-                    }).catch((err) => {
-                        this.$toast.add({severity:'error', summary: 'Error Message', detail:err.response.data.message, life: 3000});
+                    })
+                    .catch((err) => {
+                        this.$toast.add({
+                            severity: "error",
+                            summary: "Error Message",
+                            detail: err.response.data.message,
+                            life: 3000,
+                        });
                     });
             else
                 axios
@@ -293,16 +268,18 @@ export default {
                         if (res.data.success) this.$refs.userTbl.loadLazyData();
                     })
                     .catch((err) => {
-                        this.$toast.add({severity:'error', summary: 'Error Message', detail:err.response.data.message, life: 3000});
-                    })
+                        this.$toast.add({
+                            severity: "error",
+                            summary: "Error Message",
+                            detail: err.response.data.message,
+                            life: 3000,
+                        });
+                    });
 
             this.deleteId = null;
             this.selectedUsers = null;
             this.isDeleteSingleUser = false;
             this.deleteUsersDialog = false;
-        },
-        exportCSV() {
-            this.$refs.userTbl.exportCSV();
         },
         deleteBtnStatus(val) {
             this.selectedUsers = val;
