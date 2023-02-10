@@ -1,30 +1,38 @@
 <template>
     <Head title="User" />
-    <AuthenticatedLayout>
+    <MenuSideBar>
         <div class="mx-auto flex container items-center justify-center mt-4">
             <div class="rounded w-full p-2 bg-white">
-                <Toolbar>
-                    <template #start>
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">
-                            User Information
-                        </h3>
-                    </template>
-                </Toolbar>
                 <FormKit
                     type="button"
-                    label="Back"
-                    @click="back()"
+                    label="Go Back"
+                    @click="goBack()"
                     :classes="{
-                        outer: 'mt-4 mb-2',
+                        outer: 'mb-2',
                         input: 'bg-blue-500 text-white font-bold px-3 mb-2 w-auto rounded-md py-2',
                     }"
                 />
-                <div class="border-t border-gray-200">
+                <div
+                    class="border-t border-gray-200 bg-white shadow sm:rounded-lg"
+                >
                     <dl>
+                        <div
+                            class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                        >
+                            <header>
+                                <h2 class="text-lg font-medium text-gray-900">
+                                    User Information
+                                </h2>
+
+                                <p class="mt-1 text-sm text-gray-600">
+                                    Update user's name, email, status and role
+                                </p>
+                            </header>
+                        </div>
                         <div
                             class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                         >
-                            <dt class="text-md font-medium text-gray-500">
+                            <dt class="text-md font-medium text-gray-900">
                                 Name
                             </dt>
                             <dd
@@ -36,7 +44,7 @@
                         <div
                             class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                         >
-                            <dt class="text-md font-medium text-gray-500">
+                            <dt class="text-md font-medium text-gray-900">
                                 Email
                             </dt>
                             <dd
@@ -48,7 +56,7 @@
                         <div
                             class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                         >
-                            <dt class="text-md font-medium text-gray-500">
+                            <dt class="text-md font-medium text-gray-900">
                                 Status
                             </dt>
                             <dd
@@ -60,7 +68,7 @@
                         <div
                             class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                         >
-                            <dt class="text-md font-medium text-gray-500">
+                            <dt class="text-md font-medium text-gray-900">
                                 Role
                             </dt>
                             <dd
@@ -69,7 +77,7 @@
                                 {{ user.role }}
                             </dd>
                         </div>
-                        <div class="bg-gray-50 p-2">
+                        <div v-if="can.edit" class="bg-gray-50 p-2">
                             <div
                                 class="flex items-center mt-2 gap-4 justify-end"
                             >
@@ -88,7 +96,7 @@
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </MenuSideBar>
 </template>
 
 <script>
@@ -100,12 +108,16 @@ export default {
             type: Object,
             default: () => ({}),
         },
+        can: {
+            type: Object,
+            default: () => ({}),
+        },
     },
     methods: {
         edit(id) {
             Inertia.get(route("user.edit", id));
         },
-        back() {
+        goBack() {
             Inertia.visit(route("user.index"));
         },
     },
