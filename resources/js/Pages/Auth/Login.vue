@@ -1,11 +1,7 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import Checkbox from "@/Components/Checkbox.vue";
+import InputError from "@/Components/InputError.vue";
+import { Link, useForm } from "@inertiajs/inertia-vue3";
 
 defineProps({
     canResetPassword: Boolean,
@@ -13,14 +9,14 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     remember: false,
 });
 
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
+const onSubmit = () => {
+    form.post(route("login"), {
+        onFinish: () => form.reset("password"),
     });
 };
 </script>
@@ -32,38 +28,46 @@ const submit = () => {
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
+        <FormKit
+            type="form"
+            @submit="onSubmit"
+            :actions="false"
+            :config="{
+                classes: {
+                    label: 'block mb-1 font-bold text-base',
+                    input: 'w-full rounded-md py-2',
+                    help: 'text-xs text-gray-500',
+                    message: 'text-red-500 text-sm font-bold',
+                    messages: 'pt-2',
+                },
+            }"
+        >
+            <FormKit
+                type="email"
+                label="Email"
+                v-model="form.email"
+                validation="required|email"
+                :classes="{
+                    outer: 'mt-1 block w-full',
+                    input: 'border border-gray-400 px-2 mb-1',
+                }"
+            />
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
+            <InputError
+                class="mt-1 text-red-500 text-sm font-bold"
+                :message="form.errors.email"
+            />
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+            <FormKit
+                type="password"
+                name="password"
+                label="Password"
+                validation="required"
+                v-model="form.password"
+                :classes="{
+                    outer: 'mt-4 block w-full',
+                }"
+            />
 
             <div class="block mt-4">
                 <label class="flex items-center">
@@ -80,11 +84,16 @@ const submit = () => {
                 >
                     Forgot your password?
                 </Link>
-
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
+                <FormKit
+                    type="submit"
+                    label="Log In"
+                    :disabled="form.processing"
+                    :classes="{
+                        outer: form.processing ? 'm-0 text-right ml-4 opacity-25' : 'm-0 text-right ml-4',
+                        input: 'bg-blue-500 text-white font-bold px-3 w-auto mb-2 ',
+                    }"
+                />
             </div>
-        </form>
+        </FormKit>
     </GuestLayout>
 </template>
