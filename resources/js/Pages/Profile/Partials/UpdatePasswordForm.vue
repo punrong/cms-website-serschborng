@@ -1,33 +1,21 @@
 <script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
-import { ref } from 'vue';
-
-const passwordInput = ref(null);
-const currentPasswordInput = ref(null);
+import InputError from "@/Components/InputError.vue";
+import { useForm } from "@inertiajs/inertia-vue3";
 
 const form = useForm({
-    current_password: '',
-    password: '',
-    password_confirmation: '',
+    current_password: "",
+    password: "",
+    password_confirmation: "",
 });
 
 const updatePassword = () => {
-    form.put(route('password.update'), {
+    form.put(route("password.update"), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {
-            if (form.errors.password) {
-                form.reset('password', 'password_confirmation');
-                passwordInput.value.focus();
-            }
-            if (form.errors.current_password) {
-                form.reset('current_password');
-                currentPasswordInput.value.focus();
-            }
+            if (form.errors.password)
+                form.reset("password", "password_confirmation");
+            if (form.errors.current_password) form.reset("current_password");
         },
     });
 };
@@ -39,62 +27,96 @@ const updatePassword = () => {
             <h2 class="text-lg font-medium text-gray-900">Update Password</h2>
 
             <p class="mt-1 text-sm text-gray-600">
-                Ensure your account is using a long, random password to stay secure.
+                Ensure your account is using a long, random password to stay
+                secure.
             </p>
         </header>
 
-        <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
-            <div>
-                <InputLabel for="current_password" value="Current Password" />
+        <FormKit
+            type="form"
+            @submit="updatePassword"
+            :actions="false"
+            :config="{
+                classes: {
+                    label: 'block mb-1 font-bold text-base',
+                    outer: 'mt-6',
+                    input: 'w-full rounded-md py-2',
+                    message: 'text-red-500 text-sm font-bold',
+                    messages: 'pt-2',
+                },
+            }"
+        >
+            <FormKit
+                id="current_password"
+                type="password"
+                name="password"
+                label="Current Password"
+                validation="required"
+                v-model="form.current_password"
+                :classes="{
+                    outer: 'mt-1 block w-full',
+                }"
+            />
+            <InputError
+                :message="form.errors.current_password"
+                class="mt-2 text-red-500 text-sm font-bold"
+            />
 
-                <TextInput
-                    id="current_password"
-                    ref="currentPasswordInput"
-                    v-model="form.current_password"
+            <FormKit type="group">
+                <FormKit
                     type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="current-password"
-                />
-
-                <InputError :message="form.errors.current_password" class="mt-2" />
-            </div>
-
-            <div>
-                <InputLabel for="password" value="New Password" />
-
-                <TextInput
+                    name="password"
                     id="password"
-                    ref="passwordInput"
+                    label="New Password"
+                    validation="required"
                     v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
+                    :classes="{
+                        outer: 'mt-1 block w-full',
+                    }"
+                />
+                <InputError
+                    :message="form.errors.password"
+                    class="mt-2 text-red-500 text-sm font-bold"
                 />
 
-                <InputError :message="form.errors.password" class="mt-2" />
-            </div>
-
-            <div>
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
+                <FormKit
                     id="password_confirmation"
-                    v-model="form.password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
+                    name="password_confirm"
+                    label="Confirm New Password"
+                    v-model="form.password_confirmation"
+                    validation="required|confirm"
+                    validation-label="Password confirmation"
+                    :classes="{
+                        outer: 'mt-1 block w-full',
+                    }"
                 />
-
-                <InputError :message="form.errors.password_confirmation" class="mt-2" />
-            </div>
+            </FormKit>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <FormKit
+                    type="submit"
+                    label="Save"
+                    :disabled="form.processing"
+                    :classes="{
+                        outer: form.processing ? 'm-0 text-right opacity-25' : 'm-0 text-right',
+                        input: 'bg-blue-500 text-white font-bold px-3 w-auto mb-2 ',
+                    }"
+                />
 
-                <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
-                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
+                <Transition
+                    enter-from-class="opacity-0"
+                    leave-to-class="opacity-0"
+                    class="transition ease-in-out"
+                >
+                    <p
+                        v-if="form.recentlySuccessful"
+                        class="font-bold text-base text-gray-600 mt-4"
+                    >
+                        Saved.
+                    </p>
                 </Transition>
             </div>
-        </form>
+        </FormKit>
     </section>
 </template>
