@@ -106,7 +106,7 @@ export default {
                     can: res.data.can.posts,
                 },
                 {
-                    title: "Setting",
+                    title: "Settings",
                     icon: "fa-solid fa-gear",
                     route: route("profile.edit"),
                     can: true,
