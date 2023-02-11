@@ -15,6 +15,7 @@ import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
 import Dialog from 'primevue/dialog';
 import MenuSideBar from "@/Layouts/MenuSideBar.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 import MultiSelect from 'primevue/multiselect';
 import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast';
@@ -51,6 +52,7 @@ createInertiaApp({
             .use(ToastService)
             .component("Column", Column)
             .component("MenuSideBar", MenuSideBar)
+            .component("GuestLayout", GuestLayout)
             .component("Button", Button)
             .component("InputText", InputText)
             .component("Dropdown", Dropdown)
