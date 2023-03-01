@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -73,5 +74,18 @@ Route::group([
         Route::get('get/permissionlist', [PermissionController::class, 'getPermissionList'])->name('permission.getPermissionList');
     });
 
+    // Post
     Route::resource('post', PostController::class);
+    Route::group(['prefix' => 'post/api'], function (){
+        Route::delete('delete/multiple', [PostController::class, 'deleteMultipleRecord'])->name('post.deleteMultipleRecord');
+        Route::get('get/post/data', [PostController::class, 'getPostData'])->name('post.getData');
+    });
+
+    // Category
+    Route::resource('category', CategoryController::class);
+    Route::group(['prefix' => 'category/api'], function (){
+        Route::delete('delete/multiple', [CategoryController::class, 'deleteMultipleRecord'])->name('category.deleteMultipleRecord');
+        Route::get('get/category/data', [CategoryController::class, 'getCategoryData'])->name('category.getData');
+        Route::get('get/category', [CategoryController::class, 'getCategoryList'])->name('category.getCategoryList');
+    });
 });

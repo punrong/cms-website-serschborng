@@ -106,6 +106,12 @@ export default {
                     can: res.data.can.posts,
                 },
                 {
+                    title: "Category",
+                    icon: "fa-solid fa-layer-group",
+                    route: route("category.index"),
+                    can: true,
+                },
+                {
                     title: "Settings",
                     icon: "fa-solid fa-gear",
                     route: route("profile.edit"),
