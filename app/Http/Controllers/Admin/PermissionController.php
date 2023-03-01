@@ -58,6 +58,9 @@ class PermissionController extends Controller
     {
         return Inertia::render('Admin/Permission/Detail', [
             'permission' => $permission,
+            'can' => [
+                'edit' => Auth::user()->can('permission edit'),
+            ]
         ]);
     }
 

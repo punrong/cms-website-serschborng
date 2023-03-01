@@ -61,13 +61,15 @@ class UserController extends Controller
         $user->role = User::getUserRoleName($user->id);
         return Inertia::render('Admin/User/Detail', [
             'user' => $user,
+            'can' => [
+                'edit' => Auth::user()->can('user edit'),
+            ]
         ]);
     }
 
     public function edit(User $user, Request $request)
     {
         $user->role = User::getUserRoleId($user->id);
-        info($user);
         return Inertia::render('Admin/User/Edit', [
             'user' => $user,
             'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false

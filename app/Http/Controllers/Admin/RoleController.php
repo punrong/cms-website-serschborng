@@ -63,6 +63,9 @@ class RoleController extends Controller
         $role->permissions = Role::getRolePermissions($role->id);
         return Inertia::render('Admin/Role/Detail', [
             'role' => $role,
+            'can' => [
+                'edit' => Auth::user()->can('role edit'),
+            ]
         ]);
     }
 
