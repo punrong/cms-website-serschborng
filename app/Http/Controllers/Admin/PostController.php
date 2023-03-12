@@ -5,6 +5,9 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Savannabits\PrimevueDatatables\PrimevueDatatables;
+use Illuminate\Http\JsonResponse;
+use App\Models\Category;
 class PostController extends Controller
 {
     public function __construct()
@@ -14,23 +17,104 @@ class PostController extends Controller
         $this->middleware('can:post edit', ['only' => ['edit', 'update']]);
         $this->middleware('can:post delete', ['only' => ['destroy']]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $posts = (new Post)->newQuery();
-        $posts->latest();
-        $posts = $posts->paginate(100)->onEachSide(2)->appends(request()->query());
         return Inertia::render('Admin/Post/Index', [
-            'posts' => $posts,
             'can' => [
                 'create' => Auth::user()->can('post create'),
                 'edit' => Auth::user()->can('post edit'),
                 'delete' => Auth::user()->can('post delete'),
             ]
         ]);
+    }
+
+    public function getPostData(Request $request): JsonResponse {
+        $sortField = $request->sortField ?? 'id';
+        $sortOrder = $request->sortOrder ?? 'desc';
+
+        return response()->json([
+            'success' => true,
+            'payload' => PrimevueDatatables::of(Post::select('id', 'title', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
+        ]);
+    }
+    public function create()
+    {
+        return Inertia::render('Admin/Post/Create');
+    }
+
+    public function store(Request $request)
+    {
+        $this->validateRequest($request);
+        $post = new Post();
+        $this->assignValue($request, $post);
+        if ($post->save())
+            return response()->json([
+                'success' => true,
+            ]);
+    }
+
+    public function show(Post $post)
+    {
+        $post->category = Category::getCategoryName($post->category_id);
+        return Inertia::render('Admin/Post/Detail', [
+            'post' => $post,
+            'can' => [
+                'edit' => Auth::user()->can('post edit')
+            ]
+        ]);
+    }
+
+    public function edit(Post $post, Request $request)
+    {
+        return Inertia::render('Admin/Post/Edit', [
+            'post' => $post,
+            'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
+        ]);
+    }
+
+    public function update(Post $post, Request $request)
+    {
+        $this->validateRequest($request);
+        $this->assignValue($request, $post);
+        if ($post->save())
+            return response()->json([
+                'success' => true,
+            ]);
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->status = 'DEL';
+        if ($post->save())
+            return response()->json([
+                'success' => true,
+            ]);
+    }
+
+    public function deleteMultipleRecord(Request $request)
+    {
+        $postIdList = array_column($request->postList, 'id');
+        if (Post::whereIn('id', $postIdList)->update(['status' => 'DEL']))
+            return response()->json([
+                'success' => true,
+            ]);
+    }
+
+    private function validateRequest($request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'status' => 'required',
+        ]);
+    }
+
+    private function assignValue($request, $post)
+    {
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->status = $request->status;
+        $post->category_id = $request->category_id;
     }
 }

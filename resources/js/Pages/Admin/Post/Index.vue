@@ -1,73 +1,270 @@
-<script setup>
-import { Head } from '@inertiajs/inertia-vue3';
-const props = defineProps({
-  posts: {
-    type: Object,
-    default: () => ({}),
-  },
-  can: {
-    type: Object,
-    default: () => ({}),
-  },
-})
-</script>
 <template>
-    <Head title="Post" />
     <MenuSideBar>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Post
-            </h2>
-        </template>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-5">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="flex bg-gray-800 justify-between items=center p-5">
-                        <div class="flex space-x-2 items-center text-white">
-                            Post Settings Page! Here you can list, create, update or delete post!
-                        </div>
-                        <div class="flex space-x-2 items-center" v-if="can.create">
-                            <a href="#" class="px-4 py-2 bg-green-500 uppercase text-white rounded focus:outline-none flex items-center"><span class="iconify mr-1" data-icon="gridicons:create" data-inline="false"></span> Create Post</a>
-                        </div>
-                    </div>
+        <div class="mx-auto flex container items-center justify-center mt-4">
+            <div class="rounded w-full p-2 bg-white">
+                <div
+                    class="bg-white shadow sm:rounded-lg px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                >
+                    <header>
+                        <h2 class="text-2xl font-bold text-gray-900">Posts</h2>
+                    </header>
                 </div>
-            </div>
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-2">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="py-3 px-6">Title</th>
-                                <th scope="col" class="py-3 px-6">Description</th>
-                                <th v-if="can.edit || can.delete" scope="col" class="py-3 px-6">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="post in posts.data" :key="post.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td data-label="Title" class="py-4 px-6">
-                                    {{ post.title }}
-                                </td>
-                                <td data-label="Title" class="py-4 px-6">
-                                    {{ post.description }}
-                                </td>
-                                <td
-                                    v-if="can.edit || can.delete"
-                                    class="py-4 px-6 w-48"
-                                >
-                                    <div type="justify-start lg:justify-end" no-wrap>
-                                        <BreezeButton class="ml-4 bg-green-500 px-2 py-1 rounded text-white cursor-pointer" v-if="can.edit">
-                                            Edit
-                                        </BreezeButton>
-                                        <BreezeButton class="ml-4 bg-red-500 px-2 py-1 rounded text-white cursor-pointer" v-if="can.delete">
-                                            Delete
-                                        </BreezeButton>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <DataTable
+                    ref="postTbl"
+                    :apiUrl="apiUrl"
+                    :columnFilters="filters"
+                    :searchableColumns="searchableCols"
+                    :can="can"
+                    @addNew="addNew"
+                    @confirmMultipleDeleteSelected="
+                        confirmMultipleDeleteSelected
+                    "
+                    @deleteBtnStatus="deleteBtnStatus"
+                >
+                    <Column
+                        v-if="can.delete"
+                        selectionMode="multiple"
+                        headerStyle="width: 3em"
+                    ></Column>
+                    <Column
+                        field="title"
+                        header="Title"
+                        :sortable="true"
+                        style="min-width: 12rem"
+                    >
+                        <template #body="{ data }">
+                            {{ data.title }}
+                        </template>
+                        <template #filter="{ filterModel }">
+                            <InputText
+                                type="text"
+                                v-model="filterModel.value"
+                                class="p-column-filter"
+                                placeholder="Search by title"
+                            />
+                        </template>
+                    </Column>
+                    <Column
+                        field="status"
+                        header="Status"
+                        :filterMenuStyle="{ width: '14rem' }"
+                        style="min-width: 12rem"
+                    >
+                        <template #body="slotProps">
+                            <span
+                                :class="
+                                    'text-white p-2 rounded-md ' +
+                                    (slotProps.data.status === 'ACT'
+                                        ? 'bg-green-500'
+                                        : 'bg-red-500')
+                                "
+                                >{{ slotProps.data.status }}</span
+                            >
+                        </template>
+                        <template #filter="{ filterModel }">
+                            <Dropdown
+                                v-model="filterModel.value"
+                                :options="statuses"
+                                placeholder="Any"
+                                class="p-column-filter"
+                                :showClear="true"
+                            >
+                                <template #value="slotProps">
+                                    <span v-if="slotProps.value">{{
+                                        slotProps.value
+                                    }}</span>
+                                    <span v-else>{{
+                                        slotProps.placeholder
+                                    }}</span>
+                                </template>
+                                <template #option="slotProps">
+                                    <span>{{ slotProps.option }}</span>
+                                </template>
+                            </Dropdown>
+                        </template>
+                    </Column>
+                    <Column
+                        field="actions"
+                        header="Actions"
+                        :exportable="false"
+                        style="min-width: 8rem"
+                    >
+                        <template #body="slotProps">
+                            <Button
+                                icon="pi pi-eye"
+                                class="p-button-rounded"
+                                style="margin-right: 5px"
+                                @click="show(slotProps.data.id)"
+                            />
+                            <Button
+                                v-if="can.edit"
+                                icon="pi pi-pencil"
+                                class="p-button-rounded p-button-warning"
+                                style="margin-right: 5px"
+                                @click="edit(slotProps.data.id)"
+                            />
+                            <Button
+                                v-if="can.delete"
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger"
+                                @click="
+                                    confirmSingleDeleteSelected(
+                                        slotProps.data.id
+                                    )
+                                "
+                            />
+                        </template>
+                    </Column>
+                </DataTable>
             </div>
         </div>
+        <Dialog
+            v-model:visible="deletePostsDialog"
+            :style="{ width: '450px' }"
+            header="Confirm"
+            :modal="true"
+        >
+            <div class="confirmation-content">
+                <i
+                    class="pi pi-exclamation-triangle mr-3"
+                    style="font-size: 2rem"
+                />
+                <span
+                    >Are you sure you want to delete the selected
+                    record(s)?</span
+                >
+            </div>
+            <template #footer>
+                <Button
+                    label="No"
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    @click="deletePostsDialog = false"
+                />
+                <Button
+                    label="Yes"
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    @click="deletePosts"
+                />
+            </template>
+        </Dialog>
+        <Toast />
     </MenuSideBar>
 </template>
+
+<script>
+import route from "ziggy-js";
+import { Inertia } from "@inertiajs/inertia";
+import DataTable from "../../../components/DataTable.vue";
+import { FilterMatchMode, FilterOperator } from "primevue/api";
+import axios from "axios";
+
+export default {
+    components: {
+        DataTable,
+    },
+    data() {
+        return {
+            apiUrl: route("post.getData"),
+            searchableCols: ["title"],
+            statuses: ["ACT", "DSBL"],
+            filters: null,
+            deletePostsDialog: false,
+            selectedPosts: null,
+            isDeleteSinglePost: false,
+            deleteId: null,
+        };
+    },
+    props: {
+        can: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
+
+    methods: {
+        addNew() {
+            Inertia.get(route("post.create"));
+        },
+        show(id) {
+            Inertia.get(route("post.show", id));
+        },
+
+        edit(id) {
+            Inertia.get(route("post.edit", id), { isTriggeredFromTable: true });
+        },
+        initFilters() {
+            this.filters = {
+                global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+                title: {
+                    operator: FilterOperator.AND,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                    ],
+                },
+                status: {
+                    operator: FilterOperator.OR,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.EQUALS },
+                    ],
+                },
+            };
+        },
+        confirmMultipleDeleteSelected() {
+            this.deletePostsDialog = true;
+        },
+        confirmSingleDeleteSelected(id) {
+            this.deletePostsDialog = true;
+            this.isDeleteSinglePost = true;
+            this.deleteId = id;
+        },
+        deletePosts() {
+            if (this.isDeleteSinglePost)
+                axios
+                    .delete(route("post.destroy", this.deleteId))
+                    .then((res) => {
+                        if (res.data.success) this.$refs.postTbl.loadLazyData();
+                    })
+                    .catch((err) => {
+                        this.$toast.add({
+                            severity: "error",
+                            summary: "Error Message",
+                            detail: err.response.data.message,
+                            life: 3000,
+                        });
+                    });
+            else
+                axios
+                    .delete(
+                        route("post.deleteMultipleRecord", {
+                            postList: this.selectedPosts,
+                        })
+                    )
+                    .then((res) => {
+                        if (res.data.success) this.$refs.postTbl.loadLazyData();
+                    })
+                    .catch((err) => {
+                        this.$toast.add({
+                            severity: "error",
+                            summary: "Error Message",
+                            detail: err.response.data.message,
+                            life: 3000,
+                        });
+                    });
+
+            this.deleteId = null;
+            this.selectedPosts = null;
+            this.isDeleteSinglePost = false;
+            this.deletePostsDialog = false;
+        },
+        deleteBtnStatus(val) {
+            this.selectedPosts = val;
+        },
+    },
+
+    created() {
+        this.initFilters();
+    },
+};
+</script>
