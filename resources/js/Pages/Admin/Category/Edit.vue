@@ -74,7 +74,6 @@
                                 }"
                             />
                         </div>
-                        <Editor/>
                         <FormKit
                             type="submit"
                             label="Update"
@@ -95,12 +94,10 @@
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
 import InputError from "@/Components/InputError.vue";
-import Editor from "@/components/Editor.vue";
 
 export default {
     components: {
         InputError,
-        Editor
     },
     data() {
         return {
