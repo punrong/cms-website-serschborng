@@ -28,6 +28,7 @@
                     </div>
                     <FormKit
                         type="form"
+                        v-model="formData"
                         @submit="onSubmit"
                         :actions="false"
                         :config="{
@@ -44,7 +45,7 @@
                             <FormKit
                                 type="text"
                                 label="Name"
-                                v-model="formData.name"
+                                name="name"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -55,7 +56,7 @@
                                 type="select"
                                 label="Status"
                                 :options="statuses"
-                                v-model="formData.status"
+                                name="status"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -69,7 +70,7 @@
                             >
                             <div class="w-full rounded-md py-2">
                                 <MultiSelect
-                                    v-model="formData.permissions"
+                                    name="permissions"
                                     optionValue="value"
                                     :options="permissionList"
                                     optionLabel="name"
@@ -86,7 +87,7 @@
                             label="Create"
                             :classes="{
                                 outer: 'm-0 text-right',
-                                input: 'bg-blue-500 text-white font-bold px-3 w-auto mb-2',
+                                input: '$reset rounded-md py-2 bg-blue-500 text-white font-bold px-3 w-auto mb-2',
                             }"
                         />
                     </FormKit>
