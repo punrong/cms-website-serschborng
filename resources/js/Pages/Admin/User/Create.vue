@@ -28,6 +28,7 @@
                     </div>
                     <FormKit
                         type="form"
+                        v-model="formData"
                         @submit="onSubmit"
                         :actions="false"
                         :config="{
@@ -44,7 +45,7 @@
                             <FormKit
                                 type="text"
                                 label="Name"
-                                v-model="formData.name"
+                                v-model="name"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -54,7 +55,7 @@
                             <FormKit
                                 type="email"
                                 label="Email"
-                                v-model="formData.email"
+                                v-model="email"
                                 validation="required|email"
                                 :classes="{
                                     outer: 'pb-4',
@@ -65,7 +66,7 @@
                                 type="select"
                                 label="Status"
                                 :options="statuses"
-                                v-model="formData.status"
+                                v-model="status"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -76,7 +77,7 @@
                                 type="select"
                                 label="Role"
                                 :options="roleList"
-                                v-model="formData.role"
+                                v-model="role"
                                 placeholder="Select a role"
                                 validation="required"
                                 :classes="{
@@ -89,7 +90,7 @@
                                     type="password"
                                     name="password"
                                     label="Password"
-                                    v-model="formData.password"
+                                    v-model="password"
                                     help="Enter a new password"
                                     validation="required"
                                 />
@@ -97,19 +98,30 @@
                                     type="password"
                                     name="password_confirm"
                                     label="Confirm password"
-                                    v-model="formData.password_confirmation"
+                                    v-model="password_confirmation"
                                     help="Confirm your new password"
                                     validation="required|confirm"
                                     validation-label="Password confirmation"
                                 />
                             </FormKit>
+                            <FormKit
+                                type="image"
+                                label="Image"
+                                v-model="image"
+                                accept=".jpg,.png"
+                                validation="required"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
                         </div>
                         <FormKit
                             type="submit"
                             label="Create"
                             :classes="{
                                 outer: 'm-0 text-right',
-                                input: 'bg-blue-500 text-white font-bold px-3 w-auto mb-2',
+                                input: '$reset rounded-md py-2 bg-blue-500 text-white font-bold px-3 w-auto mb-2',
                             }"
                         />
                     </FormKit>
@@ -134,6 +146,7 @@ export default {
                 role: null,
                 password: null,
                 password_confirmation: null,
+                image: null,
             },
             statuses: {
                 ACT: "ACTIVE",
@@ -167,9 +180,35 @@ export default {
                 this.roleList = res.data;
             });
         },
+        async uploadHandler(file){
+            const formData = new FormData();
+            formData.append("file", file);
+            console.log(formData)
+
+            // const response = await fetch("/upload", {
+            //     method: "POST",
+            //     body: formData,
+            // });
+
+            // return response.url;
+        }
     },
     mounted() {
         this.getRoleList();
     },
 };
 </script>
+<style>
+    button.formkit-file-item-remove {
+        background-color: rgb(239 68 68) !important;
+        border-radius: 0.375rem !important;
+        color: rgb(255 255 255) !important;
+        font-weight: 700 !important;
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+        width: auto !important;
+        margin-top: 0.5rem !important;
+    }
+</style>

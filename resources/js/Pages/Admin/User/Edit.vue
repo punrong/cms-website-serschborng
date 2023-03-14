@@ -29,6 +29,7 @@
                     <FormKit
                         type="form"
                         @submit="onSubmit"
+                        v-model="formData"
                         :actions="false"
                         :config="{
                             classes: {
@@ -44,7 +45,7 @@
                             <FormKit
                                 type="text"
                                 label="Name"
-                                v-model="formData.name"
+                                name="name"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -54,7 +55,7 @@
                             <FormKit
                                 type="email"
                                 label="Email"
-                                v-model="formData.email"
+                                name="email"
                                 validation="required|email"
                                 :classes="{
                                     outer: 'pb-4',
@@ -65,7 +66,7 @@
                                 type="select"
                                 label="Status"
                                 :options="statuses"
-                                v-model="formData.status"
+                                name="status"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -76,9 +77,21 @@
                                 type="select"
                                 label="Role"
                                 :options="roleList"
-                                v-model="formData.role"
+                                name="role"
                                 placeholder="Select a role"
                                 validation="required"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
+                        </div>
+                        <div class="grid grid-cols-3 gap-x-4">
+                            <FormKit
+                                type="image"
+                                label="Image"
+                                name="image"
+                                accept=".jpg,.png"
                                 :classes="{
                                     outer: 'pb-4',
                                     input: 'border border-gray-400 px-2 mb-1',
@@ -90,7 +103,7 @@
                             label="Update"
                             :classes="{
                                 outer: 'm-0 text-right',
-                                input: 'bg-blue-500 text-white font-bold px-3 w-auto mb-2',
+                                input: '$reset rounded-md py-2 bg-blue-500 text-white font-bold px-3 w-auto mb-2',
                             }"
                         />
                     </FormKit>
@@ -174,3 +187,17 @@ export default {
     },
 };
 </script>
+<style>
+    button.formkit-file-item-remove {
+        background-color: rgb(239 68 68) !important;
+        border-radius: 0.375rem !important;
+        color: rgb(255 255 255) !important;
+        font-weight: 700 !important;
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+        width: auto !important;
+        margin-top: 0.5rem !important;
+    }
+</style>
