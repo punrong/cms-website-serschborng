@@ -28,6 +28,7 @@
                     </div>
                     <FormKit
                         type="form"
+                        v-model="formData"
                         @submit="onSubmit"
                         :actions="false"
                         :config="{
@@ -44,7 +45,7 @@
                             <FormKit
                                 type="text"
                                 label="Name"
-                                v-model="formData.name"
+                                name="name"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -55,7 +56,7 @@
                                 type="select"
                                 label="Status"
                                 :options="statuses"
-                                v-model="formData.status"
+                                name="status"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -67,7 +68,7 @@
                             <FormKit
                                 type="textarea"
                                 label="Description"
-                                v-model="formData.description"
+                                name="description"
                                 :classes="{
                                     outer: 'pb-4',
                                     input: 'border border-gray-400 px-2 mb-1',
@@ -79,7 +80,7 @@
                             label="Update"
                             :classes="{
                                 outer: 'm-0 text-right',
-                                input: 'bg-blue-500 text-white font-bold px-3 w-auto mb-2',
+                                input: '$reset rounded-md py-2 bg-blue-500 text-white font-bold px-3 w-auto mb-2',
                             }"
                         />
                     </FormKit>
@@ -93,12 +94,8 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import InputError from "@/Components/InputError.vue";
 
 export default {
-    components: {
-        InputError,
-    },
     data() {
         return {
             formData: {},
