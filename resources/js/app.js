@@ -22,8 +22,10 @@ import Toast from 'primevue/toast';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import 'primevue/resources/themes/fluent-light/theme.css';
+import { createFormKitInputsPlugin } from "@kgierke/formkit-inputs";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Sers Chborng';
+const formKitInputPlugin = createFormKitInputsPlugin();
 
 library.add(faHouse);
 library.add(faCircleArrowLeft);
@@ -49,6 +51,7 @@ createInertiaApp({
                 config: {
                     theme: 'genesis',
                 },
+                plugins: [formKitInputPlugin],
             }))
             .use(ToastService)
             .component("Column", Column)

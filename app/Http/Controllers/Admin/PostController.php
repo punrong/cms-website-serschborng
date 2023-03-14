@@ -107,6 +107,7 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'status' => 'required',
+            'category_id' => 'required'
         ]);
     }
 
