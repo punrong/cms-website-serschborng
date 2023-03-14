@@ -28,6 +28,7 @@
                     </div>
                     <FormKit
                         type="form"
+                        v-model="formData"
                         @submit="onSubmit"
                         :actions="false"
                         :config="{
@@ -44,7 +45,7 @@
                             <FormKit
                                 type="text"
                                 label="Title"
-                                v-model="formData.title"
+                                name="title"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -55,8 +56,9 @@
                                 type="select"
                                 label="Category"
                                 :options="categoryList"
-                                v-model="formData.category_id"
+                                name="category_id"
                                 placeholder="Select a category"
+                                validation="required"
                                 :classes="{
                                     outer: 'pb-4',
                                     input: 'border border-gray-400 px-2 mb-1',
@@ -66,8 +68,20 @@
                                 type="select"
                                 label="Status"
                                 :options="statuses"
-                                v-model="formData.status"
+                                name="status"
                                 validation="required"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
+                        </div>
+                        <div class="grid grid-cols-3 gap-x-4">
+                            <FormKit
+                                type="image"
+                                label="Image"
+                                name="image"
+                                accept=".jpg,.png"
                                 :classes="{
                                     outer: 'pb-4',
                                     input: 'border border-gray-400 px-2 mb-1',
@@ -76,9 +90,13 @@
                         </div>
                         <div class="pb-4 mb-1">
                             <span class="block mb-1 font-bold text-base"
-                                >Content</span
+                                >Description</span
                             >
                             <Editor :content="formData.description" @updateEditorData="updateEditorData"/>
+                            <InputError
+                                class="text-red-500 text-sm font-bold"
+                                :message="errorMsg"
+                            />
                         </div>
                         <FormKit
                             type="submit"
@@ -113,6 +131,7 @@ export default {
                 name: null,
                 status: "ACT",
                 category_id: null,
+                image: null
             },
             statuses: {
                 ACT: "ACTIVE",
@@ -120,7 +139,6 @@ export default {
             },
             categoryList: {},
             errorMsg: null,
-            editorContent: '',
         };
     },
     methods: {
@@ -178,4 +196,18 @@ export default {
     padding-right: 0.5rem;
     margin-bottom: 0.25rem;
 }
+</style>
+<style>
+    button.formkit-file-item-remove {
+        background-color: rgb(239 68 68) !important;
+        border-radius: 0.375rem !important;
+        color: rgb(255 255 255) !important;
+        font-weight: 700 !important;
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+        width: auto !important;
+        margin-top: 0.5rem !important;
+    }
 </style>
