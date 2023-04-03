@@ -45,7 +45,7 @@
                             <FormKit
                                 type="text"
                                 label="Name"
-                                v-model="name"
+                                name="name"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -55,7 +55,7 @@
                             <FormKit
                                 type="email"
                                 label="Email"
-                                v-model="email"
+                                name="email"
                                 validation="required|email"
                                 :classes="{
                                     outer: 'pb-4',
@@ -66,7 +66,7 @@
                                 type="select"
                                 label="Status"
                                 :options="statuses"
-                                v-model="status"
+                                name="status"
                                 validation="required"
                                 :classes="{
                                     outer: 'pb-4',
@@ -77,7 +77,7 @@
                                 type="select"
                                 label="Role"
                                 :options="roleList"
-                                v-model="role"
+                                name="role"
                                 placeholder="Select a role"
                                 validation="required"
                                 :classes="{
@@ -90,7 +90,7 @@
                                     type="password"
                                     name="password"
                                     label="Password"
-                                    v-model="password"
+                                    v-model="formData.password"
                                     help="Enter a new password"
                                     validation="required"
                                 />
@@ -98,24 +98,23 @@
                                     type="password"
                                     name="password_confirm"
                                     label="Confirm password"
-                                    v-model="password_confirmation"
+                                    v-model="formData.password_confirm"
                                     help="Confirm your new password"
                                     validation="required|confirm"
                                     validation-label="Password confirmation"
                                 />
                             </FormKit>
-                            <FormKit
-                                type="image"
-                                label="Image"
-                                v-model="image"
-                                accept=".jpg,.png"
-                                validation="required"
-                                :classes="{
-                                    outer: 'pb-4',
-                                    input: 'border border-gray-400 px-2 mb-1',
-                                }"
-                            />
                         </div>
+                        <FormKit
+                            type="image"
+                            label="Image"
+                            name="image"
+                            accept=".jpg,.png,.jpeg"
+                            :classes="{
+                                outer: 'pb-4',
+                                input: 'border border-gray-400 px-2 mb-1',
+                            }"
+                        />
                         <FormKit
                             type="submit"
                             label="Create"
@@ -145,7 +144,7 @@ export default {
                 status: "ACT",
                 role: null,
                 password: null,
-                password_confirmation: null,
+                password_confirm: null,
                 image: null,
             },
             statuses: {
@@ -158,8 +157,17 @@ export default {
     },
     methods: {
         onSubmit() {
+            const formData = new FormData();
+            formData.append("name", this.formData.name);
+            formData.append("email", this.formData.email);
+            formData.append("status", this.formData.status);
+            formData.append("role", this.formData.role);
+            formData.append("image", this.formData.image);
+            formData.append("password", this.formData.password);
+            formData.append("password_confirm", this.formData.password_confirm);
+
             axios
-                .post(route("user.store"), this.formData)
+                .post(route("user.store"), formData)
                 .then((res) => {
                     if (res.data.success) Inertia.visit(route("user.index"));
                 })
@@ -180,18 +188,6 @@ export default {
                 this.roleList = res.data;
             });
         },
-        async uploadHandler(file){
-            const formData = new FormData();
-            formData.append("file", file);
-            console.log(formData)
-
-            // const response = await fetch("/upload", {
-            //     method: "POST",
-            //     body: formData,
-            // });
-
-            // return response.url;
-        }
     },
     mounted() {
         this.getRoleList();
@@ -199,16 +195,16 @@ export default {
 };
 </script>
 <style>
-    button.formkit-file-item-remove {
-        background-color: rgb(239 68 68) !important;
-        border-radius: 0.375rem !important;
-        color: rgb(255 255 255) !important;
-        font-weight: 700 !important;
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.5rem !important;
-        width: auto !important;
-        margin-top: 0.5rem !important;
-    }
+button.formkit-file-item-remove {
+    background-color: rgb(239 68 68) !important;
+    border-radius: 0.375rem !important;
+    color: rgb(255 255 255) !important;
+    font-weight: 700 !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    width: auto !important;
+    margin-top: 0.5rem !important;
+}
 </style>

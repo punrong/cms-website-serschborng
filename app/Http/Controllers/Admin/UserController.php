@@ -59,6 +59,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user->role = User::getUserRoleName($user->id);
+        $user->image = asset($user->image);
         return Inertia::render('Admin/User/Detail', [
             'user' => $user,
             'can' => [
@@ -70,6 +71,7 @@ class UserController extends Controller
     public function edit(User $user, Request $request)
     {
         $user->role = User::getUserRoleId($user->id);
+        $user->image = asset($user->image);
         return Inertia::render('Admin/User/Edit', [
             'user' => $user,
             'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
@@ -110,16 +112,20 @@ class UserController extends Controller
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'password' => ['required', 'string', 'min:8'],
+                'password_confirm' => ['required','same:password'],
                 'status' => 'required',
                 'role' => 'required',
+                'image' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
+
             ]);
         else
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'status' => 'required',
-                'role' => 'required'
+                'role' => 'required',
+                'image' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
             ]);
     }
 
@@ -130,5 +136,11 @@ class UserController extends Controller
         if($request->password)
             $user->password = Hash::make($request->password);
         $user->status = $request->status;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images/users'), $imageName);
+            $user->image = 'images/users/'.$imageName;
+        } 
     }
 }
