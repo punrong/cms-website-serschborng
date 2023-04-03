@@ -76,18 +76,16 @@
                                 }"
                             />
                         </div>
-                        <div class="grid grid-cols-3 gap-x-4">
-                            <FormKit
-                                type="image"
-                                label="Image"
-                                name="image"
-                                accept=".jpg,.png"
-                                :classes="{
-                                    outer: 'pb-4',
-                                    input: 'border border-gray-400 px-2 mb-1',
-                                }"
-                            />
-                        </div>
+                        <FormKit
+                            type="image"
+                            label="Image"
+                            name="image"
+                            accept=".jpg,.png,.jepg"
+                            :classes="{
+                                outer: 'pb-4',
+                                input: 'border border-gray-400 px-2 mb-1',
+                            }"
+                        />
                         <div class="pb-4 mb-1">
                             <span class="block mb-1 font-bold text-base"
                                 >Description</span
@@ -128,10 +126,11 @@ export default {
     data() {
         return {
             formData: {
-                name: null,
+                title: null,
                 status: "ACT",
                 category_id: null,
-                image: null
+                image: null,
+                description: null
             },
             statuses: {
                 ACT: "ACTIVE",
@@ -143,8 +142,14 @@ export default {
     },
     methods: {
         onSubmit() {
+            const formData = new FormData();
+            formData.append("title", this.formData.title);
+            formData.append("category_id", this.formData.category_id);
+            formData.append("status", this.formData.status);
+            formData.append("description", this.formData.description);
+            formData.append("image", this.formData.image);
             axios
-                .post(route("post.store"), this.formData)
+                .post(route("post.store"), formData)
                 .then((res) => {
                     if (res.data.success) Inertia.visit(route("post.index"));
                 })

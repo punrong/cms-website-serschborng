@@ -57,6 +57,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post->category = Category::getCategoryName($post->category_id);
+        $post->image = asset($post->image);
         return Inertia::render('Admin/Post/Detail', [
             'post' => $post,
             'can' => [
@@ -67,6 +68,7 @@ class PostController extends Controller
 
     public function edit(Post $post, Request $request)
     {
+        $post->image = asset($post->image);
         return Inertia::render('Admin/Post/Edit', [
             'post' => $post,
             'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
@@ -104,10 +106,11 @@ class PostController extends Controller
     private function validateRequest($request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'title' => ['required','string','max:255'],
+            'description' => ['required','string'],
             'status' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'image' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
     }
 
@@ -117,5 +120,11 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->status = $request->status;
         $post->category_id = $request->category_id;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images/posts'), $imageName);
+            $post->image = 'images/posts/'.$imageName;
+        } 
     }
 }

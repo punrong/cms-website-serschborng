@@ -12,7 +12,9 @@
                         input: 'bg-blue-500 text-white font-bold px-3 mb-2 w-auto rounded-md py-2',
                     }"
                 />
-                <div class="border-t border-gray-200 bg-white shadow sm:rounded-lg">
+                <div
+                    class="border-t border-gray-200 bg-white shadow sm:rounded-lg"
+                >
                     <dl>
                         <div
                             class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
@@ -69,10 +71,20 @@
                             <dt class="text-md font-medium text-gray-900">
                                 Description
                             </dt>
-                            <dd
-                                class="mt-1 sm:col-span-2 sm:mt-0"
-                            >
+                            <dd class="mt-1 sm:col-span-2 sm:mt-0">
                                 {{ post.description }}
+                            </dd>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                        >
+                            <dt class="text-md font-medium text-gray-900">
+                                Image
+                            </dt>
+                            <dd
+                                class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0"
+                            >
+                                <img :src="post.image" />
                             </dd>
                         </div>
                         <div v-if="can.edit" class="bg-white p-2">
@@ -99,11 +111,11 @@
 
 <script>
 import { Inertia } from "@inertiajs/inertia";
-import Editor from '@/components/Editor.vue';
+import Editor from "@/components/Editor.vue";
 
 export default {
     components: {
-        Editor
+        Editor,
     },
     props: {
         post: {

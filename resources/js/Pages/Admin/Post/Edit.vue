@@ -76,18 +76,16 @@
                                 }"
                             />
                         </div>
-                        <div class="grid grid-cols-3 gap-x-4">
-                            <FormKit
-                                type="image"
-                                label="Image"
-                                name="image"
-                                accept=".jpg,.png"
-                                :classes="{
-                                    outer: 'pb-4',
-                                    input: 'border border-gray-400 px-2 mb-1',
-                                }"
-                            />
-                        </div>
+                        <FormKit
+                            type="image"
+                            label="Image"
+                            name="image"
+                            accept=".jpg,.png,.jpeg"
+                            :classes="{
+                                outer: 'pb-4',
+                                input: 'border border-gray-400 px-2 mb-1',
+                            }"
+                        />
                         <div class="pb-4 mb-1">
                             <span class="block mb-1 font-bold text-base"
                                 >Description</span
@@ -152,8 +150,20 @@ export default {
             this.formData = this.post;
         },
         onSubmit() {
+            const formData = new FormData();
+            formData.append("title", this.formData.title);
+            formData.append("category_id", this.formData.category_id);
+            formData.append("status", this.formData.status);
+            formData.append("description", this.formData.description);
+            formData.append("image", this.formData.image);
+            formData.append("_method", "PUT");
+
+            const config = {
+                headers: { "content-type": "multipart/form-data" },
+            };
+
             axios
-                .put(route("post.update", this.formData.id), this.formData)
+                .post(route("post.update", this.formData.id), formData, config)
                 .then((res) => {
                     if (res.data.success) Inertia.visit(route("post.index"));
                 })
