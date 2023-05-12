@@ -8,6 +8,8 @@ use Inertia\Inertia;
 use Savannabits\PrimevueDatatables\PrimevueDatatables;
 use Illuminate\Http\JsonResponse;
 use App\Models\Category;
+use Illuminate\Support\Facades\File;
+
 class PostController extends Controller
 {
     public function __construct()
@@ -57,7 +59,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post->category = Category::getCategoryName($post->category_id);
-        $post->image = asset($post->image);
+        $post->image = $post->image ? asset($post->image) : null;
         return Inertia::render('Admin/Post/Detail', [
             'post' => $post,
             'can' => [
@@ -68,7 +70,7 @@ class PostController extends Controller
 
     public function edit(Post $post, Request $request)
     {
-        $post->image = asset($post->image);
+        $post->image = $post->image ? asset($post->image) : null;
         return Inertia::render('Admin/Post/Edit', [
             'post' => $post,
             'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
@@ -110,7 +112,7 @@ class PostController extends Controller
             'description' => ['required','string'],
             'status' => 'required',
             'category_id' => 'required',
-            'image' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'image' => 'max:2048',
         ]);
     }
 
@@ -123,8 +125,17 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('images/posts'), $imageName);
-            $post->image = 'images/posts/'.$imageName;
+            $image->move(public_path('images'), $imageName);
+            $post->image = 'images/'.$imageName;
         } 
+
+        if(!isset($request->image) && isset($post->image)){
+            
+            if (File::exists(public_path($post->image))) {
+                // Delete the file
+                File::delete(public_path($post->image));
+            }
+            $post->image = null;
+        }
     }
 }
