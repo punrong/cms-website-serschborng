@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Savannabits\PrimevueDatatables\PrimevueDatatables;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 class UserController extends Controller
 {
     public function __construct()
@@ -59,7 +60,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user->role = User::getUserRoleName($user->id);
-        $user->image = asset($user->image);
+        $user->image = $user->image ? asset($user->image) : null;
         return Inertia::render('Admin/User/Detail', [
             'user' => $user,
             'can' => [
@@ -71,7 +72,7 @@ class UserController extends Controller
     public function edit(User $user, Request $request)
     {
         $user->role = User::getUserRoleId($user->id);
-        $user->image = asset($user->image);
+        $user->image = $user->image ? asset($user->image) : null;
         return Inertia::render('Admin/User/Edit', [
             'user' => $user,
             'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
@@ -116,7 +117,7 @@ class UserController extends Controller
                 'password_confirm' => ['required','same:password'],
                 'status' => 'required',
                 'role' => 'required',
-                'image' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
+                'image' => 'max:2048',
 
             ]);
         else
@@ -125,7 +126,7 @@ class UserController extends Controller
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'status' => 'required',
                 'role' => 'required',
-                'image' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
+                'image' => 'max:2048',
             ]);
     }
 
@@ -139,8 +140,17 @@ class UserController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('images/users'), $imageName);
-            $user->image = 'images/users/'.$imageName;
+            $image->move(public_path('images'), $imageName);
+            $user->image = 'images/'.$imageName;
         } 
+
+        if(!isset($request->image) && isset($user->image)){
+            
+            if (File::exists(public_path($user->image))) {
+                // Delete the file
+                File::delete(public_path($user->image));
+            }
+            $user->image = null;
+        }
     }
 }
