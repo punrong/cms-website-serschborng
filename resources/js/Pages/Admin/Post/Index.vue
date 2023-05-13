@@ -45,6 +45,31 @@
                         </template>
                     </Column>
                     <Column
+                        field="category_id"
+                        header="Category"
+                        :filterMenuStyle="{ width: '14rem' }"
+                        style="min-width: 12rem"
+                    >
+                        <template #body="slotProps">
+                            <span>{{
+                                slotProps.data.category
+                                    ? slotProps.data.category.name
+                                    : ""
+                            }}</span>
+                        </template>
+                        <template #filter="{ filterModel }">
+                            <Dropdown
+                                v-model="filterModel.value"
+                                :options="categoryArray"
+                                optionLabel="name"
+                                placeholder="Any"
+                                class="p-column-filter"
+                                :showClear="true"
+                            >
+                            </Dropdown>
+                        </template>
+                    </Column>
+                    <Column
                         field="status"
                         header="Status"
                         :filterMenuStyle="{ width: '14rem' }"
@@ -69,17 +94,6 @@
                                 class="p-column-filter"
                                 :showClear="true"
                             >
-                                <template #value="slotProps">
-                                    <span v-if="slotProps.value">{{
-                                        slotProps.value
-                                    }}</span>
-                                    <span v-else>{{
-                                        slotProps.placeholder
-                                    }}</span>
-                                </template>
-                                <template #option="slotProps">
-                                    <span>{{ slotProps.option }}</span>
-                                </template>
                             </Dropdown>
                         </template>
                     </Column>
@@ -169,6 +183,7 @@ export default {
             apiUrl: route("post.getData"),
             searchableCols: ["title"],
             statuses: ["ACT", "DSBL"],
+            categoryArray: [],
             filters: null,
             deletePostsDialog: false,
             selectedPosts: null,
@@ -203,6 +218,12 @@ export default {
                         { value: null, matchMode: FilterMatchMode.STARTS_WITH },
                     ],
                 },
+                category_id: {
+                    operator: FilterOperator.OR,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.EQUALS },
+                    ],
+                },
                 status: {
                     operator: FilterOperator.OR,
                     constraints: [
@@ -210,6 +231,21 @@ export default {
                     ],
                 },
             };
+        },
+        getCategoryArray() {
+            axios
+                .get(route("category.getCategoryArray"))
+                .then((res) => {
+                    this.categoryArray = res.data
+                })
+                .catch((err) => {
+                    this.$toast.add({
+                        severity: "error",
+                        summary: "Error Message",
+                        detail: err.response.data.message,
+                        life: 3000,
+                    });
+                });
         },
         confirmMultipleDeleteSelected() {
             this.deletePostsDialog = true;
@@ -265,6 +301,7 @@ export default {
 
     created() {
         this.initFilters();
+        this.getCategoryArray();
     },
 };
 </script>

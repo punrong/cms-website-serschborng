@@ -37,7 +37,7 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'payload' => PrimevueDatatables::of(Post::select('id', 'title', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
+            'payload' => PrimevueDatatables::of(Post::with('category')->select('id', 'title', 'status', 'category_id')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
         ]);
     }
     public function create()
