@@ -18,7 +18,15 @@ class Category extends Model
         return Category::where('status', 'ACT')->orderBy('id', 'asc')->pluck('name', 'id');
     }
 
+    public static function getCategoryArray(){
+        return Category::select('id', 'name')->where('status', 'ACT')->orderBy('id', 'asc')->get()->toArray();
+    }
+
     public static function getCategoryName($category_id){
         return Category::where('id', $category_id)->where('status', 'ACT')->value('name');
+    }
+
+    public static function getCategoryNameList(){
+        return Category::where('status', 'ACT')->orderBy('id', 'asc')->pluck('name');
     }
 }

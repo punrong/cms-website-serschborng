@@ -87,5 +87,6 @@ Route::group([
         Route::delete('delete/multiple', [CategoryController::class, 'deleteMultipleRecord'])->name('category.deleteMultipleRecord');
         Route::get('get/category/data', [CategoryController::class, 'getCategoryData'])->name('category.getData');
         Route::get('get/category', [CategoryController::class, 'getCategoryList'])->name('category.getCategoryList');
+        Route::get('get/category/array', [CategoryController::class, 'getCategoryArray'])->name('category.getCategoryArray');
     });
 });

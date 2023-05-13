@@ -104,6 +104,10 @@ class CategoryController extends Controller
         return Category::getCategoryList();
     }
 
+    public function getCategoryArray(){
+        return Category::getCategoryArray();
+    }
+
     private function validateRequest($request)
     {
         $request->validate([
