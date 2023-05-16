@@ -70,7 +70,7 @@
                             >
                             <div class="w-full rounded-md py-2">
                                 <MultiSelect
-                                    name="permissions"
+                                    v-model="formData.permissions"
                                     optionValue="value"
                                     :options="permissionList"
                                     optionLabel="name"
