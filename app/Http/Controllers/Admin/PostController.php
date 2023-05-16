@@ -50,15 +50,18 @@ class PostController extends Controller
         $this->validateRequest($request);
         $post = new Post();
         $this->assignValue($request, $post);
-        if ($post->save())
-            return response()->json([
-                'success' => true,
-            ]);
+        if ($post->save()){
+            if(Post::assignPostMentors($post->id, $request->mentors))
+                return response()->json([
+                    'success' => true,
+                ]);
+        }
     }
 
     public function show(Post $post)
     {
         $post->category = Category::getCategoryName($post->category_id);
+        $post->mentors = Post::getPostMentors($post->id);
         $post->image = $post->image ? asset($post->image) : null;
         return Inertia::render('Admin/Post/Detail', [
             'post' => $post,
@@ -71,6 +74,7 @@ class PostController extends Controller
     public function edit(Post $post, Request $request)
     {
         $post->image = $post->image ? asset($post->image) : null;
+        $post->mentors = Post::getPostMentorIdList($post->id);
         return Inertia::render('Admin/Post/Edit', [
             'post' => $post,
             'isTriggeredFromTable' => $request->isTriggeredFromTable ?? false
@@ -81,10 +85,11 @@ class PostController extends Controller
     {
         $this->validateRequest($request);
         $this->assignValue($request, $post);
-        if ($post->save())
+        if ($post->save() && Post::assignPostMentors($post->id, $request->mentors))
             return response()->json([
                 'success' => true,
-            ]);
+            ]); 
+            
     }
 
     public function destroy(Post $post)

@@ -77,6 +77,24 @@
                                 }"
                             />
                         </div>
+                        <div>
+                            <span class="block mb-1 font-bold text-base"
+                                >Mentors</span
+                            >
+                            <div class="w-full rounded-md py-2">
+                                <MultiSelect
+                                    v-model="formData.mentors"
+                                    optionValue="value"
+                                    :options="mentorList"
+                                    optionLabel="name"
+                                    placeholder="Select mentors"
+                                />
+                                <InputError
+                                    class="text-red-500 text-sm font-bold"
+                                    :message="errorMsg"
+                                />
+                            </div>
+                        </div>
                         <FormKit
                             type="image"
                             label="Image"
@@ -135,6 +153,7 @@ export default {
                 category_id: null,
                 image: null,
                 description: "",
+                mentors: null,
             },
             statuses: {
                 ACT: "ACTIVE",
@@ -142,6 +161,7 @@ export default {
             },
             categoryList: {},
             errorMsg: null,
+            mentorList: null,
         };
     },
     methods: {
@@ -151,6 +171,11 @@ export default {
             formData.append("category_id", this.formData.category_id);
             formData.append("status", this.formData.status);
             formData.append("description", this.formData.description);
+            if(this.formData.mentors)
+                if(this.formData.mentors.length > 0)
+                    for (var i = 0; i < this.formData.mentors.length; i++) {
+                        formData.append('mentors[]', this.formData.mentors[i]);
+                    }
             formData.append("image", this.formData.image);
             axios
                 .post(route("post.store"), formData)
@@ -189,9 +214,25 @@ export default {
         updateEditorData(editorData) {
             this.formData.description = editorData;
         },
+        getMentorList() {
+            axios
+                .get(route("mentor.getMentorList"))
+                .then((res) => {
+                    this.mentorList = res.data;
+                })
+                .catch((err) => {
+                    this.$toast.add({
+                        severity: "error",
+                        summary: "Error Message",
+                        detail: err.response.data.message,
+                        life: 3000,
+                    });
+                });
+        },
     },
     mounted() {
         this.getCategoryList();
+        this.getMentorList();
     },
 };
 </script>
