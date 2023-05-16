@@ -236,7 +236,7 @@ export default {
             axios
                 .get(route("category.getCategoryArray"))
                 .then((res) => {
-                    this.categoryArray = res.data
+                    this.categoryArray = res.data;
                 })
                 .catch((err) => {
                     this.$toast.add({

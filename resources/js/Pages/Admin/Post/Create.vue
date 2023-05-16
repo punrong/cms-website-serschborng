@@ -22,7 +22,8 @@
                             </h2>
 
                             <p class="mt-1 text-sm text-gray-600">
-                                Add post's title, status and description
+                                Add post's title, category, status, image, and
+                                description
                             </p>
                         </header>
                     </div>
@@ -90,7 +91,10 @@
                             <span class="block mb-1 font-bold text-base"
                                 >Description</span
                             >
-                            <Editor :content="formData.description" @updateEditorData="updateEditorData"/>
+                            <Editor
+                                :content="formData.description"
+                                @updateEditorData="updateEditorData"
+                            />
                             <InputError
                                 class="text-red-500 text-sm font-bold"
                                 :message="errorMsg"
@@ -115,13 +119,13 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import InputError from "@/Components/InputError.vue";
-import Editor from '@/components/Editor.vue';
+import InputError from "@/components/InputError.vue";
+import Editor from "@/components/Editor.vue";
 
 export default {
     components: {
         InputError,
-        Editor
+        Editor,
     },
     data() {
         return {
@@ -130,7 +134,7 @@ export default {
                 status: "ACT",
                 category_id: null,
                 image: null,
-                description: null
+                description: "",
             },
             statuses: {
                 ACT: "ACTIVE",
@@ -182,9 +186,9 @@ export default {
                     });
                 });
         },
-        updateEditorData(editorData){
-            this.formData.description = editorData
-        }
+        updateEditorData(editorData) {
+            this.formData.description = editorData;
+        },
     },
     mounted() {
         this.getCategoryList();
@@ -203,16 +207,16 @@ export default {
 }
 </style>
 <style>
-    button.formkit-file-item-remove {
-        background-color: rgb(239 68 68) !important;
-        border-radius: 0.375rem !important;
-        color: rgb(255 255 255) !important;
-        font-weight: 700 !important;
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.5rem !important;
-        width: auto !important;
-        margin-top: 0.5rem !important;
-    }
+button.formkit-file-item-remove {
+    background-color: rgb(239 68 68) !important;
+    border-radius: 0.375rem !important;
+    color: rgb(255 255 255) !important;
+    font-weight: 700 !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    width: auto !important;
+    margin-top: 0.5rem !important;
+}
 </style>
