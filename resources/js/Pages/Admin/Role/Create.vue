@@ -101,7 +101,7 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import InputError from "@/Components/InputError.vue";
+import InputError from "@/components/InputError.vue";
 
 export default {
     components: {
