@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -41,26 +42,26 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::group([
     'prefix' => 'admin',
     'middleware' => ['auth'],
 ], function () {
 
-    Route::group(['prefix' => 'api'], function(){
+    Route::group(['prefix' => 'api'], function () {
         Route::get('get/menusidebar/permissions', [AuthenticatedSessionController::class, 'getMenuSideBarPermission'])->name('menusidebar.getPermissions');
     });
     // User
     Route::resource('user', UserController::class);
-    Route::group(['prefix' => 'user/api'], function (){
+    Route::group(['prefix' => 'user/api'], function () {
         Route::delete('delete/multiple', [UserController::class, 'deleteMultipleRecord'])->name('user.deleteMultipleRecord');
         Route::get('get/user/data', [UserController::class, 'getUserData'])->name('user.getData');
     });
 
     // Role
     Route::resource('role', RoleController::class);
-    Route::group(['prefix' => 'role/api'], function (){
+    Route::group(['prefix' => 'role/api'], function () {
         Route::delete('delete/multiple', [RoleController::class, 'deleteMultipleRecord'])->name('role.deleteMultipleRecord');
         Route::get('get/role/data', [RoleController::class, 'getRoleData'])->name('role.getData');
         Route::get('get/rolelist', [RoleController::class, 'getRoleList'])->name('role.getRoleList');
@@ -68,7 +69,7 @@ Route::group([
 
     // Permission
     Route::resource('permission', PermissionController::class);
-    Route::group(['prefix' => 'permission/api'], function (){
+    Route::group(['prefix' => 'permission/api'], function () {
         Route::delete('delete/multiple', [PermissionController::class, 'deleteMultipleRecord'])->name('permission.deleteMultipleRecord');
         Route::get('get/permission/data', [PermissionController::class, 'getPermissionData'])->name('permission.getData');
         Route::get('get/permissionlist', [PermissionController::class, 'getPermissionList'])->name('permission.getPermissionList');
@@ -76,17 +77,24 @@ Route::group([
 
     // Post
     Route::resource('post', PostController::class);
-    Route::group(['prefix' => 'post/api'], function (){
+    Route::group(['prefix' => 'post/api'], function () {
         Route::delete('delete/multiple', [PostController::class, 'deleteMultipleRecord'])->name('post.deleteMultipleRecord');
         Route::get('get/post/data', [PostController::class, 'getPostData'])->name('post.getData');
     });
 
     // Category
     Route::resource('category', CategoryController::class);
-    Route::group(['prefix' => 'category/api'], function (){
+    Route::group(['prefix' => 'category/api'], function () {
         Route::delete('delete/multiple', [CategoryController::class, 'deleteMultipleRecord'])->name('category.deleteMultipleRecord');
         Route::get('get/category/data', [CategoryController::class, 'getCategoryData'])->name('category.getData');
         Route::get('get/category', [CategoryController::class, 'getCategoryList'])->name('category.getCategoryList');
         Route::get('get/category/array', [CategoryController::class, 'getCategoryArray'])->name('category.getCategoryArray');
+    });
+
+    //Mentor
+    Route::resource('mentor', MentorController::class);
+    Route::group(['prefix' => 'mentor/api'], function () {
+        Route::delete('delete/multiple', [MentorController::class, 'deleteMultipleRecord'])->name('mentor.deleteMultipleRecord');
+        Route::get('get/mentor/data', [MentorController::class, 'getMentorData'])->name('mentor.getData');
     });
 });
