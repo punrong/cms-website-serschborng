@@ -118,7 +118,6 @@ class UserController extends Controller
                 'status' => 'required',
                 'role' => 'required',
                 'image' => 'max:2048',
-
             ]);
         else
             $request->validate([

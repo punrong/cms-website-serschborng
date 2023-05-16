@@ -57,6 +57,8 @@ class AuthenticatedSessionController extends Controller
             'permissions' => Auth::user()->can('permission list'),
             'roles' => Auth::user()->can('role list'),
             'users' => Auth::user()->can('user list'),
+            'categories' => Auth::user()->can('category list'),
+            'mentors' => Auth::user()->can('mentor list'),
         ]];
     }
 }

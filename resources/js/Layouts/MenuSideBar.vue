@@ -106,10 +106,16 @@ export default {
                     can: res.data.can.posts,
                 },
                 {
+                    title: "Mentor",
+                    icon: "fa-solid fa-person-chalkboard",
+                    route: route("mentor.index"),
+                    can: res.data.can.mentors,
+                },
+                {
                     title: "Category",
                     icon: "fa-solid fa-layer-group",
                     route: route("category.index"),
-                    can: true,
+                    can: res.data.can.categories,
                 },
                 {
                     title: "Settings",
