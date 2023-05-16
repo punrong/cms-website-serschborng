@@ -81,7 +81,7 @@ class UserController extends Controller
 
     public function update(User $user, Request $request)
     {
-        $this->validateRequest($request);
+        $this->validateRequest($request, $user);
         $this->assignValue($request, $user);
         if ($user->save() && User::assignUserRole($user->id, $request->role))
             return response()->json([
@@ -107,7 +107,7 @@ class UserController extends Controller
             ]);
     }
 
-    private function validateRequest($request)
+    private function validateRequest($request, $user = null)
     {
         if($request->password)
             $request->validate([
@@ -122,7 +122,7 @@ class UserController extends Controller
         else
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255','unique:users,email,' . $user->id . ',id'],
                 'status' => 'required',
                 'role' => 'required',
                 'image' => 'max:2048',

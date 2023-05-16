@@ -88,17 +88,6 @@
                                 class="p-column-filter"
                                 :showClear="true"
                             >
-                                <template #value="slotProps">
-                                    <span v-if="slotProps.value">{{
-                                        slotProps.value
-                                    }}</span>
-                                    <span v-else>{{
-                                        slotProps.placeholder
-                                    }}</span>
-                                </template>
-                                <template #option="slotProps">
-                                    <span>{{ slotProps.option }}</span>
-                                </template>
                             </Dropdown>
                         </template>
                     </Column>
