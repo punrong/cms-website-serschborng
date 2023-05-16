@@ -111,12 +111,8 @@
 
 <script>
 import { Inertia } from "@inertiajs/inertia";
-import Editor from "@/components/Editor.vue";
 
 export default {
-    components: {
-        Editor,
-    },
     props: {
         post: {
             type: Object,
