@@ -6,7 +6,9 @@
                     class="bg-white shadow sm:rounded-lg px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                 >
                     <header>
-                        <h2 class="text-2xl font-bold text-gray-900">Mentors</h2>
+                        <h2 class="text-2xl font-bold text-gray-900">
+                            Mentors
+                        </h2>
                     </header>
                 </div>
                 <DataTable
@@ -217,7 +219,9 @@ export default {
         },
 
         edit(id) {
-            Inertia.get(route("mentor.edit", id), { isTriggeredFromTable: true });
+            Inertia.get(route("mentor.edit", id), {
+                isTriggeredFromTable: true,
+            });
         },
         initFilters() {
             this.filters = {
@@ -261,7 +265,8 @@ export default {
                 axios
                     .delete(route("mentor.destroy", this.deleteId))
                     .then((res) => {
-                        if (res.data.success) this.$refs.mentorTbl.loadLazyData();
+                        if (res.data.success)
+                            this.$refs.mentorTbl.loadLazyData();
                     })
                     .catch((err) => {
                         this.$toast.add({
@@ -279,7 +284,8 @@ export default {
                         })
                     )
                     .then((res) => {
-                        if (res.data.success) this.$refs.mentorTbl.loadLazyData();
+                        if (res.data.success)
+                            this.$refs.mentorTbl.loadLazyData();
                     })
                     .catch((err) => {
                         this.$toast.add({

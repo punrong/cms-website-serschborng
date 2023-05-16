@@ -25,7 +25,8 @@
                                 </h2>
 
                                 <p class="mt-1 text-sm text-gray-600">
-                                    View mentor's name, email, phone number, status, description, and image
+                                    View mentor's name, email, phone number,
+                                    status, description, and image
                                 </p>
                             </header>
                         </div>

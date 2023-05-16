@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Models\Mentor;
 use Illuminate\Http\Request;
@@ -7,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Savannabits\PrimevueDatatables\PrimevueDatatables;
 use Illuminate\Http\JsonResponse;
-use App\Models\Category;
 use Illuminate\Support\Facades\File;
 
 class MentorController extends Controller
@@ -31,7 +32,8 @@ class MentorController extends Controller
         ]);
     }
 
-    public function getMentorData(Request $request): JsonResponse {
+    public function getMentorData(Request $request): JsonResponse
+    {
         $sortField = $request->sortField ?? 'id';
         $sortOrder = $request->sortOrder ?? 'desc';
 
@@ -106,24 +108,14 @@ class MentorController extends Controller
 
     private function validateRequest($request, $mentor = null)
     {
-        if(!isset($mentor))
-            $request->validate([
-                'name' => ['required','string','max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:mentors'],
-                'phone_number' => ['string', 'max:20', 'unique:mentors', 'regex:/^\d{9,10}$/'],
-                'status' => 'required',
-                'image' => 'max:2048',
-                'description' => ['required','string'],
-            ]);
-        else
-            $request->validate([
-                'name' => ['required','string','max:255'],
-                'email' => ['required', 'string', 'email', 'max:255'],
-                'phone_number' => ['string', 'max:20', 'regex:/^\d{9,10}$/'],
-                'status' => 'required',
-                'image' => 'max:2048',
-                'description' => ['required','string'],
-            ]);
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', isset($mentor) ? 'unique:mentors,email,' . $mentor->id . ',id' : 'unique:mentors'],
+            'phone_number' => ['string', 'max:20', isset($mentor) ? 'unique:mentors,phone_number,' . $mentor->id . ',id' : 'unique:mentors', 'regex:/^\d{9,10}$/'],
+            'status' => 'required',
+            'image' => 'max:2048',
+            'description' => ['required', 'string'],
+        ]);
     }
 
     private function assignValue($request, $mentor)
@@ -135,13 +127,13 @@ class MentorController extends Controller
         $mentor->description = $request->description;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
-            $mentor->image = 'images/'.$imageName;
-        } 
+            $mentor->image = 'images/' . $imageName;
+        }
 
-        if(!isset($request->image) && isset($mentor->image)){
-            
+        if (!isset($request->image) && isset($mentor->image)) {
+
             if (File::exists(public_path($mentor->image))) {
                 // Delete the file
                 File::delete(public_path($mentor->image));
