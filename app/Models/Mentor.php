@@ -15,4 +15,8 @@ class Mentor extends Model
         'image',
         'status',
     ];
+
+    public static function getMentorList(){
+        return Mentor::select( 'name', 'id as value')->where('status', 'ACT')->orderBy('id', 'asc')->get();
+    }
 }

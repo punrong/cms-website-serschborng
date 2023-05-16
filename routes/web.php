@@ -96,5 +96,6 @@ Route::group([
     Route::group(['prefix' => 'mentor/api'], function () {
         Route::delete('delete/multiple', [MentorController::class, 'deleteMultipleRecord'])->name('mentor.deleteMultipleRecord');
         Route::get('get/mentor/data', [MentorController::class, 'getMentorData'])->name('mentor.getData');
+        Route::get('get/mentorlist', [MentorController::class, 'getMentorList'])->name('mentor.getMentorList');
     });
 });
