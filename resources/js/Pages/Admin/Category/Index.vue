@@ -6,7 +6,9 @@
                     class="bg-white shadow sm:rounded-lg px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                 >
                     <header>
-                        <h2 class="text-2xl font-bold text-gray-900">Categories</h2>
+                        <h2 class="text-2xl font-bold text-gray-900">
+                            Categories
+                        </h2>
                     </header>
                 </div>
                 <DataTable
@@ -69,17 +71,6 @@
                                 class="p-column-filter"
                                 :showClear="true"
                             >
-                                <template #value="slotProps">
-                                    <span v-if="slotProps.value">{{
-                                        slotProps.value
-                                    }}</span>
-                                    <span v-else>{{
-                                        slotProps.placeholder
-                                    }}</span>
-                                </template>
-                                <template #option="slotProps">
-                                    <span>{{ slotProps.option }}</span>
-                                </template>
                             </Dropdown>
                         </template>
                     </Column>
@@ -192,7 +183,9 @@ export default {
         },
 
         edit(id) {
-            Inertia.get(route("category.edit", id), { isTriggeredFromTable: true });
+            Inertia.get(route("category.edit", id), {
+                isTriggeredFromTable: true,
+            });
         },
         initFilters() {
             this.filters = {
@@ -224,7 +217,8 @@ export default {
                 axios
                     .delete(route("category.destroy", this.deleteId))
                     .then((res) => {
-                        if (res.data.success) this.$refs.categoryTbl.loadLazyData();
+                        if (res.data.success)
+                            this.$refs.categoryTbl.loadLazyData();
                     })
                     .catch((err) => {
                         this.$toast.add({
@@ -242,7 +236,8 @@ export default {
                         })
                     )
                     .then((res) => {
-                        if (res.data.success) this.$refs.categoryTbl.loadLazyData();
+                        if (res.data.success)
+                            this.$refs.categoryTbl.loadLazyData();
                     })
                     .catch((err) => {
                         this.$toast.add({

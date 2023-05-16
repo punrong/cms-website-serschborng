@@ -12,7 +12,9 @@
                         input: 'bg-blue-500 text-white font-bold px-3 mb-2 w-auto rounded-md py-2',
                     }"
                 />
-                <div class="border-t border-gray-200 bg-white shadow sm:rounded-lg">
+                <div
+                    class="border-t border-gray-200 bg-white shadow sm:rounded-lg"
+                >
                     <dl>
                         <div
                             class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
@@ -23,7 +25,8 @@
                                 </h2>
 
                                 <p class="mt-1 text-sm text-gray-600">
-                                    View category's title, status, and description
+                                    View category's title, status, and
+                                    description
                                 </p>
                             </header>
                         </div>

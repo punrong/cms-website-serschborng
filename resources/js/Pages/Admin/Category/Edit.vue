@@ -124,7 +124,8 @@ export default {
             axios
                 .put(route("category.update", this.formData.id), this.formData)
                 .then((res) => {
-                    if (res.data.success) Inertia.visit(route("category.index"));
+                    if (res.data.success)
+                        Inertia.visit(route("category.index"));
                 })
                 .catch((err) => {
                     if (err.response.status === 422)
@@ -138,7 +139,8 @@ export default {
                 });
         },
         goBack() {
-            if (this.isTriggeredFromTable) Inertia.visit(route("category.index"));
+            if (this.isTriggeredFromTable)
+                Inertia.visit(route("category.index"));
             else Inertia.get(route("category.show", this.formData.id));
         },
     },

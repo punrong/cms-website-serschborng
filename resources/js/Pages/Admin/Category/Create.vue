@@ -115,7 +115,8 @@ export default {
             axios
                 .post(route("category.store"), this.formData)
                 .then((res) => {
-                    if (res.data.success) Inertia.visit(route("category.index"));
+                    if (res.data.success)
+                        Inertia.visit(route("category.index"));
                 })
                 .catch((err) => {
                     if (err.response.status === 422)
