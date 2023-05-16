@@ -113,6 +113,7 @@ class MentorController extends Controller
                 'phone_number' => ['string', 'max:20', 'unique:mentors', 'regex:/^\d{9,10}$/'],
                 'status' => 'required',
                 'image' => 'max:2048',
+                'description' => ['required','string'],
             ]);
         else
             $request->validate([
@@ -121,6 +122,7 @@ class MentorController extends Controller
                 'phone_number' => ['string', 'max:20', 'regex:/^\d{9,10}$/'],
                 'status' => 'required',
                 'image' => 'max:2048',
+                'description' => ['required','string'],
             ]);
     }
 
@@ -130,6 +132,7 @@ class MentorController extends Controller
         $mentor->email = $request->email;
         $mentor->status = $request->status;
         $mentor->phone_number = $request->phone_number;
+        $mentor->description = $request->description;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time().'.'.$image->getClientOriginalExtension();

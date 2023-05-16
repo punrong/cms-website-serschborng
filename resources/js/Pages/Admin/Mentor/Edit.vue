@@ -22,7 +22,7 @@
                             </h2>
 
                             <p class="mt-1 text-sm text-gray-600">
-                                Update mentor's title, status and description
+                                Update mentor's name, email, phone number, status, image and description
                             </p>
                         </header>
                     </div>
@@ -93,6 +93,16 @@
                                 input: 'border border-gray-400 px-2 mb-1',
                             }"
                         />
+                        <div class="pb-4 mb-1">
+                            <span class="block mb-1 font-bold text-base"
+                                >Description</span
+                            >
+                            <Editor :content="formData.description" @updateEditorData="updateEditorData"/>
+                            <InputError
+                                class="text-red-500 text-sm font-bold"
+                                :message="errorMsg"
+                            />
+                        </div>
                         <FormKit
                             type="submit"
                             label="Update"
@@ -112,8 +122,14 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
+import InputError from "@/components/InputError.vue";
+import Editor from '@/components/Editor.vue';
 
 export default {
+    components: {
+        InputError,
+        Editor
+    },
     data() {
         return {
             formData: {},
@@ -146,6 +162,7 @@ export default {
             formData.append("status", this.formData.status);
             formData.append("phone_number", this.formData.phone_number);
             formData.append("image", this.formData.image);
+            formData.append("description", this.formData.description);
             formData.append("_method", "PUT");
 
             const config = {
@@ -172,6 +189,9 @@ export default {
             if (this.isTriggeredFromTable) Inertia.visit(route("mentor.index"));
             else Inertia.get(route("mentor.show", this.formData.id));
         },
+        updateEditorData(editorData){
+            this.formData.description = editorData
+        }
     },
     created() {
         this.initForm();

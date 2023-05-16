@@ -22,7 +22,7 @@
                             </h2>
 
                             <p class="mt-1 text-sm text-gray-600">
-                                Add mentor's title, status and description
+                                Add mentor's name, email, phone number, status, image and description
                             </p>
                         </header>
                     </div>
@@ -93,6 +93,16 @@
                                 input: 'border border-gray-400 px-2 mb-1',
                             }"
                         />
+                        <div class="pb-4 mb-1">
+                            <span class="block mb-1 font-bold text-base"
+                                >Description</span
+                            >
+                            <Editor :content="formData.description" @updateEditorData="updateEditorData"/>
+                            <InputError
+                                class="text-red-500 text-sm font-bold"
+                                :message="errorMsg"
+                            />
+                        </div>
                         <FormKit
                             type="submit"
                             label="Create"
@@ -112,8 +122,14 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
+import InputError from "@/components/InputError.vue";
+import Editor from '@/components/Editor.vue';
 
 export default {
+    components: {
+        InputError,
+        Editor
+    },
     data() {
         return {
             formData: {
@@ -122,6 +138,7 @@ export default {
                 email: null,
                 image: null,
                 phone_number: null,
+                description: ''
             },
             statuses: {
                 ACT: "ACTIVE",
@@ -138,6 +155,7 @@ export default {
             formData.append("status", this.formData.status);
             formData.append("phone_number", this.formData.phone_number);
             formData.append("image", this.formData.image);
+            formData.append("description", this.formData.description);
             axios
                 .post(route("mentor.store"), formData)
                 .then((res) => {
@@ -161,6 +179,9 @@ export default {
         goBack() {
             Inertia.visit(route("mentor.index"));
         },
+        updateEditorData(editorData){
+            this.formData.description = editorData
+        }
     },
 };
 </script>
