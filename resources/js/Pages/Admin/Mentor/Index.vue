@@ -1,4 +1,5 @@
 <template>
+    <Head title="Mentors" />
     <MenuSideBar>
         <div class="mx-auto flex container items-center justify-center mt-4">
             <div class="rounded w-full p-2 bg-white">

@@ -1,5 +1,5 @@
 <template>
-    <Head title="Role" />
+    <Head title="Roles" />
     <MenuSideBar>
         <div class="mx-auto flex container items-center justify-center mt-4">
             <div class="rounded w-full p-2 bg-white">

@@ -1,5 +1,5 @@
 <script setup>
-import InputError from "@/Components/InputError.vue";
+import InputError from "@/components/InputError.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 
 const form = useForm({

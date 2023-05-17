@@ -1,6 +1,6 @@
 <script setup>
-import Checkbox from "@/Components/Checkbox.vue";
-import InputError from "@/Components/InputError.vue";
+import Checkbox from "@/components/Checkbox.vue";
+import InputError from "@/components/InputError.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 
 defineProps({

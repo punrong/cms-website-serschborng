@@ -1,7 +1,7 @@
 <script setup>
-import InputError from "@/Components/InputError.vue";
-import Modal from "@/Components/Modal.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+import InputError from "@/components/InputError.vue";
+import Modal from "@/components/Modal.vue";
+import SecondaryButton from "@/components/SecondaryButton.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { nextTick, ref } from "vue";
 
