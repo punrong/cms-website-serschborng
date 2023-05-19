@@ -1,5 +1,5 @@
 <script setup>
-import Checkbox from "@/components/Checkbox.vue";
+// import Checkbox from "@/components/Checkbox.vue";
 import InputError from "@/components/InputError.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 
@@ -85,21 +85,21 @@ const onSubmit = () => {
                 }"
             />
 
-            <div class="block mt-4">
+            <!-- <div class="block mt-4">
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember" />
                     <span class="ml-2 text-sm text-gray-600">Remember me</span>
                 </label>
-            </div>
+            </div> -->
 
             <div class="flex items-center justify-end mt-4">
-                <Link
+                <!-- <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
                     class="underline text-sm text-blue-600 hover:text-blue-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     Forgot your password?
-                </Link>
+                </Link> -->
                 <FormKit
                     type="submit"
                     label="Log In"
