@@ -37,7 +37,7 @@ class RoleController extends Controller
 
         return response()->json([
             'success' => true,
-            'payload' => PrimevueDatatables::of(Role::select('id', 'name', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
+            'payload' => PrimevueDatatables::of(Role::select('id', 'name', 'code', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
         ]);
     }
 
@@ -115,7 +115,8 @@ class RoleController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'status' => 'required',
-            'permissions' => 'required'
+            // 'permissions' => 'required',
+            'code' => 'required|string'
         ]);
     }
 
@@ -123,5 +124,6 @@ class RoleController extends Controller
     {
         $role->name = $request->name;
         $role->status = $request->status;
+        $role->code = $request->code;
     }
 }
