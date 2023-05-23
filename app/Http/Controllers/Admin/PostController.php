@@ -118,6 +118,7 @@ class PostController extends Controller
             'status' => 'required',
             'category_id' => 'required',
             'image' => 'max:2048',
+            'sequence' => ['numeric','integer','min:1'],
         ]);
     }
 
@@ -127,6 +128,7 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->status = $request->status;
         $post->category_id = $request->category_id;
+        $post->sequence = $request->sequence;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time().'.'.$image->getClientOriginalExtension();

@@ -77,22 +77,35 @@
                                 }"
                             />
                         </div>
-                        <div>
-                            <span class="block mb-1 font-bold text-base"
-                                >Mentors</span
-                            >
-                            <div class="w-full rounded-md py-2">
-                                <MultiSelect
-                                    v-model="formData.mentors"
-                                    optionValue="value"
-                                    :options="mentorList"
-                                    optionLabel="name"
-                                    placeholder="Select mentors"
-                                />
-                                <InputError
-                                    class="text-red-500 text-sm font-bold"
-                                    :message="errorMsg"
-                                />
+                        <div class="grid grid-cols-2 gap-x-4">
+                            <FormKit
+                                type="number"
+                                label="Sequence"
+                                name="sequence"
+                                validation="number|min:1"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
+                            <div>
+                                <span class="block font-bold text-base"
+                                    >Mentors</span
+                                >
+                                <div class="py-1">
+                                    <MultiSelect
+                                        v-model="formData.mentors"
+                                        class="w-full rounded-md"
+                                        optionValue="value"
+                                        :options="mentorList"
+                                        optionLabel="name"
+                                        placeholder="Select mentors"
+                                    />
+                                    <InputError
+                                        class="text-red-500 text-sm font-bold"
+                                        :message="errorMsg"
+                                    />
+                                </div>
                             </div>
                         </div>
                         <FormKit
@@ -178,6 +191,7 @@ export default {
             formData.append("category_id", this.formData.category_id);
             formData.append("status", this.formData.status);
             formData.append("description", this.formData.description);
+            formData.append("sequence", this.formData.sequence);
             for (var i = 0; i < this.formData.mentors.length; i++) {
                 formData.append('mentors[]', this.formData.mentors[i]);
             }
@@ -253,12 +267,9 @@ export default {
 </script>
 <style scoped>
 .p-multiselect {
-    width: 100%;
     border-width: 1px;
     border-radius: 0.375rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    margin-bottom: 0.25rem;
+    border-color: rgb(156, 163, 175);
 }
 </style>
 <style>
