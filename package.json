@@ -41,6 +41,7 @@
         "primevue": "^3.22.1",
         "tw-elements": "^1.0.0-alpha13",
         "vue": "^3.2.36",
+        "vue-carousel": "^0.18.0",
         "vue-loader": "^17.0.1",
         "vue-router": "^4.1.6",
         "vuex": "^4.0.2",

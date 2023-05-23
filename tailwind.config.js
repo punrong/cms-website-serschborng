@@ -9,7 +9,10 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
-        './node_modules/@formkit/themes/dist/tailwindcss/genesis/index.cjs'
+        './node_modules/@formkit/themes/dist/tailwindcss/genesis/index.cjs',
+        "./index.html",
+        "./src/**/*.{vue,js,ts,jsx,tsx}",
+        "./node_modules/tw-elements/dist/js/**/*.js"
     ],
 
     theme: {
@@ -20,5 +23,5 @@ module.exports = {
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), FormKitVariants],
+    plugins: [require('@tailwindcss/forms'), require("tw-elements/dist/plugin.cjs"), FormKitVariants],
 };
