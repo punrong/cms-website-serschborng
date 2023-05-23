@@ -48,6 +48,24 @@
                         </template>
                     </Column>
                     <Column
+                        field="code"
+                        header="Code"
+                        :sortable="true"
+                        style="min-width: 12rem"
+                    >
+                        <template #body="{ data }">
+                            {{ data.code }}
+                        </template>
+                        <template #filter="{ filterModel }">
+                            <InputText
+                                type="text"
+                                v-model="filterModel.value"
+                                class="p-column-filter"
+                                placeholder="Search by code"
+                            />
+                        </template>
+                    </Column>
+                    <Column
                         field="status"
                         header="Status"
                         :filterMenuStyle="{ width: '14rem' }"
@@ -192,6 +210,12 @@ export default {
             this.filters = {
                 global: { value: null, matchMode: FilterMatchMode.CONTAINS },
                 name: {
+                    operator: FilterOperator.AND,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                    ],
+                },
+                code: {
                     operator: FilterOperator.AND,
                     constraints: [
                         { value: null, matchMode: FilterMatchMode.STARTS_WITH },

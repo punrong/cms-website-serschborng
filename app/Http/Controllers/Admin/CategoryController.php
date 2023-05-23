@@ -34,7 +34,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'payload' => PrimevueDatatables::of(Category::select('id', 'name', 'description', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
+            'payload' => PrimevueDatatables::of(Category::select('id', 'name', 'code', 'description', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
         ]);
     }
 
@@ -74,7 +74,7 @@ class CategoryController extends Controller
 
     public function update(Category $category, Request $request)
     {
-        $this->validateRequest($request);
+        $this->validateRequest($request, $category);
         $this->assignValue($request, $category);
         if ($category->save())
             return response()->json([
@@ -108,11 +108,12 @@ class CategoryController extends Controller
         return Category::getCategoryArray();
     }
 
-    private function validateRequest($request)
+    private function validateRequest($request, $category = null)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => ['required','string','max:255'],
             'status' => 'required',
+            'code' => ['required','string', isset($category) ? 'unique:categories,code,' . $category->id . ',id' : 'unique:categories']
         ]);
     }
 
@@ -121,5 +122,6 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->description = $request->description;
         $category->status = $request->status;
+        $category->code = $request->code;
     }
 }

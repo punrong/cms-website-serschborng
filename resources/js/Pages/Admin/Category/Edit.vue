@@ -53,6 +53,16 @@
                                 }"
                             />
                             <FormKit
+                                type="text"
+                                label="Code"
+                                name="code"
+                                validation="required"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
+                            <FormKit
                                 type="select"
                                 label="Status"
                                 :options="statuses"

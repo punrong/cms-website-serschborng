@@ -46,6 +46,18 @@
                             class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                         >
                             <dt class="text-md font-medium text-gray-900">
+                                Code
+                            </dt>
+                            <dd
+                                class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0"
+                            >
+                                {{ category.code }}
+                            </dd>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                        >
+                            <dt class="text-md font-medium text-gray-900">
                                 Status
                             </dt>
                             <dd
@@ -55,7 +67,7 @@
                             </dd>
                         </div>
                         <div
-                            class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                            class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                         >
                             <dt class="text-md font-medium text-gray-900">
                                 Description
