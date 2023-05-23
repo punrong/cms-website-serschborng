@@ -118,8 +118,8 @@ export default {
                     can: res.data.can.categories,
                 },
                 {
-                    title: "Settings",
-                    icon: "fa-solid fa-gear",
+                    title: "My Profile",
+                    icon: "fa-solid fa-user",
                     route: route("profile.edit"),
                     can: true,
                 },

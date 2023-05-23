@@ -11,7 +11,7 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Settings" />
+    <Head title="My Profile" />
 
     <MenuSideBar>
         <template #header>
