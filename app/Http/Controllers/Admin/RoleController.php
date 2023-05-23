@@ -80,7 +80,7 @@ class RoleController extends Controller
 
     public function update(Role $role, Request $request)
     {
-        $this->validateRequest($request);
+        $this->validateRequest($request, $role);
         $this->assignValue($request, $role);
         if ($role->save() && Role::assignRolePermissions($role->id, $request->permissions))
             return response()->json([
@@ -110,13 +110,12 @@ class RoleController extends Controller
         return Role::getRoleList();
     }
 
-    private function validateRequest($request)
+    private function validateRequest($request, $role = null)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'status' => 'required',
-            // 'permissions' => 'required',
-            'code' => 'required|string'
+            'name' => ['required','string','max:255'],
+            'status' => ['required'],
+            'code' => ['required','string', isset($role) ? 'unique:roles,code,' . $role->id . ',id' : 'unique:roles']
         ]);
     }
 
