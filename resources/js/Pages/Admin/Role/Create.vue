@@ -123,7 +123,7 @@ export default {
                 name: null,
                 code: null,
                 status: "ACT",
-                permissions: null,
+                permissions: [],
             },
             statuses: {
                 ACT: "ACTIVE",
