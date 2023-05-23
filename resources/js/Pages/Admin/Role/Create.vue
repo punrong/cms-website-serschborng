@@ -52,16 +52,21 @@
                                     input: 'border border-gray-400 px-2 mb-1',
                                 }"
                             />
-                            <FormKit
-                                type="text"
-                                label="Code"
-                                name="code"
-                                validation="required"
-                                :classes="{
-                                    outer: 'pb-4',
-                                    input: 'border border-gray-400 px-2 mb-1',
-                                }"
-                            />
+                            <div class="pb-4 px-2 mb-1">
+                                <FormKit
+                                    type="text"
+                                    label="Code"
+                                    name="code"
+                                    validation="required"
+                                    :classes="{
+                                        input: 'border border-gray-400',
+                                    }"
+                                />
+                                <InputError
+                                    class="text-red-500 text-sm font-bold"
+                                    :message="errorMsg"
+                                />
+                            </div>
                             <FormKit
                                 type="select"
                                 label="Status"
@@ -85,10 +90,6 @@
                                     :options="permissionList"
                                     optionLabel="name"
                                     placeholder="Select permissions"
-                                />
-                                <InputError
-                                    class="text-red-500 text-sm font-bold"
-                                    :message="errorMsg"
                                 />
                             </div>
                         </div>
