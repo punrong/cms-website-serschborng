@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Admin\PageSettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,10 @@ Route::get('/dashboard', function () {
 
 require __DIR__ . '/auth.php';
 
+Route::group(['prefix' => 'page-settings/api'], function () {
+    Route::get('get/data', [PageSettingController::class, 'getPageSetting'])->name('page-settings.getData');
+});
+
 Route::group([
     'prefix' => 'admin',
     'middleware' => ['auth'],
@@ -47,7 +52,10 @@ Route::group([
         Route::get('get/menusidebar/permissions', [AuthenticatedSessionController::class, 'getMenuSideBarPermission'])->name('menusidebar.getPermissions');
     });
 
-    //Settings: Profile
+    // Page Settings
+    Route::resource('/page-settings', PageSettingController::class)->except(['show', 'create', 'store', 'destory']);
+
+    // Profile Setting
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
