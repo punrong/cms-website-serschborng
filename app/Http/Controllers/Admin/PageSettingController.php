@@ -74,14 +74,14 @@ class PageSettingController extends Controller
         if ($request->hasFile('logo')) {
             $image = $request->file('logo');
             $imageName = 'logo.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-            $pageSetting->logo = 'images/' . $imageName;
+            $image->move(public_path(), $imageName);
+            $pageSetting->logo = $imageName;
         }
         if ($request->hasFile('favicon')) {
             $image = $request->file('favicon');
             $imageName = 'favicon.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-            $pageSetting->favicon = 'images/' . $imageName;
+            $image->move(public_path(), $imageName);
+            $pageSetting->favicon = $imageName;
         }
     }
 }

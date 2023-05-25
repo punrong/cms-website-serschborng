@@ -14,7 +14,7 @@
                 <div class="inline-flex">
                     <img
                         :class="isOpen && 'object-contain h-32 w-96'"
-                        src="../../../public/images/logo.png"
+                        src="../../../public/logo.png"
                     />
                 </div>
                 <div

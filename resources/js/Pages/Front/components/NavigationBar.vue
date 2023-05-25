@@ -8,7 +8,7 @@
             >
                 <a href="https://flowbite.com/" class="flex">
                     <img
-                        src="../../../../../public/images/logo.png"
+                        src="../../../../../public/logo.png"
                         class="h-20 mr-3"
                         :alt="this.pageSetting.name"
                     />
