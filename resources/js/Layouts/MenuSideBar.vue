@@ -14,10 +14,12 @@
                 <div class="inline-flex">
                     <img
                         :class="isOpen && 'object-contain h-32 w-96'"
-                        src="../../assets/logo.png"
+                        src="../../../public/images/logo.png"
                     />
                 </div>
-                <div class="flex items-center justify-center rounded-md py-2 text-gray-300 text-lg block font-bold">
+                <div
+                    class="flex items-center justify-center rounded-md py-2 text-gray-300 text-lg block font-bold"
+                >
                     <span>Hello, {{ $page.props.auth.user.name }} !</span>
                 </div>
                 <ul v-for="(menu, index) in menuList">
@@ -55,6 +57,7 @@ export default {
         return {
             isOpen: true,
             menuList: [],
+            logo: null,
         };
     },
     methods: {
@@ -66,7 +69,7 @@ export default {
             else Inertia.visit(route);
         },
     },
-    mounted() {
+    beforeCreate() {
         axios.get(route("menusidebar.getPermissions")).then((res) => {
             this.menuList = [
                 {
@@ -116,6 +119,12 @@ export default {
                     icon: "fa-solid fa-layer-group",
                     route: route("category.index"),
                     can: res.data.can.categories,
+                },
+                {
+                    title: "Page Settings",
+                    icon: "fa-solid fa-gear",
+                    route: route("page-settings.index"),
+                    can: res.data.can.page_settings,
                 },
                 {
                     title: "My Profile",
