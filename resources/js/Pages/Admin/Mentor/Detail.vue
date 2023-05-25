@@ -95,7 +95,7 @@
                             <dd
                                 class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0"
                             >
-                                <img :src="mentor.image" />
+                                <img class="max-w-[20%]" :src="mentor.image" />
                             </dd>
                         </div>
                         <div v-if="can.edit" class="bg-white p-2">

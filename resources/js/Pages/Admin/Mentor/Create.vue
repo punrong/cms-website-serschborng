@@ -176,10 +176,6 @@ export default {
                     });
                 });
         },
-        validatePhoneNumber(value) {
-            const regex = /^[0-9]{8,}$/;
-            return regex.test(value);
-        },
         goBack() {
             Inertia.visit(route("mentor.index"));
         },
@@ -212,5 +208,8 @@ button.formkit-file-item-remove {
     padding-bottom: 0.5rem !important;
     width: auto !important;
     margin-top: 0.5rem !important;
+}
+img.formkit-file-item-image{
+    max-width: 20% !important;
 }
 </style>

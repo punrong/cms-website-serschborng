@@ -167,7 +167,6 @@ export default {
             },
             categoryList: {},
             errorMsg: null,
-            image: null,
             mentorList: null,
         };
     },
@@ -284,5 +283,8 @@ button.formkit-file-item-remove {
     padding-bottom: 0.5rem !important;
     width: auto !important;
     margin-top: 0.5rem !important;
+}
+img.formkit-file-item-image{
+    max-width: 20% !important;
 }
 </style>

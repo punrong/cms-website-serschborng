@@ -207,4 +207,7 @@ button.formkit-file-item-remove {
     width: auto !important;
     margin-top: 0.5rem !important;
 }
+img.formkit-file-item-image{
+    max-width: 20% !important;
+}
 </style>

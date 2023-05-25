@@ -8,7 +8,7 @@
                 >
                     <header>
                         <h2 class="text-2xl font-bold text-gray-900">
-                            Permission
+                            Permissions
                         </h2>
                     </header>
                 </div>
