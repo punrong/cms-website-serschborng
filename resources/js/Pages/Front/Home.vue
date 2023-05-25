@@ -1,17 +1,19 @@
 <template>
     <div>
-        <NavigationBar />
+        <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting"/>
         <Carousel />
         <AboutUs/>
         <Service/>
         <Testimonial/>
         <OurTeam/>
         <BlogPost/>
-        <Footer/>
+        <Footer v-if="pageSetting" :pageSetting="this.pageSetting"/>
     </div>
 </template>
 
 <script>
+
+import axios from "axios";
 import Carousel from "./components/Carousel.vue";
 import NavigationBar from "./components/NavigationBar.vue";
 import Footer from './components/Footer.vue';
@@ -20,6 +22,7 @@ import OurTeam from "./components/OurTeam.vue";
 import Testimonial from "./components/Testimonial.vue"
 import Service from "./components/Service.vue";
 import AboutUs from "./components/AboutUs.vue";
+
 export default {
     components: {
         NavigationBar,
@@ -32,8 +35,19 @@ export default {
         Footer,
     },
     data() {
-        return {};
+        return {
+            pageSetting: null
+        };
     },
-    methods: {},
+    methods: {
+        getPageSetting(){
+            axios.get(route("page-settings.getData")).then((res) => {
+                this.pageSetting = res.data;
+            });
+        }
+    },
+    mounted(){
+        this.getPageSetting()
+    }
 };
 </script>

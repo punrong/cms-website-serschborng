@@ -8,9 +8,9 @@
             >
                 <a href="https://flowbite.com/" class="flex">
                     <img
-                        src="../../../../assets/logo.png"
+                        src="../../../../../public/images/logo.png"
                         class="h-20 mr-3"
-                        alt="Sers Chborng"
+                        :alt="this.pageSetting.name"
                     />
                 </a>
                 <div class="flex sm:order-2">
@@ -138,6 +138,12 @@
 
 <script>
 export default {
+    props: {
+        pageSetting: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
     data() {
         return {
             isMenuOpen: false,
