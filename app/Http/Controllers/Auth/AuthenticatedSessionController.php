@@ -51,7 +51,8 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 
-    public function getMenuSideBarPermission(){
+    public function getMenuSideBarPermission()
+    {
         return ['can' => [
             'posts' => Auth::user()->can('post list'),
             'permissions' => Auth::user()->can('permission list'),
@@ -59,6 +60,7 @@ class AuthenticatedSessionController extends Controller
             'users' => Auth::user()->can('user list'),
             'categories' => Auth::user()->can('category list'),
             'mentors' => Auth::user()->can('mentor list'),
+            'page_settings' => Auth::user()->can('page-settings list'),
         ]];
     }
 }
