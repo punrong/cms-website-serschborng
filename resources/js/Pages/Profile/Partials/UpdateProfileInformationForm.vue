@@ -43,7 +43,7 @@ const form = useForm({
             <div>
                 <FormKit
                     type="text"
-                    label="Name"
+                    label="Name *"
                     v-model="form.name"
                     validation="required"
                     :classes="{
@@ -58,7 +58,7 @@ const form = useForm({
             <div>
                 <FormKit
                     type="email"
-                    label="Email"
+                    label="Email *"
                     v-model="form.email"
                     validation="required|email"
                     :classes="{

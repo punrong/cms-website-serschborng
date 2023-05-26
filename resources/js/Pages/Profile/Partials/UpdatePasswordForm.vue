@@ -50,7 +50,7 @@ const updatePassword = () => {
                 id="current_password"
                 type="password"
                 name="password"
-                label="Current Password"
+                label="Current Password *"
                 validation="required"
                 v-model="form.current_password"
                 :classes="{
@@ -67,7 +67,7 @@ const updatePassword = () => {
                     type="password"
                     name="password"
                     id="password"
-                    label="New Password"
+                    label="New Password *"
                     validation="required"
                     v-model="form.password"
                     :classes="{
@@ -83,7 +83,7 @@ const updatePassword = () => {
                     id="password_confirmation"
                     type="password"
                     name="password_confirm"
-                    label="Confirm New Password"
+                    label="Confirm New Password *"
                     v-model="form.password_confirmation"
                     validation="required|confirm"
                     validation-label="Password confirmation"
