@@ -12,5 +12,6 @@ class RoleHasPermissions extends Model
     protected $fillable = [
         'role_id',
         'permission_id',
+        'created_by',
     ];
 }
