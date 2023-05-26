@@ -35,7 +35,7 @@ class ProfileController extends Controller
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-
+        $request->user()->updated_by = Auth::user()->id;
         $request->user()->save();
 
         return Redirect::route('profile.edit');
@@ -51,11 +51,11 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+        $user->status = 'DEL';
+        $user->updated_by = Auth::user()->id;
+        $user->save();
 
         Auth::logout();
-
-        $user->status = 'DEL';
-        $user->save();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
