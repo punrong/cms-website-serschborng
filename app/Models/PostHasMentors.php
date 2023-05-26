@@ -12,5 +12,6 @@ class PostHasMentors extends Model
     protected $fillable = [
         'post_id',
         'mentor_id',
+        'created_by',
     ];
 }
