@@ -50,6 +50,8 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        $user->created_by = Auth::user()->id;
+        $user->save();
 
         return redirect(RouteServiceProvider::HOME);
     }
