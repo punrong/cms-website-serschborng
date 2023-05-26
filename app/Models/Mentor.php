@@ -14,6 +14,8 @@ class Mentor extends Model
         'phone_number',
         'image',
         'status',
+        'created_by',
+        'updated_by'
     ];
 
     public static function getMentorList(){

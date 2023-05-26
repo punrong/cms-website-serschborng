@@ -91,6 +91,7 @@ class MentorController extends Controller
     public function destroy(Mentor $mentor)
     {
         $mentor->status = 'DEL';
+        $mentor->updated_by = Auth::user()->id;
         if ($mentor->save())
             return response()->json([
                 'success' => true,
@@ -100,7 +101,7 @@ class MentorController extends Controller
     public function deleteMultipleRecord(Request $request)
     {
         $mentorIdList = array_column($request->mentorList, 'id');
-        if (Mentor::whereIn('id', $mentorIdList)->update(['status' => 'DEL']))
+        if (Mentor::whereIn('id', $mentorIdList)->update(['status' => 'DEL', 'updated_by' => Auth::user()->id]))
             return response()->json([
                 'success' => true,
             ]);
@@ -122,13 +123,17 @@ class MentorController extends Controller
         ]);
     }
 
-    private function assignValue($request, $mentor)
+        private function assignValue($request, $mentor)
     {
         $mentor->name = $request->name;
         $mentor->email = $request->email;
         $mentor->status = $request->status;
         $mentor->phone_number = $request->phone_number;
         $mentor->description = $request->description;
+        if(isset($mentor->id))
+            $mentor->updated_by = Auth::user()->id;
+        else
+            $mentor->created_by = Auth::user()->id;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
