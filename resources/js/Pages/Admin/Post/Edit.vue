@@ -45,7 +45,7 @@
                         <div class="grid grid-cols-3 gap-x-4">
                             <FormKit
                                 type="text"
-                                label="Title"
+                                label="Title *"
                                 name="title"
                                 validation="required"
                                 :classes="{
@@ -55,7 +55,7 @@
                             />
                             <FormKit
                                 type="select"
-                                label="Category"
+                                label="Category *"
                                 :options="categoryList"
                                 name="category_id"
                                 placeholder="Select a category"
@@ -67,7 +67,7 @@
                             />
                             <FormKit
                                 type="select"
-                                label="Status"
+                                label="Status *"
                                 :options="statuses"
                                 name="status"
                                 validation="required"
@@ -120,7 +120,7 @@
                         />
                         <div class="pb-4 mb-1">
                             <span class="block mb-1 font-bold text-base"
-                                >Description</span
+                                >Description *</span
                             >
                             <Editor
                                 :content="formData.description"
