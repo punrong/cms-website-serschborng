@@ -85,6 +85,7 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         $permission->status = 'DEL';
+        $permission->updated_by = Auth::user()->id;
         if ($permission->save())
             return response()->json([
                 'success' => true,
@@ -94,7 +95,7 @@ class PermissionController extends Controller
     public function deleteMultipleRecord(Request $request)
     {
         $permissionIdList = array_column($request->permissionList, 'id');
-        if (Permission::whereIn('id', $permissionIdList)->update(['status' => 'DEL']))
+        if (Permission::whereIn('id', $permissionIdList)->update(['status' => 'DEL', 'updated_by' => Auth::user()->id]))
             return response()->json([
                 'success' => true,
             ]);
@@ -116,5 +117,9 @@ class PermissionController extends Controller
     {
         $permission->name = $request->name;
         $permission->status = $request->status;
+        if(isset($permission->id))
+            $permission->updated_by = Auth::user()->id;
+        else
+            $permission->created_by = Auth::user()->id;
     }
 }
