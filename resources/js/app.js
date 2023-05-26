@@ -1,6 +1,6 @@
 import "tw-elements";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCircleArrowLeft, faSignOut, faHouse, faTableColumns, faUsers, faUniversalAccess, faPeopleRoof, faMailBulk, faGear, faLayerGroup, faPersonChalkboard, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft, faSignOut, faHouse, faTableColumns, faUsers, faUniversalAccess, faPeopleRoof, faMailBulk, faGear, faLayerGroup, faPersonChalkboard, faUser, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp, h } from 'vue';
 import { createInertiaApp, Head } from '@inertiajs/inertia-vue3';
@@ -39,6 +39,7 @@ library.add(faGear)
 library.add(faLayerGroup)
 library.add(faPersonChalkboard)
 library.add(faUser)
+library.add(faCaretDown)
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

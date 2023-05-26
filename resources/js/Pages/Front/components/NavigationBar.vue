@@ -6,26 +6,65 @@
             <div
                 class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto"
             >
-                <a href="https://flowbite.com/" class="flex">
+                <a :href="route('home')" class="flex">
                     <img
                         src="../../../../../public/logo.png"
                         class="h-20 mr-3"
-                        :alt="this.pageSetting.name"
+                        :alt="pageSetting.name"
                     />
                 </a>
                 <div class="flex sm:order-2">
-                    <a
-                        :href="route('register')"
-                        class="text-gray-900 hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3"
-                    >
-                        Sign Up
-                    </a>
-                    <a
-                        :href="route('login')"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 sm:mr-0"
-                    >
-                        Sign In
-                    </a>
+                    <!-- Conditional rendering block -->
+                    <div v-if="$page.props.auth.user" class="relative">
+                        <button
+                            @click="toggleDropdown"
+                            class="flex items-center text-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-3"
+                        >
+                            <span class="mr-2 underline">{{
+                                $page.props.auth.user.name
+                            }}</span>
+                            <FontAwesomeIcon
+                                icon="fa-solid fa-caret-down"
+                                :class="{ 'rotate-180': isDropdownOpen }"
+                            />
+                        </button>
+                        <!-- Dropdown menu -->
+                        <ul
+                            v-if="isDropdownOpen"
+                            class="absolute right-0 mt-2 py-2 bg-white shadow-md"
+                        >
+                            <!-- Dropdown items -->
+                            <li>
+                                <a
+                                    :href="route('dashboard')"
+                                    class="block px-4 py-2"
+                                    >Dashboard</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    @click="logout()"
+                                    class="block px-4 py-2"
+                                    >Logout</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <div v-else>
+                        <a
+                            :href="route('register')"
+                            class="text-gray-900 hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-3"
+                        >
+                            Sign Up
+                        </a>
+                        <a
+                            :href="route('login')"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 sm:mr-0"
+                        >
+                            Sign In
+                        </a>
+                    </div>
 
                     <!-- Mobile View -->
                     <button
@@ -137,6 +176,7 @@
 </template>
 
 <script>
+import { Inertia } from "@inertiajs/inertia";
 export default {
     props: {
         pageSetting: {
@@ -147,12 +187,26 @@ export default {
     data() {
         return {
             isMenuOpen: false,
+            isDropdownOpen: false,
         };
     },
     methods: {
         toggleMenu() {
             this.isMenuOpen = !this.isMenuOpen;
         },
+        toggleDropdown() {
+            this.isDropdownOpen = !this.isDropdownOpen;
+        },
+        logout() {
+            event.preventDefault();
+            Inertia.post(route("logout"));
+        },
     },
 };
 </script>
+
+<style>
+.rotate-180 {
+    transform: rotate(180deg);
+}
+</style>
