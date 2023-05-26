@@ -78,6 +78,16 @@
                                     input: 'border border-gray-400 px-2 mb-1',
                                 }"
                             />
+                            <FormKit
+                                type="number"
+                                label="Sequence"
+                                name="sequence"
+                                validation="number|min:1"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
                         </div>
                         <div>
                             <span class="block mb-1 font-bold text-base"

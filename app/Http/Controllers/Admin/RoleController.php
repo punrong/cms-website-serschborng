@@ -116,7 +116,8 @@ class RoleController extends Controller
         $request->validate([
             'name' => ['required','string','max:255'],
             'status' => ['required'],
-            'code' => ['required','string', isset($role) ? 'unique:roles,code,' . $role->id . ',id' : 'unique:roles']
+            'code' => ['required','string', isset($role) ? 'unique:roles,code,' . $role->id . ',id' : 'unique:roles'],
+            'sequence' => ['numeric','integer','min:1'],
         ]);
     }
 
@@ -125,6 +126,7 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->status = $request->status;
         $role->code = $request->code;
+        $role->sequence = $request->sequence;
         if(isset($role->id))
             $role->updated_by = Auth::user()->id;
         else
