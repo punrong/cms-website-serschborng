@@ -41,7 +41,7 @@
                             },
                         }"
                     >
-                        <div class="grid grid-cols-2 gap-x-4">
+                        <div class="grid grid-cols-3 gap-x-4">
                             <FormKit
                                 type="text"
                                 label="Name *"
@@ -73,6 +73,16 @@
                                 :options="statuses"
                                 name="status"
                                 validation="required"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
+                            <FormKit
+                                type="number"
+                                label="Sequence"
+                                name="sequence"
+                                validation="number|min:1"
                                 :classes="{
                                     outer: 'pb-4',
                                     input: 'border border-gray-400 px-2 mb-1',

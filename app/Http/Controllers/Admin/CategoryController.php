@@ -114,7 +114,8 @@ class CategoryController extends Controller
         $request->validate([
             'name' => ['required','string','max:255'],
             'status' => 'required',
-            'code' => ['required','string', isset($category) ? 'unique:categories,code,' . $category->id . ',id' : 'unique:categories']
+            'code' => ['required','string', isset($category) ? 'unique:categories,code,' . $category->id . ',id' : 'unique:categories'],
+            'sequence' => ['numeric','integer','min:1'],
         ]);
     }
 
@@ -123,6 +124,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->description = $request->description;
         $category->status = $request->status;
+        $category->sequence = $request->sequence;
         $category->code = $request->code;
         if(isset($category->id))
             $category->updated_by = Auth::user()->id;
