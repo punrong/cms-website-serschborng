@@ -44,7 +44,7 @@
                         <div class="grid grid-cols-3 gap-x-4">
                             <FormKit
                                 type="text"
-                                label="Name"
+                                label="Name *"
                                 name="name"
                                 validation="required"
                                 :classes="{
@@ -54,7 +54,7 @@
                             />
                             <FormKit
                                 type="email"
-                                label="Email"
+                                label="Email *"
                                 name="email"
                                 validation="required|email"
                                 :classes="{
@@ -64,7 +64,7 @@
                             />
                             <FormKit
                                 type="select"
-                                label="Status"
+                                label="Status *"
                                 :options="statuses"
                                 name="status"
                                 validation="required"
@@ -75,7 +75,7 @@
                             />
                             <FormKit
                                 type="select"
-                                label="Role"
+                                label="Role *"
                                 :options="roleList"
                                 name="role"
                                 placeholder="Select a role"
