@@ -12,10 +12,12 @@
                     @click="setIsOpenStatus"
                 />
                 <div class="inline-flex">
-                    <img
-                        :class="isOpen && 'object-contain h-32 w-96'"
-                        src="../../../public/logo.png"
-                    />
+                    <a :href="route('home')" >
+                        <img
+                            :class="isOpen && 'object-contain h-32 w-96'"
+                            src="../../../public/logo.png"
+                        />
+                    </a>
                 </div>
                 <div
                     class="flex items-center justify-center rounded-md py-2 text-gray-300 text-lg block font-bold"
