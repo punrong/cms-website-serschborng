@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\PostHasMentors;
 use App\Models\Mentor;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -37,7 +38,8 @@ class Post extends Model
             foreach($mentorIdList as $mentorId)
                 $postMentorRecords[] = [
                     'mentor_id' => $mentorId,
-                    'post_id' => $postId
+                    'post_id' => $postId,
+                    'created_by' => Auth::user()->id
                 ];
             if(PostHasMentors::insert($postMentorRecords));
                 return true;

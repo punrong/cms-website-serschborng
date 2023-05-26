@@ -95,6 +95,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->status = 'DEL';
+        $post->updated_by = Auth::user()->id;
         if ($post->save())
             return response()->json([
                 'success' => true,
@@ -104,7 +105,7 @@ class PostController extends Controller
     public function deleteMultipleRecord(Request $request)
     {
         $postIdList = array_column($request->postList, 'id');
-        if (Post::whereIn('id', $postIdList)->update(['status' => 'DEL']))
+        if (Post::whereIn('id', $postIdList)->update(['status' => 'DEL', 'updated_by' => Auth::user()->id]))
             return response()->json([
                 'success' => true,
             ]);
@@ -129,6 +130,10 @@ class PostController extends Controller
         $post->status = $request->status;
         $post->category_id = $request->category_id;
         $post->sequence = $request->sequence;
+        if(isset($post->id))
+            $post->updated_by = Auth::user()->id;
+        else
+            $post->created_by = Auth::user()->id;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time().'.'.$image->getClientOriginalExtension();
