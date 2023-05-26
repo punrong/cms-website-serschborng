@@ -92,6 +92,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->status = 'DEL';
+        $user->updated_by = Auth::user()->id;
         if ($user->save())
             return response()->json([
                 'success' => true,
@@ -101,7 +102,7 @@ class UserController extends Controller
     public function deleteMultipleRecord(Request $request)
     {
         $userIdList = array_column($request->userList, 'id');
-        if (User::whereIn('id', $userIdList)->update(['status' => 'DEL']))
+        if (User::whereIn('id', $userIdList)->update(['status' => 'DEL', 'updated_by' => Auth::user()->id]))
             return response()->json([
                 'success' => true,
             ]);
@@ -133,6 +134,10 @@ class UserController extends Controller
     {
         $user->name = $request->name;
         $user->email = $request->email;
+        if(isset($user->id))
+            $user->updated_by = Auth::user()->id;
+        else
+            $user->created_by = Auth::user()->id;
         if($request->password)
             $user->password = Hash::make($request->password);
         $user->status = $request->status;
