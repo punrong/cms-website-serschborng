@@ -91,6 +91,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->status = 'DEL';
+        $role->updated_by = Auth::user()->id;
         if ($role->save())
             return response()->json([
                 'success' => true,
@@ -100,7 +101,7 @@ class RoleController extends Controller
     public function deleteMultipleRecord(Request $request)
     {
         $roleIdList = array_column($request->roleList, 'id');
-        if (Role::whereIn('id', $roleIdList)->update(['status' => 'DEL']))
+        if (Role::whereIn('id', $roleIdList)->update(['status' => 'DEL', 'updated_by' => Auth::user()->id]))
             return response()->json([
                 'success' => true,
             ]);
@@ -124,5 +125,9 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->status = $request->status;
         $role->code = $request->code;
+        if(isset($role->id))
+            $role->updated_by = Auth::user()->id;
+        else
+            $role->created_by = Auth::user()->id;
     }
 }
