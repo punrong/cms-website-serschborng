@@ -45,7 +45,7 @@
                         <div class="grid grid-cols-3 gap-x-4">
                             <FormKit
                                 type="text"
-                                label="Name"
+                                label="Name *"
                                 name="name"
                                 validation="required"
                                 :classes="{
@@ -55,7 +55,7 @@
                             />
                             <FormKit
                                 type="email"
-                                label="Email"
+                                label="Email *"
                                 name="email"
                                 validation="required|email"
                                 :classes="{
@@ -76,7 +76,7 @@
                         <div class="grid grid-cols-3 gap-x-4">
                             <FormKit
                                 type="text"
-                                label="Facebook Link"
+                                label="Facebook Link *"
                                 name="facebook"
                                 validation="required"
                                 :classes="{
@@ -86,7 +86,7 @@
                             />
                             <FormKit
                                 type="text"
-                                label="Copyrights"
+                                label="Copyrights *"
                                 name="copyrights"
                                 validation="required"
                                 :classes="{
@@ -97,7 +97,7 @@
                         </div>
                         <FormKit
                             type="image"
-                            label="Logo"
+                            label="Logo *"
                             name="logo"
                             accept=".jpg,.png,.jepg"
                             :classes="{
@@ -107,7 +107,7 @@
                         />
                         <FormKit
                             type="image"
-                            label="Favicon"
+                            label="Favicon *"
                             name="favicon"
                             accept=".jpg,.png,.jepg"
                             :classes="{
@@ -117,7 +117,7 @@
                         />
                         <div class="pb-4 mb-1">
                             <span class="block mb-1 font-bold text-base"
-                                >Description</span
+                                >Description *</span
                             >
                             <Editor
                                 :content="formData.description"
