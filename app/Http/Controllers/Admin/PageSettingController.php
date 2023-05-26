@@ -71,6 +71,7 @@ class PageSettingController extends Controller
         $pageSetting->facebook = $request->facebook;
         $pageSetting->phone_number = $request->phone_number;
         $pageSetting->description = $request->description;
+        $pageSetting->updated_by = Auth::user()->id;
         if ($request->hasFile('logo')) {
             $image = $request->file('logo');
             $imageName = 'logo.' . $image->getClientOriginalExtension();

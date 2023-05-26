@@ -15,6 +15,7 @@ class PageSetting extends Model
         'description',
         'facebook',
         'logo',
-        'rights'
+        'copyrights',
+        'updated_by'
     ];
 }
