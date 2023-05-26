@@ -85,6 +85,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->status = 'DEL';
+        $category->updated_by = Auth::user()->id;
         if ($category->save())
             return response()->json([
                 'success' => true,
@@ -94,7 +95,7 @@ class CategoryController extends Controller
     public function deleteMultipleRecord(Request $request)
     {
         $categoryIdList = array_column($request->categoryList, 'id');
-        if (Category::whereIn('id', $categoryIdList)->update(['status' => 'DEL']))
+        if (Category::whereIn('id', $categoryIdList)->update(['status' => 'DEL', 'updated_by' => Auth::user()->id]))
             return response()->json([
                 'success' => true,
             ]);
@@ -123,5 +124,9 @@ class CategoryController extends Controller
         $category->description = $request->description;
         $category->status = $request->status;
         $category->code = $request->code;
+        if(isset($category->id))
+            $category->updated_by = Auth::user()->id;
+        else
+            $category->created_by = Auth::user()->id;
     }
 }
