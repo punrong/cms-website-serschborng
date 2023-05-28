@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div class="bg-gray-100 py-4">
         <div class="text-center">
             <h5 class="text-3xl font-bold mt-5">Our Service</h5>
         </div>
         <div class="m-5">
-            <section class="bg-gray-100 py-8">
+            <section>
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div
                         class="grid grid-cols-1 sm:grid-cols-3 gap-4"

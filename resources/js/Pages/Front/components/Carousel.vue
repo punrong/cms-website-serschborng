@@ -52,13 +52,24 @@
                     alt="..."
                 />
                 <div
-                    class="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block"
+                    class="absolute inset-x-[15%] top-1/2 transform -translate-y-1/2 text-center text-white md:block"
                 >
-                    <h5 class="text-xl">First slide label</h5>
-                    <p>
-                        Some representative placeholder content for the first
-                        slide.
-                    </p>
+                    <h2 class="text-4xl font-bold">Title 1</h2>
+                    <p class="mt-4">Subtitle 1</p>
+                    <div
+                        class="max-w-sm mx-auto bg-transparent flex items-center mt-5"
+                    >
+                        <input
+                            type="text"
+                            class="flex-grow px-4 py-2 rounded-l-lg bg-transparent border border-white placeholder-white text-white"
+                            placeholder="Enter your email"
+                        />
+                        <button
+                            class="px-4 py-2 text-white bg-blue-500 rounded-r-lg shadow border border-blue-500"
+                        >
+                            Join Now
+                        </button>
+                    </div>
                 </div>
             </div>
             <!--Second item-->
@@ -73,13 +84,24 @@
                     alt="..."
                 />
                 <div
-                    class="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block"
+                    class="absolute inset-x-[15%] top-1/2 transform -translate-y-1/2 text-center text-white md:block"
                 >
-                    <h5 class="text-xl">Second slide label</h5>
-                    <p>
-                        Some representative placeholder content for the second
-                        slide.
-                    </p>
+                    <h2 class="text-4xl font-bold">Title 2</h2>
+                    <p class="mt-4">Subtitle 2</p>
+                    <div
+                        class="max-w-sm mx-auto bg-transparent flex items-center mt-5"
+                    >
+                        <input
+                            type="text"
+                            class="flex-grow px-4 py-2 rounded-l-lg bg-transparent border border-white placeholder-white text-white"
+                            placeholder="Enter your email"
+                        />
+                        <button
+                            class="px-4 py-2 text-white bg-blue-500 rounded-r-lg shadow border border-blue-500"
+                        >
+                            Join Now
+                        </button>
+                    </div>
                 </div>
             </div>
             <!--Third item-->
@@ -94,13 +116,24 @@
                     alt="..."
                 />
                 <div
-                    class="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block"
+                    class="absolute inset-x-[15%] top-1/2 transform -translate-y-1/2 text-center text-white md:block"
                 >
-                    <h5 class="text-xl">Third slide label</h5>
-                    <p>
-                        Some representative placeholder content for the third
-                        slide.
-                    </p>
+                    <h2 class="text-4xl font-bold">Title 3</h2>
+                    <p class="mt-4">Subtitle 3</p>
+                    <div
+                        class="max-w-sm mx-auto bg-transparent flex items-center mt-5"
+                    >
+                        <input
+                            type="text"
+                            class="flex-grow px-4 py-2 rounded-l-lg bg-transparent border border-white placeholder-white text-white"
+                            placeholder="Enter your email"
+                        />
+                        <button
+                            class="px-4 py-2 text-white bg-blue-500 rounded-r-lg shadow border border-blue-500"
+                        >
+                            Join Now
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -169,7 +202,7 @@ import { Carousel, initTE } from "tw-elements";
 export default {
     mounted() {
         // Call the initTE function to initialize the "tw-elements" library
-        initTE({Carousel});
+        initTE({ Carousel });
     },
 };
 </script>

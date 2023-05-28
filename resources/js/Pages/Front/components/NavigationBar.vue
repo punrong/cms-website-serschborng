@@ -51,7 +51,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div v-else>
+                    <div class="mt-2" v-else>
                         <a
                             :href="route('register')"
                             class="text-gray-900 hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-3"
@@ -60,7 +60,7 @@
                         </a>
                         <a
                             :href="route('login')"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 sm:mr-0"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 sm:mr-3"
                         >
                             Sign In
                         </a>
@@ -94,7 +94,7 @@
 
                 <!-- Web View -->
                 <div
-                    class="items-center justify-between hidden w-full sm:flex sm:w-auto sm:order-1"
+                    class="items-center justify-between hidden w-full sm:flex sm:w-auto sm:order-1 mt-2"
                     id="navbar-sticky"
                 >
                     <ul
