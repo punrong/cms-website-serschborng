@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\PageSettingController;
+use App\Http\Controllers\Admin\JoinOurNetworkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,12 @@ Route::group([
 
     // Page Settings
     Route::resource('/page-settings', PageSettingController::class)->except(['show', 'create', 'store', 'destory']);
+
+    // Join Our Networks
+    Route::resource('/join-our-networks', JoinOurNetworkController::class)->except(['show', 'create', 'edit', 'update', 'destory']);
+    Route::group(['prefix' => 'join-our-networks/api'], function () {
+        Route::get('get/our-network/data', [JoinOurNetworkController::class, 'getOurNetworkData'])->name('join-our-networks.getData');
+    });
 
     // Profile Setting
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -123,6 +123,12 @@ export default {
                     can: res.data.can.categories,
                 },
                 {
+                    title: "Join Our Networks",
+                    icon: "fa-solid fa-gear",
+                    route: route("join-our-networks.index"),
+                    can: res.data.can.join_our_networks,
+                },
+                {
                     title: "Page Settings",
                     icon: "fa-solid fa-gear",
                     route: route("page-settings.index"),
