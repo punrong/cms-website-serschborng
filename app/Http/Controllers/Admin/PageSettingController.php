@@ -45,10 +45,6 @@ class PageSettingController extends Controller
             ]);
     }
 
-    public function getPageSetting(){
-        return PageSetting::first();
-    }
-
     private function validateRequest($request)
     {
         $request->validate([

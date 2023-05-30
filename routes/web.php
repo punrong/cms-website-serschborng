@@ -1,5 +1,12 @@
 <?php
 
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Admin\PageSettingController;
+use App\Http\Controllers\Admin\JoinOurNetworkController;
+use App\Http\Controllers\Admin\PublicController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserController;
@@ -7,12 +14,6 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Admin\CategoryController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\PageSettingController;
-use App\Http\Controllers\Admin\JoinOurNetworkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,9 +41,14 @@ Route::get('/dashboard', function () {
 
 require __DIR__ . '/auth.php';
 
-Route::group(['prefix' => 'page-settings/api'], function () {
-    Route::get('get/data', [PageSettingController::class, 'getPageSetting'])->name('page-settings.getData');
+Route::group(['prefix' => 'public/api'], function () {
+    Route::get('get/cover/data', [PublicController::class, 'getCoverData'])->name('public.getCoverData');
+    Route::get('get/page-settings/data', [PublicController::class, 'getPageSettingData'])->name('public.getPageSettingData');
+    Route::get('get/join-us/data', [PublicController::class, 'getJoinUsData'])->name('public.getJoinUsData');
 });
+
+// Join Our Networks
+Route::post('/join-our-networks', [JoinOurNetworkController::class, 'store'])->name('join-our-networks.store');
 
 Route::group([
     'prefix' => 'admin',
@@ -54,10 +60,10 @@ Route::group([
     });
 
     // Page Settings
-    Route::resource('/page-settings', PageSettingController::class)->except(['show', 'create', 'store', 'destory']);
+    Route::resource('/page-settings', PageSettingController::class)->except(['show', 'create', 'store', 'destroy']);
 
     // Join Our Networks
-    Route::resource('/join-our-networks', JoinOurNetworkController::class)->except(['show', 'create', 'edit', 'update', 'destory']);
+    Route::resource('/join-our-networks', JoinOurNetworkController::class)->except(['create', 'store', 'update', 'edit', 'destroy']);
     Route::group(['prefix' => 'join-our-networks/api'], function () {
         Route::get('get/our-network/data', [JoinOurNetworkController::class, 'getOurNetworkData'])->name('join-our-networks.getData');
     });

@@ -48,4 +48,10 @@ class Post extends Model
         else
             return true;
     }
+
+    public static function getFirstPostByCategory($category_id){
+        $post = Post::where('category_id', $category_id)->where('status','ACT')->first();
+        $post->image = $post->image ? asset($post->image) : null;
+        return $post;
+    }
 }
