@@ -27,19 +27,7 @@ import { createFormKitInputsPlugin } from "@kgierke/formkit-inputs";
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Sers Chborng';
 const formKitInputPlugin = createFormKitInputsPlugin();
 
-library.add(faHouse);
-library.add(faCircleArrowLeft);
-library.add(faSignOut);
-library.add(faTableColumns);
-library.add(faUsers);
-library.add(faUniversalAccess);
-library.add(faPeopleRoof);
-library.add(faMailBulk)
-library.add(faGear)
-library.add(faLayerGroup)
-library.add(faPersonChalkboard)
-library.add(faUser)
-library.add(faCaretDown)
+library.add(faHouse, faCircleArrowLeft, faSignOut, faTableColumns, faUsers, faUniversalAccess, faPeopleRoof, faMailBulk, faGear, faLayerGroup, faPersonChalkboard, faUser, faCaretDown);
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
