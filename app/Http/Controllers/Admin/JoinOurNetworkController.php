@@ -11,7 +11,7 @@ class JoinOurNetworkController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:category list', ['only' => ['index', 'show']]);
+        $this->middleware('can:join-our-networks list', ['only' => ['index', 'show']]);
     }
 
     public function index()
@@ -25,12 +25,15 @@ class JoinOurNetworkController extends Controller
 
         return response()->json([
             'success' => true,
-            'payload' => PrimevueDatatables::of(JoinOurNetwork::select('id', 'email')->orderBy($sortField, $sortOrder))->make()
+            'payload' => PrimevueDatatables::of(JoinOurNetwork::select('id', 'name', 'email')->orderBy($sortField, $sortOrder))->make()
         ]);
     }
 
     public function store(Request $request)
     {
+        return response()->json([
+            'success' => true,
+        ]);
         $this->validateRequest($request);
         $ourNetwork = new JoinOurNetwork();
         $this->assignValue($request, $ourNetwork);
@@ -40,15 +43,25 @@ class JoinOurNetworkController extends Controller
             ]);
     }
 
+    public function show(JoinOurNetwork $join_our_network)
+    {
+        return Inertia::render('Admin/JoinOurNetwork/Detail', [
+            'join_our_network' => $join_our_network,
+        ]);
+    }
+
     private function validateRequest($request)
     {
         $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'name' => ['required','string', 'max:255'],
+            'email' => ['required','email', 'max:255'],
         ]);
     }
 
     private function assignValue($request, $ourNetwork)
     {
+        $ourNetwork->name = $request->name;
         $ourNetwork->email = $request->email;
+        $ourNetwork->message = $request->message;
     }
 }

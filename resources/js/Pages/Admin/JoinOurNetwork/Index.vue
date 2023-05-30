@@ -18,11 +18,6 @@
                     :columnFilters="filters"
                     :searchableColumns="searchableCols"
                     :can="can"
-                    @addNew="addNew"
-                    @confirmMultipleDeleteSelected="
-                        confirmMultipleDeleteSelected
-                    "
-                    @deleteBtnStatus="deleteBtnStatus"
                 >
                     <Column
                         v-if="can.delete"
@@ -30,13 +25,21 @@
                         headerStyle="width: 3em"
                     ></Column>
                     <Column
-                        field="id"
-                        header="ID"
+                        field="name"
+                        header="Name"
                         :sortable="true"
                         style="min-width: 12rem"
                     >
                         <template #body="{ data }">
-                            {{ data.id }}
+                            {{ data.name }}
+                        </template>
+                        <template #filter="{ filterModel }">
+                            <InputText
+                                type="text"
+                                v-model="filterModel.value"
+                                class="p-column-filter"
+                                placeholder="Search by name"
+                            />
                         </template>
                     </Column>
                     <Column
@@ -57,6 +60,21 @@
                             />
                         </template>
                     </Column>
+                    <Column
+                        field="actions"
+                        header="Actions"
+                        :exportable="false"
+                        style="min-width: 8rem"
+                    >
+                        <template #body="slotProps">
+                            <Button
+                                icon="pi pi-eye"
+                                class="p-button-rounded"
+                                style="margin-right: 5px"
+                                @click="show(slotProps.data.id)"
+                            />
+                        </template>
+                    </Column>
                 </DataTable>
             </div>
         </div>
@@ -67,6 +85,7 @@
 <script>
 import route from "ziggy-js";
 import DataTable from "../../../components/DataTable.vue";
+import { Inertia } from "@inertiajs/inertia";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 
 export default {
@@ -91,9 +110,18 @@ export default {
     },
 
     methods: {
+        show(id) {
+            Inertia.get(route("join-our-networks.show", id));
+        },
         initFilters() {
             this.filters = {
                 global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+                name: {
+                    operator: FilterOperator.AND,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                    ],
+                },
                 email: {
                     operator: FilterOperator.AND,
                     constraints: [
