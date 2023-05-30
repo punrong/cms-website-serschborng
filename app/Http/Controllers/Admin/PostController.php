@@ -119,7 +119,7 @@ class PostController extends Controller
             'status' => 'required',
             'category_id' => 'required',
             'image' => 'max:2048',
-            'sequence' => ['numeric','integer','min:1'],
+            // 'sequence' => ['numeric','integer','min:1'],
         ]);
     }
 
@@ -129,12 +129,18 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->status = $request->status;
         $post->category_id = $request->category_id;
-        $post->sequence = $request->sequence;
+        $post->sequence = $request->sequence ?? $request->sequence;
         if(isset($post->id))
             $post->updated_by = Auth::user()->id;
         else
             $post->created_by = Auth::user()->id;
         if ($request->hasFile('image')) {
+            if(isset($post->id) && isset($post->image)){
+                if (File::exists(public_path($post->image))) {
+                    // Delete the file
+                    File::delete(public_path($post->image));
+                }
+            }
             $image = $request->file('image');
             $imageName = time().'.'.$image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
