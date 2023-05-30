@@ -190,7 +190,8 @@ export default {
             formData.append("category_id", this.formData.category_id);
             formData.append("status", this.formData.status);
             formData.append("description", this.formData.description);
-            formData.append("sequence", this.formData.sequence);
+            if(this.formData.sequence)
+                formData.append("sequence", this.formData.sequence);
             for (var i = 0; i < this.formData.mentors.length; i++) {
                 formData.append('mentors[]', this.formData.mentors[i]);
             }

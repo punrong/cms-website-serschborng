@@ -184,7 +184,8 @@ export default {
             formData.append("title", this.formData.title);
             formData.append("category_id", this.formData.category_id);
             formData.append("status", this.formData.status);
-            formData.append("sequence", this.formData.sequence);
+            if(this.formData.sequence)
+                formData.append("sequence", this.formData.sequence);
             formData.append("description", this.formData.description);
             if (this.formData.mentors)
                 if (this.formData.mentors.length > 0)
