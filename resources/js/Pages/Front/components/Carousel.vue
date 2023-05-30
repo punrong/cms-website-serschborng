@@ -41,7 +41,7 @@
         >
             <!--First item-->
             <div
-                class="relative float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+                class="relative max-h-max float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
                 data-te-carousel-active
                 data-te-carousel-item
                 style="backface-visibility: hidden"
@@ -60,16 +60,22 @@
                         class="max-w-sm mx-auto bg-transparent flex items-center mt-5"
                     >
                         <input
-                            type="text"
+                            type="email"
+                            v-model="formData.email"
                             class="flex-grow px-4 py-2 rounded-l-lg bg-transparent border border-white placeholder-white text-white"
                             placeholder="Enter your email"
                         />
                         <button
                             class="px-4 py-2 text-white bg-blue-500 rounded-r-lg shadow border border-blue-500"
+                            @click="onSubmit"
                         >
                             Join Now
                         </button>
                     </div>
+                    <InputError
+                        class="text-red-500 text-sm font-bold"
+                        :message="errorMsg"
+                    />
                 </div>
             </div>
             <!--Second item-->
@@ -92,16 +98,22 @@
                         class="max-w-sm mx-auto bg-transparent flex items-center mt-5"
                     >
                         <input
-                            type="text"
+                            type="email"
+                            v-model="formData.email"
                             class="flex-grow px-4 py-2 rounded-l-lg bg-transparent border border-white placeholder-white text-white"
                             placeholder="Enter your email"
                         />
                         <button
                             class="px-4 py-2 text-white bg-blue-500 rounded-r-lg shadow border border-blue-500"
+                            @click="onSubmit"
                         >
                             Join Now
                         </button>
                     </div>
+                    <InputError
+                        class="text-red-500 text-sm font-bold"
+                        :message="errorMsg"
+                    />
                 </div>
             </div>
             <!--Third item-->
@@ -124,16 +136,22 @@
                         class="max-w-sm mx-auto bg-transparent flex items-center mt-5"
                     >
                         <input
-                            type="text"
+                            type="email"
+                            v-model="formData.email"
                             class="flex-grow px-4 py-2 rounded-l-lg bg-transparent border border-white placeholder-white text-white"
                             placeholder="Enter your email"
                         />
                         <button
                             class="px-4 py-2 text-white bg-blue-500 rounded-r-lg shadow border border-blue-500"
+                            @click="onSubmit"
                         >
                             Join Now
                         </button>
                     </div>
+                    <InputError
+                        class="text-red-500 text-sm font-bold"
+                        :message="errorMsg"
+                    />
                 </div>
             </div>
         </div>
@@ -199,10 +217,42 @@
 
 <script>
 import { Carousel, initTE } from "tw-elements";
+import InputError from "@/components/InputError.vue";
+import axios from "axios";
 export default {
+    components: {
+        InputError,
+    },
+    data() {
+        return {
+            formData: {
+                email: "",
+            },
+            errorMsg: null,
+        };
+    },
     mounted() {
         // Call the initTE function to initialize the "tw-elements" library
         initTE({ Carousel });
+    },
+    methods: {
+        onSubmit() {
+            axios
+                .post(route("join-our-networks.store"), this.formData)
+                .then((res) => {
+                    if (res.data.success) this.formData.email = "";
+                })
+                .catch((err) => {
+                    if (err.response.status === 422)
+                        this.errorMsg = err.response.data.message;
+                    this.$toast.add({
+                        severity: "error",
+                        summary: "Error Message",
+                        detail: err.response.data.message,
+                        life: 3000,
+                    });
+                });
+        },
     },
 };
 </script>

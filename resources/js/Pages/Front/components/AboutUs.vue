@@ -1,7 +1,7 @@
 <template>
     <div class="container mx-auto py-8">
         <div class="text-center">
-            <h5 class="text-3xl font-bold mt-5">About Us</h5>
+            <h5 class="text-3xl font-bold">About Us</h5>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 m-5">
             <div class="flex justify-end">

@@ -15,7 +15,7 @@
                 </a>
                 <div class="flex sm:order-2">
                     <!-- Conditional rendering block -->
-                    <div v-if="$page.props.auth.user" class="relative">
+                    <div v-if="$page.props.auth.user" class="relative invisible sm:visible">
                         <button
                             @click="toggleDropdown"
                             class="flex items-center text-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-3"
@@ -51,7 +51,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="mt-2" v-else>
+                    <div class="mt-2 invisible sm:visible" v-else>
                         <a
                             :href="route('register')"
                             class="text-gray-900 hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-3"
