@@ -8,18 +8,17 @@
                     >
                         <div class="px-4 py-5 flex-auto">
                             <div
-                                class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400"
+                                class="p-3 text-center inline-flex items-center justify-center h-12 mt-5 mb-5"
                             >
-                                <i class="fas fa-award"></i>
+                                <img :src="featureData[0].image" class="h-20" />
                             </div>
                             <h6 class="text-xl font-semibold">
-                                Awarded Agency
+                                {{ featureData[0].title }}
                             </h6>
-                            <p class="mt-2 mb-4 text-gray-600">
-                                Divide details about your product or agency work
-                                into parts. A paragraph describing a feature
-                                will be enough.
-                            </p>
+                            <p
+                                class="mt-2 mb-4 text-gray-600"
+                                v-html="featureData[0].description"
+                            ></p>
                         </div>
                     </div>
                 </div>
@@ -29,18 +28,17 @@
                     >
                         <div class="px-4 py-5 flex-auto">
                             <div
-                                class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-blue-400"
+                                class="p-3 text-center inline-flex items-center justify-center h-12 mt-5 mb-5"
                             >
-                                <i class="fas fa-retweet"></i>
+                                <img :src="featureData[1].image" class="h-20" />
                             </div>
                             <h6 class="text-xl font-semibold">
-                                Free Revisions
+                                {{ featureData[1].title }}
                             </h6>
-                            <p class="mt-2 mb-4 text-gray-600">
-                                Keep you user engaged by providing meaningful
-                                information. Remember that by this time, the
-                                user is curious.
-                            </p>
+                            <p
+                                class="mt-2 mb-4 text-gray-600"
+                                v-html="featureData[1].description"
+                            ></p>
                         </div>
                     </div>
                 </div>
@@ -50,18 +48,17 @@
                     >
                         <div class="px-4 py-5 flex-auto">
                             <div
-                                class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-green-400"
+                                class="p-3 text-center inline-flex items-center justify-center h-12 mt-5 mb-5"
                             >
-                                <i class="fas fa-fingerprint"></i>
+                                <img :src="featureData[2].image" class="h-20" />
                             </div>
                             <h6 class="text-xl font-semibold">
-                                Verified Company
+                                {{ featureData[2].title }}
                             </h6>
-                            <p class="mt-2 mb-4 text-gray-600">
-                                Write a few lines about each one. A paragraph
-                                describing a feature will be enough. Keep you
-                                user engaged!
-                            </p>
+                            <p
+                                class="mt-2 mb-4 text-gray-600"
+                                v-html="featureData[2].description"
+                            ></p>
                         </div>
                     </div>
                 </div>
@@ -136,5 +133,16 @@
     </section>
 </template>
 <script>
-export default {};
+import InputError from "@/components/InputError.vue";
+export default {
+    props: {
+        featureData: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
+    components: {
+        InputError,
+    },
+};
 </script>

@@ -54,4 +54,12 @@ class Post extends Model
         $post->image = $post->image ? asset($post->image) : null;
         return $post;
     }
+
+    public static function getTopThreePostByCategory($category_id){
+        $posts = Post::where('category_id', $category_id)->where('status','ACT')->orderBy('sequence')->take(3)->get();
+        foreach($posts as $post){
+            $post->image = $post->image ? asset($post->image) : null;
+        }
+        return $posts;
+    }
 }

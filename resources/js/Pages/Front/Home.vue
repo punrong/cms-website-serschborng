@@ -3,7 +3,7 @@
       <main>
         <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting"/>
         <Hero v-if="coverData" :coverData="this.coverData"/>
-        <Features/>
+        <Features v-if="featureData" :featureData="this.featureData"/>
         <About/>
         <Team/>
         <Services/>
@@ -44,6 +44,7 @@
             pageSetting: null,
             coverData: null,
             joinUsData: null,
+            featureData: null,
         };
     },
     methods: {
@@ -62,11 +63,17 @@
                 this.joinUsData = res.data;
             });
         },
+        getFeatureData(){
+          axios.get(route("public.getFeatureData")).then((res) => {
+                this.featureData = res.data;
+            });
+        },
     },
     mounted(){
         this.getPageSetting()
         this.getCoverData()
         this.getJoinUsData()
+        this.getFeatureData()
     }
   };
   </script>

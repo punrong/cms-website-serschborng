@@ -39,6 +39,7 @@ Route::group(['prefix' => 'public/api'], function () {
     Route::get('get/cover/data', [PublicController::class, 'getCoverData'])->name('public.getCoverData');
     Route::get('get/page-settings/data', [PublicController::class, 'getPageSettingData'])->name('public.getPageSettingData');
     Route::get('get/join-us/data', [PublicController::class, 'getJoinUsData'])->name('public.getJoinUsData');
+    Route::get('get/feature/data', [PublicController::class, 'getFeatureData'])->name('public.getFeatureData');
 });
 
 // Join Our Networks

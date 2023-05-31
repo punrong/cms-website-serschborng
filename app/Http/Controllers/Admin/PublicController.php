@@ -20,4 +20,9 @@ class PublicController extends Controller
         $joinUsId = Category::where('code', 'JOIN_US')->value('id');
         return Post::getFirstPostByCategory($joinUsId);
     }
+
+    public function getFeatureData(){
+        $featureId = Category::where('code', 'FEATURES')->value('id');
+        return Post::getTopThreePostByCategory($featureId);
+    }
 }
