@@ -9,7 +9,7 @@
                         <FormKit
                             v-model="formData"
                             type="form"
-                            id="myForm"
+                            id="joinUsForm"
                             :actions="false"
                             :config="{
                                 classes: {
@@ -118,7 +118,7 @@ export default {
                 .post(route("join-our-networks.store"), this.formData)
                 .then((res) => {
                     if (res.data.success) {
-                        this.$formkit.reset("myForm");
+                        this.$formkit.reset("joinUsForm");
                         this.complete = true;
                     }
                 })
