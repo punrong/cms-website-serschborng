@@ -23,57 +23,50 @@
             <div class="flex flex-wrap text-center justify-center">
                 <div class="w-full lg:w-6/12 px-4">
                     <h2 class="text-4xl font-semibold text-white">
-                        Build something
+                        {{ ourServiceTitleData.title }}
                     </h2>
-                    <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
-                        Put the potentially record low maximum sea ice extent
-                        tihs year down to low ice. According to the National
-                        Oceanic and Atmospheric Administration, Ted, Scambos.
-                    </p>
+                    <p
+                        class="text-lg leading-relaxed mt-4 mb-4 text-gray-500"
+                        v-html="ourServiceTitleData.description"
+                    ></p>
                 </div>
             </div>
-            <div class="flex flex-wrap mt-12 justify-center">
+            <div class="flex flex-wrap mt-12 mb-12 sm:mb-0 justify-center">
                 <div class="w-full lg:w-3/12 px-4 text-center">
-                    <div
-                        class="text-gray-900 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center"
-                    >
-                        <i class="fas fa-medal text-xl"></i>
+                    <div class="p-3 inline-flex items-center justify-center">
+                        <img :src="ourServiceItemData[0].image" class="h-20" />
                     </div>
                     <h6 class="text-xl mt-5 font-semibold text-white">
-                        Excelent Services
+                        {{ ourServiceItemData[0].title }}
                     </h6>
-                    <p class="mt-2 mb-4 text-gray-500">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                    </p>
+                    <p
+                        class="mt-2 mb-4 text-gray-500"
+                        v-html="ourServiceItemData[0].description"
+                    ></p>
                 </div>
                 <div class="w-full lg:w-3/12 px-4 text-center">
-                    <div
-                        class="text-gray-900 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center"
-                    >
-                        <i class="fas fa-poll text-xl"></i>
+                    <div class="p-3 inline-flex items-center justify-center">
+                        <img :src="ourServiceItemData[1].image" class="h-20" />
                     </div>
                     <h5 class="text-xl mt-5 font-semibold text-white">
-                        Grow your market
+                        {{ ourServiceItemData[1].title }}
                     </h5>
-                    <p class="mt-2 mb-4 text-gray-500">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                    </p>
+                    <p
+                        class="mt-2 mb-4 text-gray-500"
+                        v-html="ourServiceItemData[1].description"
+                    ></p>
                 </div>
                 <div class="w-full lg:w-3/12 px-4 text-center">
-                    <div
-                        class="text-gray-900 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center"
-                    >
-                        <i class="fas fa-lightbulb text-xl"></i>
+                    <div class="p-3 inline-flex items-center justify-center">
+                        <img :src="ourServiceItemData[2].image" class="h-20" />
                     </div>
                     <h5 class="text-xl mt-5 font-semibold text-white">
-                        Launch time
+                        {{ ourServiceItemData[2].title }}
                     </h5>
-                    <p class="mt-2 mb-4 text-gray-500">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                    </p>
+                    <p
+                        class="mt-2 mb-4 text-gray-500"
+                        v-html="ourServiceItemData[2].description"
+                    ></p>
                 </div>
             </div>
         </div>
@@ -81,7 +74,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+    props: {
+        ourServiceTitleData: {
+            type: Object,
+            default: () => ({}),
+        },
+        ourServiceItemData: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
+};
 </script>
 
 <style></style>
