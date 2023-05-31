@@ -11,7 +11,6 @@
                             <img
                                 src="../../../../../public/logo.png"
                                 class="h-20 mr-3"
-                                alt="FlowBite Logo"
                             />
                             <span
                                 class="self-center text-2xl font-semibold whitespace-nowrap text-white"
