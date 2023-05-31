@@ -25,4 +25,14 @@ class PublicController extends Controller
         $featureId = Category::where('code', 'FEATURES')->value('id');
         return Post::getTopThreePostByCategory($featureId);
     }
+
+    public function getAboutUsTextData(){
+        $aboutUsTextId = Category::where('code', 'ABOUT_US')->value('id');
+        return Post::getFirstPostByCategory($aboutUsTextId);
+    }
+
+    public function getAboutUsCardData(){
+        $aboutUsCardId = Category::where('code', 'ABOUT_US_C')->value('id');
+        return Post::getFirstPostByCategory($aboutUsCardId);
+    }
 }

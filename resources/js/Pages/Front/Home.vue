@@ -3,7 +3,7 @@
       <main>
         <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting"/>
         <Hero v-if="coverData" :coverData="this.coverData"/>
-        <Features v-if="featureData" :featureData="this.featureData"/>
+        <Features v-if="featureData && aboutUsTextData && aboutUsCardData" :featureData="this.featureData" :aboutUsTextData="this.aboutUsTextData" :aboutUsCardData="aboutUsCardData"/>
         <About/>
         <Team/>
         <Services/>
@@ -45,6 +45,8 @@
             coverData: null,
             joinUsData: null,
             featureData: null,
+            aboutUsTextData: null,
+            aboutUsCardData: null,
         };
     },
     methods: {
@@ -68,12 +70,24 @@
                 this.featureData = res.data;
             });
         },
+        getAboutUsTextData(){
+          axios.get(route("public.getAboutUsTextData")).then((res) => {
+                this.aboutUsTextData = res.data;
+            });
+        },
+        getAboutUsCardData(){
+          axios.get(route("public.getAboutUsCardData")).then((res) => {
+                this.aboutUsCardData = res.data;
+            });
+        },
     },
     mounted(){
         this.getPageSetting()
         this.getCoverData()
         this.getJoinUsData()
         this.getFeatureData()
+        this.getAboutUsTextData()
+        this.getAboutUsCardData()
     }
   };
   </script>

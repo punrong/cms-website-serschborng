@@ -40,6 +40,8 @@ Route::group(['prefix' => 'public/api'], function () {
     Route::get('get/page-settings/data', [PublicController::class, 'getPageSettingData'])->name('public.getPageSettingData');
     Route::get('get/join-us/data', [PublicController::class, 'getJoinUsData'])->name('public.getJoinUsData');
     Route::get('get/feature/data', [PublicController::class, 'getFeatureData'])->name('public.getFeatureData');
+    Route::get('get/about-us-text/data', [PublicController::class, 'getAboutUsTextData'])->name('public.getAboutUsTextData');
+    Route::get('get/about-us-card/data', [PublicController::class, 'getAboutUsCardData'])->name('public.getAboutUsCardData');
 });
 
 // Join Our Networks
