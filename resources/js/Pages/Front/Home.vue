@@ -5,7 +5,7 @@
         <Hero v-if="coverData" :coverData="this.coverData"/>
         <Features v-if="featureData && aboutUsTextData && aboutUsCardData" :featureData="this.featureData" :aboutUsTextData="this.aboutUsTextData" :aboutUsCardData="aboutUsCardData"/>
         <Mission v-if="ourMissionData" :ourMissionData="ourMissionData"/>
-        <Team/>
+        <Team v-if="ourHeroTitleData && ourHeroItemData" :ourHeroTitleData="ourHeroTitleData" :ourHeroItemData="ourHeroItemData"/>
         <Services/>
         <Contact v-if="joinUsData" :joinUsData="this.joinUsData"/>
         <Footer v-if="pageSetting" :pageSetting="this.pageSetting"/>
@@ -48,6 +48,8 @@
             aboutUsTextData: null,
             aboutUsCardData: null,
             ourMissionData: null,
+            ourHeroTitleData: null,
+            ourHeroItemData: null,
         };
     },
     methods: {
@@ -86,6 +88,16 @@
                 this.ourMissionData = res.data;
             });
         },
+        getOurHeroTitleData(){
+          axios.get(route("public.getOurHeroTitleData")).then((res) => {
+                this.ourHeroTitleData = res.data;
+            });
+        },
+        getOurHeroItemData(){
+          axios.get(route("public.getOurHeroItemData")).then((res) => {
+                this.ourHeroItemData = res.data;
+            });
+        },
     },
     mounted(){
         this.getPageSetting()
@@ -95,6 +107,8 @@
         this.getAboutUsTextData()
         this.getAboutUsCardData()
         this.getOurMissionData()
+        this.getOurHeroTitleData()
+        this.getOurHeroItemData()
     }
   };
   </script>

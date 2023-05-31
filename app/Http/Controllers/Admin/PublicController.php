@@ -40,4 +40,14 @@ class PublicController extends Controller
         $missionId = Category::where('code', 'MISSION')->value('id');
         return Post::getFirstPostByCategory($missionId);
     }
+
+    public function getOurHeroTitleData(){
+        $ourHeroTitleId = Category::where('code', 'HERO_TITLE')->value('id');
+        return Post::getFirstPostByCategory($ourHeroTitleId);
+    }
+
+    public function getOurHeroItemData(){
+        $ourHeroItemId = Category::where('code', 'HERO_ITEM')->value('id');
+        return Post::getFirstPostByCategory($ourHeroItemId);
+    }
 }
