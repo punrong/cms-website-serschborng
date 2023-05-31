@@ -4,7 +4,7 @@
         <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting"/>
         <Hero v-if="coverData" :coverData="this.coverData"/>
         <Features v-if="featureData && aboutUsTextData && aboutUsCardData" :featureData="this.featureData" :aboutUsTextData="this.aboutUsTextData" :aboutUsCardData="aboutUsCardData"/>
-        <About/>
+        <Mission v-if="ourMissionData" :ourMissionData="ourMissionData"/>
         <Team/>
         <Services/>
         <Contact v-if="joinUsData" :joinUsData="this.joinUsData"/>
@@ -15,7 +15,7 @@
   
   <script>
   import axios from "axios";
-  import About from "./components/About.vue";
+  import Mission from "./components/Mission.vue";
   import Contact from "./components/Contact.vue";
   import Features from "./components/Features.vue";
   import Hero from "./components/Hero.vue";
@@ -28,7 +28,7 @@
   export default {
     name: "App",
     components: {
-      About,
+      Mission,
       Contact,
       Features,
       Hero,
@@ -47,6 +47,7 @@
             featureData: null,
             aboutUsTextData: null,
             aboutUsCardData: null,
+            ourMissionData: null,
         };
     },
     methods: {
@@ -80,6 +81,11 @@
                 this.aboutUsCardData = res.data;
             });
         },
+        getOurMissionData(){
+          axios.get(route("public.getOurMissionData")).then((res) => {
+                this.ourMissionData = res.data;
+            });
+        },
     },
     mounted(){
         this.getPageSetting()
@@ -88,6 +94,7 @@
         this.getFeatureData()
         this.getAboutUsTextData()
         this.getAboutUsCardData()
+        this.getOurMissionData()
     }
   };
   </script>

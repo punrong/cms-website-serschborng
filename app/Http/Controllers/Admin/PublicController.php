@@ -35,4 +35,9 @@ class PublicController extends Controller
         $aboutUsCardId = Category::where('code', 'ABOUT_US_C')->value('id');
         return Post::getFirstPostByCategory($aboutUsCardId);
     }
+
+    public function getOurMissionData(){
+        $missionId = Category::where('code', 'MISSION')->value('id');
+        return Post::getFirstPostByCategory($missionId);
+    }
 }
