@@ -1,6 +1,8 @@
 <script setup>
 import InputError from "@/components/InputError.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
+import { reset } from '@formkit/core'
 
 const form = useForm({
     current_password: "",
@@ -11,11 +13,16 @@ const form = useForm({
 const updatePassword = () => {
     form.put(route("password.update"), {
         preserveScroll: true,
-        onSuccess: () => form.reset(),
+        onSuccess: () => {
+            reset("updatePasswordForm");
+            form.reset()
+            setTimeout(() => {
+                Inertia.post(route('logout'))
+            }, 2000);
+        },
         onError: () => {
-            if (form.errors.password)
-                form.reset("password", "password_confirmation");
-            if (form.errors.current_password) form.reset("current_password");
+            reset("updatePasswordForm");
+            form.reset()
         },
     });
 };
@@ -34,6 +41,7 @@ const updatePassword = () => {
 
         <FormKit
             type="form"
+            id="updatePasswordForm"
             @submit="updatePassword"
             :actions="false"
             :config="{
@@ -114,6 +122,7 @@ const updatePassword = () => {
                         class="font-bold text-base text-gray-600 mt-4"
                     >
                         Saved.
+                        Please log in again
                     </p>
                 </Transition>
             </div>
