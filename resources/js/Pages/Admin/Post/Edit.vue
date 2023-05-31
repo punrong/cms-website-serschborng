@@ -57,7 +57,7 @@
                                 type="select"
                                 label="Category *"
                                 :options="categoryList"
-                                name="category_id"
+                                v-model="formData.category_id"
                                 placeholder="Select a category"
                                 validation="required"
                                 :classes="{
