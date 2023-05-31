@@ -31,9 +31,6 @@ class JoinOurNetworkController extends Controller
 
     public function store(Request $request)
     {
-        return response()->json([
-            'success' => true,
-        ]);
         $this->validateRequest($request);
         $ourNetwork = new JoinOurNetwork();
         $this->assignValue($request, $ourNetwork);
