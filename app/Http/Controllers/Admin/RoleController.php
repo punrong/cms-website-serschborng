@@ -37,7 +37,7 @@ class RoleController extends Controller
 
         return response()->json([
             'success' => true,
-            'payload' => PrimevueDatatables::of(Role::select('id', 'name', 'code', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
+            'payload' => PrimevueDatatables::of(Role::select('id', 'name', 'code', 'status', 'sequence')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
         ]);
     }
 

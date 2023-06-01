@@ -34,7 +34,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'payload' => PrimevueDatatables::of(Category::select('id', 'name', 'code', 'description', 'status')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
+            'payload' => PrimevueDatatables::of(Category::select('id', 'name', 'code', 'description', 'status', 'sequence')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
         ]);
     }
 

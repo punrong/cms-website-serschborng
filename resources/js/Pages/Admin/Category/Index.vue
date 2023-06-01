@@ -35,9 +35,6 @@
                         :sortable="true"
                         style="min-width: 12rem"
                     >
-                        <template #body="{ data }">
-                            {{ data.name }}
-                        </template>
                         <template #filter="{ filterModel }">
                             <InputText
                                 type="text"
@@ -53,9 +50,6 @@
                         :sortable="true"
                         style="min-width: 12rem"
                     >
-                        <template #body="{ data }">
-                            {{ data.code }}
-                        </template>
                         <template #filter="{ filterModel }">
                             <InputText
                                 type="text"
@@ -64,6 +58,13 @@
                                 placeholder="Search by code"
                             />
                         </template>
+                    </Column>
+                    <Column
+                        field="sequence"
+                        header="Sequence"
+                        :sortable="true"
+                        style="min-width: 12rem"
+                    >
                     </Column>
                     <Column
                         field="status"

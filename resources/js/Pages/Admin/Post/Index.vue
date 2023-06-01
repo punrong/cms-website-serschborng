@@ -33,9 +33,6 @@
                         :sortable="true"
                         style="min-width: 12rem"
                     >
-                        <template #body="{ data }">
-                            {{ data.title }}
-                        </template>
                         <template #filter="{ filterModel }">
                             <InputText
                                 type="text"
@@ -69,6 +66,13 @@
                             >
                             </Dropdown>
                         </template>
+                    </Column>
+                    <Column
+                        field="sequence"
+                        header="Sequence"
+                        :sortable="true"
+                        style="min-width: 12rem"
+                    >
                     </Column>
                     <Column
                         field="status"
