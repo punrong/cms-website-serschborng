@@ -8,7 +8,7 @@
                     </p>
                 </div>
             </div>
-            <div class="flex flex-wrap">
+            <div class="flex flex-wrap justify-center">
                 <div class="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                     <div class="px-6">
                         <img
