@@ -47,6 +47,8 @@ Route::group(['prefix' => 'public/api'], function () {
     Route::get('get/our-hero-item/data', [PublicController::class, 'getOurHeroItemData'])->name('public.getOurHeroItemData');
     Route::get('get/our-service-title/data', [PublicController::class, 'getOurServiceTitleData'])->name('public.getOurServiceTitleData');
     Route::get('get/our-service-item/data', [PublicController::class, 'getOurServiceItemData'])->name('public.getOurServiceItemData');
+    Route::get('get/our-blog-title/data', [PublicController::class, 'getBlogPostTitleData'])->name('public.getBlogPostTitleData');
+    Route::get('get/our-blog-item/data', [PublicController::class, 'getBlogPostItemData'])->name('public.getBlogPostItemData');
 });
 
 // Join Our Networks
