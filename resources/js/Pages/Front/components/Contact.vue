@@ -22,11 +22,11 @@
                             }"
                         >
                             <div class="flex-auto p-5 lg:p-10">
-                                <h4 class="text-2xl font-semibold">
+                                <h4 class="text-2xl font-semibold text-center">
                                     {{ joinUsData.title }}
                                 </h4>
                                 <p
-                                    class="leading-relaxed mt-1 mb-4 text-gray-600"
+                                    class="leading-relaxed mt-1 mb-4 text-gray-600 text-center"
                                     v-html="joinUsData.description"
                                 >
                                 </p>
