@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white pt-14">
+    <div class="bg-white pb-14">
         <div class="flex flex-wrap justify-center text-center mb-10">
             <div class="w-full lg:w-6/12 px-4">
                 <h2 class="text-4xl font-semibold">
