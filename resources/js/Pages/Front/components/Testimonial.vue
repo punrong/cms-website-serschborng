@@ -1,100 +1,196 @@
 <template>
-    <div>
-        <div class="text-center">
-            <h5 class="text-3xl font-bold mt-5">Testimonial</h5>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 m-5">
+    <section class="bg-gray-200 mt-20">
+        <div
+            class="mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:me-0 lg:pe-0 lg:ps-8"
+        >
             <div
-                class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
+                class="grid grid-cols-1 gap-y-8 lg:grid-cols-3 lg:items-center lg:gap-x-16"
             >
-                <a href="#!">
-                    <img
-                        class="rounded-t-lg"
-                        src="https://tecdn.b-cdn.net/img/new/standard/nature/184.jpg"
-                        alt=""
-                    />
-                </a>
-                <div class="p-6">
-                    <h5
-                        class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50"
-                    >
-                        Card title
-                    </h5>
+                <div
+                    class="max-w-max text-center ltr:sm:text-left rtl:sm:text-right"
+                >
+                    <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+                        {{ testimonialTitleData.title }}
+                    </h2>
+
                     <p
-                        class="mb-4 text-base text-neutral-600 dark:text-neutral-200"
-                    >
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                    </p>
+                        class="mt-4 text-gray-500"
+                        v-html="testimonialTitleData.description"
+                    ></p>
+
+                    <div class="hidden justify-center lg:mt-8 lg:flex lg:gap-4">
+                        <button
+                            class="prev-button rounded-full border border-blue-600 p-3 text-blue-600 hover:bg-blue-600 hover:text-white"
+                        >
+                            <span class="sr-only">Previous Slide</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="h-5 w-5 rtl:rotate-180"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15.75 19.5L8.25 12l7.5-7.5"
+                                />
+                            </svg>
+                        </button>
+
+                        <button
+                            class="next-button rounded-full border border-blue-600 p-3 text-blue-600 hover:bg-blue-600 hover:text-white"
+                        >
+                            <span class="sr-only">Next Slide</span>
+                            <svg
+                                class="h-5 w-5 rtl:rotate-180"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M9 5l7 7-7 7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="-mx-6 lg:col-span-2 lg:mx-0">
+                    <div class="swiper-container !overflow-hidden">
+                        <div class="swiper-wrapper">
+                            <div
+                                v-for="(
+                                    testimonialItem, index
+                                ) in testimonialItemData"
+                                :key="index"
+                                class="swiper-slide"
+                            >
+                                <blockquote
+                                    class="flex h-full flex-col justify-center items-center bg-white p-12"
+                                >
+                                    <div
+                                        class="w-9/12 sm:w-7/12 md:w-6/12 lg:w-6/12"
+                                    >
+                                        <img
+                                            :src="testimonialItem.image"
+                                            class="shadow-lg rounded-full"
+                                        />
+                                    </div>
+                                    <div>
+                                        <div class="mt-4">
+                                            <p
+                                                class="text-2xl font-bold text-blue-600 sm:text-3xl"
+                                            >
+                                                {{ testimonialItem.title }}
+                                            </p>
+
+                                            <p
+                                                class="mt-4 leading-relaxed text-gray-500"
+                                                v-html="
+                                                    testimonialItem.description
+                                                "
+                                            ></p>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div
-                class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
-            >
-                <a href="#!">
-                    <img
-                        class="rounded-t-lg"
-                        src="https://tecdn.b-cdn.net/img/new/standard/nature/184.jpg"
-                        alt=""
-                    />
-                </a>
-                <div class="p-6">
-                    <h5
-                        class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50"
+
+            <div class="mt-8 flex justify-center gap-4 lg:hidden">
+                <button
+                    aria-label="Previous slide"
+                    class="prev-button rounded-full border border-blue-600 p-4 text-blue-600 hover:bg-blue-600 hover:text-white"
+                >
+                    <svg
+                        class="h-5 w-5 -rotate-180 transform"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
                     >
-                        Card title
-                    </h5>
-                    <p
-                        class="mb-4 text-base text-neutral-600 dark:text-neutral-200"
+                        <path
+                            d="M9 5l7 7-7 7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                        />
+                    </svg>
+                </button>
+
+                <button
+                    aria-label="Next slide"
+                    class="next-button rounded-full border border-blue-600 p-4 text-blue-600 hover:bg-blue-600 hover:text-white"
+                >
+                    <svg
+                        class="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
                     >
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                    </p>
-                </div>
-            </div>
-            <div
-                class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
-            >
-                <a href="#!">
-                    <img
-                        class="rounded-t-lg"
-                        src="https://tecdn.b-cdn.net/img/new/standard/nature/184.jpg"
-                        alt=""
-                    />
-                </a>
-                <div class="p-6">
-                    <h5
-                        class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50"
-                    >
-                        Card title
-                    </h5>
-                    <p
-                        class="mb-4 text-base text-neutral-600 dark:text-neutral-200"
-                    >
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                    </p>
-                </div>
+                        <path
+                            d="M9 5l7 7-7 7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                        />
+                    </svg>
+                </button>
             </div>
         </div>
-        <div class="text-center mb-5">
-            <button
-                type="button"
-                class="inline-block rounded-full border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-primary-600 focus:border-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
-                data-te-ripple-init
-            >
-                View Blog Post
-            </button>
-        </div>
-    </div>
+    </section>
 </template>
 
 <script>
 import { Ripple, initTE } from "tw-elements";
+import Swiper from "swiper";
+import "swiper/swiper-bundle.min.css";
 export default {
+    props: {
+        testimonialTitleData: {
+            type: Object,
+            default: () => ({}),
+        },
+        testimonialItemData: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
     mounted() {
         // Call the initTE function to initialize the "tw-elements" library
         initTE({ Ripple });
+
+        new Swiper(".swiper-container", {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 32,
+            autoplay: {
+                delay: 8000,
+            },
+            breakpoints: {
+                640: {
+                    centeredSlides: true,
+                    slidesPerView: 1.25,
+                },
+                1024: {
+                    centeredSlides: false,
+                    slidesPerView: 1.5,
+                },
+            },
+            navigation: {
+                nextEl: ".next-button",
+                prevEl: ".prev-button",
+            },
+        });
     },
 };
 </script>

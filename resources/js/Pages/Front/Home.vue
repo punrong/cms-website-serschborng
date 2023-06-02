@@ -10,6 +10,11 @@
                 :aboutUsCardData="aboutUsCardData"
             />
             <Mission v-if="ourMissionData" :ourMissionData="ourMissionData" />
+            <Testimonial
+                v-if="testimonialTitleData && testimonialItemData"
+                :testimonialTitleData="testimonialTitleData"
+                :testimonialItemData="testimonialItemData"
+            />
             <BlogPost
                 v-if="blogPostTitleData && blogPostItemData"
                 :blogPostTitleData="blogPostTitleData"
@@ -72,6 +77,8 @@ export default {
             ourServiceItemData: null,
             blogPostTitleData: null,
             blogPostItemData: null,
+            testimonialTitleData: null,
+            testimonialItemData: null,
         };
     },
     methods: {
@@ -140,6 +147,16 @@ export default {
                 this.blogPostItemData = res.data;
             });
         },
+        getTestimonialTitleData() {
+            axios.get(route("public.getTestimonialTitleData")).then((res) => {
+                this.testimonialTitleData = res.data;
+            });
+        },
+        getTestimonialItemData() {
+            axios.get(route("public.getTestimonialItemData")).then((res) => {
+                this.testimonialItemData = res.data;
+            });
+        },
     },
     mounted() {
         this.getPageSetting();
@@ -155,6 +172,8 @@ export default {
         this.getOurServiceItemData();
         this.getBlogPostTitleData();
         this.getBlogPostItemData();
+        this.getTestimonialTitleData();
+        this.getTestimonialItemData();
     },
 };
 </script>

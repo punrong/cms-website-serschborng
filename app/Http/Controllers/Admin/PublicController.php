@@ -70,4 +70,14 @@ class PublicController extends Controller
         $blogPostItemId = Category::where('code', 'BLOG_ITEM')->value('id');
         return Post::getTopThreePostByCategory($blogPostItemId);
     }
+
+    public function getTestimonialTitleData(){
+        $testimonialitleId = Category::where('code', 'TEST_TITLE')->value('id');
+        return Post::getFirstPostByCategory($testimonialitleId);
+    }
+
+    public function getTestimonialItemData(){
+        $testimonialItemId = Category::where('code', 'TEST_ITEM')->value('id');
+        return Post::getTopThreePostByCategory($testimonialItemId);
+    }
 }
