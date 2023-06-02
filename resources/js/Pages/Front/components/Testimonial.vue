@@ -20,7 +20,7 @@
 
                     <div class="hidden justify-center lg:mt-8 lg:flex lg:gap-4">
                         <button
-                            class="prev-button rounded-full border border-blue-600 p-3 text-blue-600 hover:bg-blue-600 hover:text-white"
+                            class="prev-button-testimonial rounded-full border border-blue-600 p-3 text-blue-600 hover:bg-blue-600 hover:text-white"
                         >
                             <span class="sr-only">Previous Slide</span>
                             <svg
@@ -40,7 +40,7 @@
                         </button>
 
                         <button
-                            class="next-button rounded-full border border-blue-600 p-3 text-blue-600 hover:bg-blue-600 hover:text-white"
+                            class="next-button-testimonial rounded-full border border-blue-600 p-3 text-blue-600 hover:bg-blue-600 hover:text-white"
                         >
                             <span class="sr-only">Next Slide</span>
                             <svg
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="-mx-6 lg:col-span-2 lg:mx-0">
-                    <div class="swiper-container !overflow-hidden">
+                    <div class="swiper-container-testimonial !overflow-hidden">
                         <div class="swiper-wrapper">
                             <div
                                 v-for="(
@@ -108,7 +108,7 @@
             <div class="mt-8 flex justify-center gap-4 lg:hidden">
                 <button
                     aria-label="Previous slide"
-                    class="prev-button rounded-full border border-blue-600 p-4 text-blue-600 hover:bg-blue-600 hover:text-white"
+                    class="prev-button-testimonial rounded-full border border-blue-600 p-4 text-blue-600 hover:bg-blue-600 hover:text-white"
                 >
                     <svg
                         class="h-5 w-5 -rotate-180 transform"
@@ -128,7 +128,7 @@
 
                 <button
                     aria-label="Next slide"
-                    class="next-button rounded-full border border-blue-600 p-4 text-blue-600 hover:bg-blue-600 hover:text-white"
+                    class="next-button-testimonial rounded-full border border-blue-600 p-4 text-blue-600 hover:bg-blue-600 hover:text-white"
                 >
                     <svg
                         class="h-5 w-5"
@@ -169,7 +169,7 @@ export default {
         // Call the initTE function to initialize the "tw-elements" library
         initTE({ Ripple });
 
-        new Swiper(".swiper-container", {
+        new Swiper(".swiper-container-testimonial", {
             loop: true,
             slidesPerView: 1,
             spaceBetween: 32,
@@ -187,8 +187,8 @@ export default {
                 },
             },
             navigation: {
-                nextEl: ".next-button",
-                prevEl: ".prev-button",
+                nextEl: ".next-button-testimonial",
+                prevEl: ".prev-button-testimonial",
             },
         });
     },
