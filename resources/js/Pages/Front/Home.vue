@@ -20,6 +20,11 @@
                 :ourHeroTitleData="ourHeroTitleData"
                 :ourHeroItemData="ourHeroItemData"
             />
+            <OurRecentWorks
+                v-if="ourRecentWorkTitleData && ourRecentWorkItemData"
+                :ourRecentWorkTitleData="ourRecentWorkTitleData"
+                :ourRecentWorkItemData="ourRecentWorkItemData"
+            />
             <BlogPost
                 v-if="blogPostTitleData && blogPostItemData"
                 :blogPostTitleData="blogPostTitleData"
@@ -48,6 +53,7 @@ import BlogPost from "./components/BlogPost.vue";
 import Testimonial from "./components/Testimonial.vue";
 import NavigationBar from "./components/NavigationBar.vue";
 import Footer from "./components/Footer.vue";
+import OurRecentWorks from "./components/OurRecentWorks.vue"
 export default {
     name: "App",
     components: {
@@ -61,6 +67,7 @@ export default {
         Footer,
         BlogPost,
         Testimonial,
+        OurRecentWorks,
     },
     data() {
         return {
@@ -79,6 +86,8 @@ export default {
             blogPostItemData: null,
             testimonialTitleData: null,
             testimonialItemData: null,
+            ourRecentWorkTitleData: null,
+            ourRecentWorkItemData: null,
         };
     },
     methods: {
@@ -157,6 +166,16 @@ export default {
                 this.testimonialItemData = res.data;
             });
         },
+        getOurRecentWorkTitleData() {
+            axios.get(route("public.getOurRecentWorkTitleData")).then((res) => {
+                this.ourRecentWorkTitleData = res.data;
+            });
+        },
+        getOurRecentWorkItemData() {
+            axios.get(route("public.getOurRecentWorkItemData")).then((res) => {
+                this.ourRecentWorkItemData = res.data;
+            });
+        },
     },
     mounted() {
         this.getPageSetting();
@@ -174,6 +193,8 @@ export default {
         this.getBlogPostItemData();
         this.getTestimonialTitleData();
         this.getTestimonialItemData();
+        this.getOurRecentWorkTitleData();
+        this.getOurRecentWorkItemData();
     },
 };
 </script>

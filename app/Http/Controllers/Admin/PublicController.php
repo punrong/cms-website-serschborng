@@ -72,12 +72,22 @@ class PublicController extends Controller
     }
 
     public function getTestimonialTitleData(){
-        $testimonialitleId = Category::where('code', 'TEST_TITLE')->value('id');
-        return Post::getFirstPostByCategory($testimonialitleId);
+        $testimonialTitleId = Category::where('code', 'TEST_TITLE')->value('id');
+        return Post::getFirstPostByCategory($testimonialTitleId);
     }
 
     public function getTestimonialItemData(){
         $testimonialItemId = Category::where('code', 'TEST_ITEM')->value('id');
         return Post::getAllPostByCategory($testimonialItemId);
+    }
+
+    public function getOurRecentWorkTitleData(){
+        $recentWorkTitleId = Category::where('code', 'WORK_TITLE')->value('id');
+        return Post::getFirstPostByCategory($recentWorkTitleId);
+    }
+
+    public function getOurRecentWorkItemData(){
+        $recentWorkItemId = Category::where('code', 'WORK_ITEM')->value('id');
+        return Post::getAllPostByCategory($recentWorkItemId);
     }
 }
