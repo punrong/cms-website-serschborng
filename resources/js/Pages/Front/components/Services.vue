@@ -32,40 +32,20 @@
                 </div>
             </div>
             <div class="flex flex-wrap mt-12 mb-12 sm:mb-0 justify-center">
-                <div class="w-full lg:w-3/12 px-4 text-center">
+                <div
+                    v-for="(ourServiceItem, index) in ourServiceItemData"
+                    :key="index"
+                    class="w-full lg:w-3/12 px-4 text-center"
+                >
                     <div class="p-3 inline-flex items-center justify-center">
-                        <img :src="ourServiceItemData[0].image" class="h-20" />
+                        <img :src="ourServiceItem.image" class="h-20" />
                     </div>
                     <h6 class="text-xl mt-5 font-semibold text-white">
-                        {{ ourServiceItemData[0].title }}
+                        {{ ourServiceItem.title }}
                     </h6>
                     <p
                         class="mt-2 mb-4 text-gray-500"
-                        v-html="ourServiceItemData[0].description"
-                    ></p>
-                </div>
-                <div class="w-full lg:w-3/12 px-4 text-center">
-                    <div class="p-3 inline-flex items-center justify-center">
-                        <img :src="ourServiceItemData[1].image" class="h-20" />
-                    </div>
-                    <h5 class="text-xl mt-5 font-semibold text-white">
-                        {{ ourServiceItemData[1].title }}
-                    </h5>
-                    <p
-                        class="mt-2 mb-4 text-gray-500"
-                        v-html="ourServiceItemData[1].description"
-                    ></p>
-                </div>
-                <div class="w-full lg:w-3/12 px-4 text-center">
-                    <div class="p-3 inline-flex items-center justify-center">
-                        <img :src="ourServiceItemData[2].image" class="h-20" />
-                    </div>
-                    <h5 class="text-xl mt-5 font-semibold text-white">
-                        {{ ourServiceItemData[2].title }}
-                    </h5>
-                    <p
-                        class="mt-2 mb-4 text-gray-500"
-                        v-html="ourServiceItemData[2].description"
+                        v-html="ourServiceItem.description"
                     ></p>
                 </div>
             </div>
