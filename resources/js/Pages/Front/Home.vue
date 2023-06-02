@@ -15,15 +15,15 @@
                 :testimonialTitleData="testimonialTitleData"
                 :testimonialItemData="testimonialItemData"
             />
-            <BlogPost
-                v-if="blogPostTitleData && blogPostItemData"
-                :blogPostTitleData="blogPostTitleData"
-                :blogPostItemData="blogPostItemData"
-            />
             <Team
                 v-if="ourHeroTitleData && ourHeroItemData"
                 :ourHeroTitleData="ourHeroTitleData"
                 :ourHeroItemData="ourHeroItemData"
+            />
+            <BlogPost
+                v-if="blogPostTitleData && blogPostItemData"
+                :blogPostTitleData="blogPostTitleData"
+                :blogPostItemData="blogPostItemData"
             />
             <Services
                 v-if="ourServiceTitleData && ourServiceItemData"
