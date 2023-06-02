@@ -62,4 +62,12 @@ class Post extends Model
         }
         return $posts;
     }
+
+    public static function getAllPostByCategory($category_id){
+        $posts = Post::where('category_id', $category_id)->where('status','ACT')->orderBy('sequence')->get();
+        foreach($posts as $post){
+            $post->image = $post->image ? asset($post->image) : null;
+        }
+        return $posts;
+    }
 }

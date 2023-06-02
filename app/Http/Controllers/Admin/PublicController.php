@@ -78,6 +78,6 @@ class PublicController extends Controller
 
     public function getTestimonialItemData(){
         $testimonialItemId = Category::where('code', 'TEST_ITEM')->value('id');
-        return Post::getTopThreePostByCategory($testimonialItemId);
+        return Post::getAllPostByCategory($testimonialItemId);
     }
 }
