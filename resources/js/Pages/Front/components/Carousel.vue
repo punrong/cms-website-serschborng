@@ -1,257 +1,43 @@
 <template>
     <div
-        id="carouselExampleCaptions"
-        class="relative"
-        data-te-carousel-init
-        data-te-carousel-slide
+        class="relative pt-16 pb-32 flex content-center items-center justify-center"
+        style="min-height: 75vh"
     >
-        <!--Carousel indicators-->
         <div
-            class="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0"
-            data-te-carousel-indicators
+            class="absolute top-0 w-full h-full bg-center bg-cover"
+            :style="`background-image: url('${coverData.image}')`"
         >
-            <button
-                type="button"
-                data-te-target="#carouselExampleCaptions"
-                data-te-slide-to="0"
-                data-te-carousel-active
-                class="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-white bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
-                aria-current="true"
-                aria-label="Slide 1"
-            ></button>
-            <button
-                type="button"
-                data-te-target="#carouselExampleCaptions"
-                data-te-slide-to="1"
-                class="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-white bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
-                aria-label="Slide 2"
-            ></button>
-            <button
-                type="button"
-                data-te-target="#carouselExampleCaptions"
-                data-te-slide-to="2"
-                class="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-white bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
-                aria-label="Slide 3"
-            ></button>
+            <span
+                id="blackOverlay"
+                class="w-full h-full absolute opacity-75 bg-black"
+            ></span>
         </div>
-
-        <!--Carousel items-->
-        <div
-            class="relative w-full overflow-hidden after:clear-both after:block after:content-['']"
-        >
-            <!--First item-->
-            <div
-                class="relative max-h-max float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-                data-te-carousel-active
-                data-te-carousel-item
-                style="backface-visibility: hidden"
-            >
-                <img
-                    src="https://tecdn.b-cdn.net/img/Photos/Slides/img%20(15).jpg"
-                    class="block w-full"
-                    alt="..."
-                />
+        <div class="container relative mx-auto">
+            <div class="items-center flex flex-wrap">
                 <div
-                    class="absolute inset-x-[15%] top-1/2 transform -translate-y-1/2 text-center text-white md:block"
+                    class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center mt-9 sm:mt-0"
                 >
-                    <h2 class="text-4xl font-bold">Title 1</h2>
-                    <p class="mt-4">Subtitle 1</p>
-                    <div
-                        class="max-w-sm mx-auto bg-transparent flex items-center mt-5"
-                    >
-                        <input
-                            type="email"
-                            v-model="formData.email"
-                            class="flex-grow px-4 py-2 rounded-l-lg bg-transparent border border-white placeholder-white text-white"
-                            placeholder="Enter your email"
-                        />
-                        <button
-                            class="px-4 py-2 text-white bg-blue-500 rounded-r-lg shadow border border-blue-500"
-                            @click="onSubmit"
-                        >
-                            Join Now
-                        </button>
+                    <div>
+                        <h1 class="text-white font-semibold text-5xl">
+                            {{ coverData.title }}
+                        </h1>
+                        <p
+                            class="mt-4 text-lg text-gray-300"
+                            v-html="coverData.description"
+                        ></p>
                     </div>
-                    <InputError
-                        class="text-red-500 text-sm font-bold"
-                        :message="errorMsg"
-                    />
-                </div>
-            </div>
-            <!--Second item-->
-            <div
-                class="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-                data-te-carousel-item
-                style="backface-visibility: hidden"
-            >
-                <img
-                    src="https://tecdn.b-cdn.net/img/Photos/Slides/img%20(22).jpg"
-                    class="block w-full"
-                    alt="..."
-                />
-                <div
-                    class="absolute inset-x-[15%] top-1/2 transform -translate-y-1/2 text-center text-white md:block"
-                >
-                    <h2 class="text-4xl font-bold">Title 2</h2>
-                    <p class="mt-4">Subtitle 2</p>
-                    <div
-                        class="max-w-sm mx-auto bg-transparent flex items-center mt-5"
-                    >
-                        <input
-                            type="email"
-                            v-model="formData.email"
-                            class="flex-grow px-4 py-2 rounded-l-lg bg-transparent border border-white placeholder-white text-white"
-                            placeholder="Enter your email"
-                        />
-                        <button
-                            class="px-4 py-2 text-white bg-blue-500 rounded-r-lg shadow border border-blue-500"
-                            @click="onSubmit"
-                        >
-                            Join Now
-                        </button>
-                    </div>
-                    <InputError
-                        class="text-red-500 text-sm font-bold"
-                        :message="errorMsg"
-                    />
-                </div>
-            </div>
-            <!--Third item-->
-            <div
-                class="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-                data-te-carousel-item
-                style="backface-visibility: hidden"
-            >
-                <img
-                    src="https://tecdn.b-cdn.net/img/Photos/Slides/img%20(23).jpg"
-                    class="block w-full"
-                    alt="..."
-                />
-                <div
-                    class="absolute inset-x-[15%] top-1/2 transform -translate-y-1/2 text-center text-white md:block"
-                >
-                    <h2 class="text-4xl font-bold">Title 3</h2>
-                    <p class="mt-4">Subtitle 3</p>
-                    <div
-                        class="max-w-sm mx-auto bg-transparent flex items-center mt-5"
-                    >
-                        <input
-                            type="email"
-                            v-model="formData.email"
-                            class="flex-grow px-4 py-2 rounded-l-lg bg-transparent border border-white placeholder-white text-white"
-                            placeholder="Enter your email"
-                        />
-                        <button
-                            class="px-4 py-2 text-white bg-blue-500 rounded-r-lg shadow border border-blue-500"
-                            @click="onSubmit"
-                        >
-                            Join Now
-                        </button>
-                    </div>
-                    <InputError
-                        class="text-red-500 text-sm font-bold"
-                        :message="errorMsg"
-                    />
                 </div>
             </div>
         </div>
-
-        <!--Carousel controls - prev item-->
-        <button
-            class="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
-            type="button"
-            data-te-target="#carouselExampleCaptions"
-            data-te-slide="prev"
-        >
-            <span class="inline-block h-8 w-8">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="h-6 w-6"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15.75 19.5L8.25 12l7.5-7.5"
-                    />
-                </svg>
-            </span>
-            <span
-                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                >Previous</span
-            >
-        </button>
-        <!--Carousel controls - next item-->
-        <button
-            class="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
-            type="button"
-            data-te-target="#carouselExampleCaptions"
-            data-te-slide="next"
-        >
-            <span class="inline-block h-8 w-8">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="h-6 w-6"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                    />
-                </svg>
-            </span>
-            <span
-                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                >Next</span
-            >
-        </button>
     </div>
 </template>
 
 <script>
-import { Carousel, initTE } from "tw-elements";
-import InputError from "@/components/InputError.vue";
-import axios from "axios";
 export default {
-    components: {
-        InputError,
-    },
-    data() {
-        return {
-            formData: {
-                email: "",
-            },
-            errorMsg: null,
-        };
-    },
-    mounted() {
-        // Call the initTE function to initialize the "tw-elements" library
-        initTE({ Carousel });
-    },
-    methods: {
-        onSubmit() {
-            axios
-                .post(route("join-our-networks.store"), this.formData)
-                .then((res) => {
-                    if (res.data.success) this.formData.email = "";
-                })
-                .catch((err) => {
-                    if (err.response.status === 422)
-                        this.errorMsg = err.response.data.message;
-                    this.$toast.add({
-                        severity: "error",
-                        summary: "Error Message",
-                        detail: err.response.data.message,
-                        life: 3000,
-                    });
-                });
+    props: {
+        coverData: {
+            type: Object,
+            default: () => ({}),
         },
     },
 };

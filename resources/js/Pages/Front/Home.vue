@@ -2,7 +2,7 @@
     <div id="app" class="min-h-screen w-full">
         <main>
             <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting" />
-            <Hero v-if="coverData" :coverData="this.coverData" />
+            <Carousel v-if="coverData" :coverData="this.coverData" />
             <Features
                 v-if="featureData && aboutUsTextData && aboutUsCardData"
                 :featureData="this.featureData"
@@ -46,7 +46,7 @@ import axios from "axios";
 import Mission from "./components/Mission.vue";
 import Contact from "./components/Contact.vue";
 import Features from "./components/Features.vue";
-import Hero from "./components/Hero.vue";
+import Carousel from "./components/Carousel.vue";
 import Services from "./components/Services.vue";
 import Team from "./components/Team.vue";
 import BlogPost from "./components/BlogPost.vue";
@@ -60,7 +60,7 @@ export default {
         Mission,
         Contact,
         Features,
-        Hero,
+        Carousel,
         Services,
         Team,
         NavigationBar,
