@@ -37,7 +37,7 @@
         <div class="text-center">
             <a
                 href="#"
-                class="inline-block rounded-full text-xl font-semibold leading-normal text-primary transition duration-150 ease-in-out hover:underline hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
+                class="inline-block rounded-full text-xl font-semibold leading-normal text-blue-500 transition duration-150 ease-in-out hover:underline focus:outline-none focus:ring-0 active:text-blue-500"
             >
                 See all articles
             </a>
