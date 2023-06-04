@@ -18,58 +18,10 @@
                         <h3 class="text-3xl font-semibold">
                             {{ ourMissionData.title }}
                         </h3>
-                        <p class="mt-4 text-lg leading-relaxed text-gray-600" v-html="ourMissionData.description">
-                        </p>
-                        <!-- <ul class="list-none mt-6">
-                            <li class="py-2">
-                                <div class="flex items-center">
-                                    <div>
-                                        <span
-                                            class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-600 bg-pink-200 mr-3"
-                                        >
-                                            <i class="fas fa-fingerprint"></i>
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-gray-600">
-                                            Carefully crafted components
-                                        </h4>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="py-2">
-                                <div class="flex items-center">
-                                    <div>
-                                        <span
-                                            class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-600 bg-pink-200 mr-3"
-                                        >
-                                            <i class="fab fa-html5"></i>
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-gray-600">
-                                            Amazing page examples
-                                        </h4>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="py-2">
-                                <div class="flex items-center">
-                                    <div>
-                                        <span
-                                            class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-600 bg-pink-200 mr-3"
-                                        >
-                                            <i class="far fa-paper-plane"></i>
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-gray-600">
-                                            Dynamic components
-                                        </h4>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul> -->
+                        <p
+                            class="mt-4 text-lg leading-relaxed text-gray-600 mission-component"
+                            v-html="ourMissionData.description"
+                        ></p>
                     </div>
                 </div>
             </div>
@@ -86,3 +38,14 @@ export default {
     },
 };
 </script>
+<style>
+.mission-component ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+</style>
