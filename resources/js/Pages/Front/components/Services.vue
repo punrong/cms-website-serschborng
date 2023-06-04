@@ -3,7 +3,7 @@
         <div class="container mx-auto px-4 lg:pt-24 lg:pb-64">
             <div class="flex flex-wrap text-center justify-center">
                 <div class="w-full lg:w-6/12 px-4">
-                    <h2 class="text-4xl font-semibold text-white">
+                    <h2 class="text-4xl font-semibold text-white mt-5">
                         {{ ourServiceTitleData.title }}
                     </h2>
                     <p
