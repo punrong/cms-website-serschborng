@@ -74,7 +74,7 @@
                         {{ aboutUsTextData.title }}
                     </h3>
                     <p
-                        class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700"
+                        class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700 features-component"
                         v-html="aboutUsTextData.description"
                     ></p>
                 </div>
@@ -121,8 +121,13 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-a {
+<style>
+.features-component a {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    color: rgb(59 113 202 / var(--tw-text-opacity))
+}
+.features-component a:hover {
+  text-decoration: underline;
 }
 </style>
