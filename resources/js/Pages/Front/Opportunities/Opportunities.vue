@@ -46,8 +46,8 @@
 
 <script>
 import axios from "axios";
-import NavigationBar from "./components/NavigationBar.vue";
-import Footer from "./components/Footer.vue";
+import NavigationBar from "../components/NavigationBar.vue";
+import Footer from "../components/Footer.vue";
 export default {
     name: "App",
     components: {
@@ -59,7 +59,7 @@ export default {
             pageSetting: null,
             aboutUsCardData: null,
             aboutUsTextData: null,
-            activeMenu: 'mentorship',
+            activeMenu: 'opportunities'
         };
     },
     methods: {

@@ -51,11 +51,11 @@ import Services from "./components/Services.vue";
 import Team from "./components/Team.vue";
 import BlogPost from "./components/BlogPost.vue";
 import Testimonial from "./components/Testimonial.vue";
-import NavigationBar from "./components/NavigationBar.vue";
-import Footer from "./components/Footer.vue";
 import OurRecentWorks from "./components/OurRecentWorks.vue"
+import NavigationBar from "../components/NavigationBar.vue";
+import Footer from "../components/Footer.vue";
 export default {
-    name: "App",
+    name: "Sers Chborng",
     components: {
         Mission,
         Contact,

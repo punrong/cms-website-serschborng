@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\PageSettingController;
 use App\Http\Controllers\Admin\JoinOurNetworkController;
-use App\Http\Controllers\Admin\PublicController;
+use App\Http\Controllers\Front\PublicController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserController;
@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Front\MenuController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,7 +26,7 @@ use App\Http\Controllers\Admin\MenuController;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Front/Home');
+    return Inertia::render('Front/Home/Home');
 })->name('home');
 
 Route::get('/dashboard', function () {

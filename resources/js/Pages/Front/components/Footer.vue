@@ -5,7 +5,7 @@
                 <div class="md:flex md:justify-between">
                     <div class="mb-6 md:mb-0">
                         <a
-                            href="https://flowbite.com/"
+                            :href="route('home')"
                             class="flex items-center"
                         >
                             <img

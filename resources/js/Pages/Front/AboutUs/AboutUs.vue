@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen w-full">
         <main>
-        <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting" :activeMenu="activeMenu"/>
+        <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting" :activeMenu="activeMenu" />
         <section class="pb-20 bg-gray-300 -mt-24">
         <div class="container mx-auto px-4">
             <div v-if="aboutUsTextData && aboutUsCardData" class="flex flex-wrap items-center mt-20">
@@ -46,8 +46,8 @@
 
 <script>
 import axios from "axios";
-import NavigationBar from "./components/NavigationBar.vue";
-import Footer from "./components/Footer.vue";
+import NavigationBar from "../components/NavigationBar.vue";
+import Footer from "../components/Footer.vue";
 export default {
     name: "App",
     components: {
@@ -59,7 +59,7 @@ export default {
             pageSetting: null,
             aboutUsCardData: null,
             aboutUsTextData: null,
-            activeMenu: 'blog',
+            activeMenu: "about-us",
         };
     },
     methods: {
