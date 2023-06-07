@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Admin\CategoryController;
-
+use App\Http\Controllers\Admin\MenuController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +53,13 @@ Route::group(['prefix' => 'public/api'], function () {
     Route::get('get/testimonial-item/data', [PublicController::class, 'getTestimonialItemData'])->name('public.getTestimonialItemData');
     Route::get('get/our-recent-work-title/data', [PublicController::class, 'getOurRecentWorkTitleData'])->name('public.getOurRecentWorkTitleData');
     Route::get('get/our-recent-work-item/data', [PublicController::class, 'getOurRecentWorkItemData'])->name('public.getOurRecentWorkItemData');
+});
+
+Route::group(['prefix' => 'menu/api'], function () {
+    Route::get('get/about-us', [MenuController::class, 'getAboutUs'])->name('menu.about-us');
+    Route::get('get/mentorship', [MenuController::class, 'getMentorship'])->name('menu.mentorship');
+    Route::get('get/opportunities', [MenuController::class, 'getOpportunities'])->name('menu.opportunities');
+    Route::get('get/blog', [MenuController::class, 'getBlog'])->name('menu.blog');
 });
 
 // Join Our Networks

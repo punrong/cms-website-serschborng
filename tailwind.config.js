@@ -21,6 +21,14 @@ module.exports = {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
         },
+        screens: {
+            'sm': '640px',
+            'custom-sm': '740px',
+            'md': '768px',      
+            'lg': '1024px',      
+            'xl': '1280px',      
+            '2xl': '1536px',
+          }
     },
 
     plugins: [require('@tailwindcss/forms'), require("tw-elements/dist/plugin.cjs"), FormKitVariants],
