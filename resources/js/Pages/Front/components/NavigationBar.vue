@@ -99,9 +99,11 @@
                     <li>
                         <a
                             :href="route('home')"
-                            class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
+                            class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
                             :class="
-                                activeMenu === 'home' ? 'text-blue-700' : null
+                                activeMenu === 'home'
+                                    ? 'text-blue-700 font-semibold'
+                                    : 'text-gray-900'
                             "
                             >Home</a
                         >
@@ -109,11 +111,11 @@
                     <li>
                         <a
                             :href="route('menu.about-us')"
-                            class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
+                            class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
                             :class="
                                 activeMenu === 'about-us'
-                                    ? 'text-blue-700'
-                                    : null
+                                    ? 'text-blue-700 font-semibold'
+                                    : 'text-gray-900'
                             "
                             >About Us</a
                         >
@@ -121,11 +123,11 @@
                     <li>
                         <a
                             :href="route('menu.mentorship')"
-                            class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
+                            class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
                             :class="
                                 activeMenu === 'mentorship'
-                                    ? 'text-blue-700'
-                                    : null
+                                    ? 'text-blue-700 font-semibold'
+                                    : 'text-gray-900'
                             "
                             >Mentorship</a
                         >
@@ -133,11 +135,11 @@
                     <li>
                         <a
                             :href="route('menu.opportunities')"
-                            class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
+                            class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
                             :class="
                                 activeMenu === 'opportunities'
-                                    ? 'text-blue-700'
-                                    : null
+                                    ? 'text-blue-700 font-semibold'
+                                    : 'text-gray-900'
                             "
                             >Opportunities</a
                         >
@@ -145,9 +147,11 @@
                     <li>
                         <a
                             :href="route('menu.blog')"
-                            class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
+                            class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
                             :class="
-                                activeMenu === 'blog' ? 'text-blue-700' : null
+                                activeMenu === 'blog'
+                                    ? 'text-blue-700 font-semibold'
+                                    : 'text-gray-900'
                             "
                             >Blog</a
                         >
@@ -314,6 +318,9 @@ export default {
             event.preventDefault();
             Inertia.post(route("logout"));
         },
+    },
+    mounted() {
+        console.log(this.activeMenu);
     },
 };
 </script>
