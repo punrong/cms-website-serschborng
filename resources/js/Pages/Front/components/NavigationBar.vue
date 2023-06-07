@@ -217,7 +217,7 @@
                             >Opportunities</a
                         >
                     </li>
-                    <li class="mb-5">
+                    <li>
                         <a
                             :href="route('menu.blog')"
                             class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 custom-sm:hover:bg-transparent custom-sm:hover:text-blue-700 custom-sm:p-0"
@@ -229,7 +229,7 @@
                             >Blog</a
                         >
                     </li>
-                    <div class="border-b border-gray-300"></div>
+                    <div class="border-b border-gray-300 mb-5"></div>
                     <li v-if="$page.props.auth.user">
                         <button
                             @click="toggleDropdown"
@@ -318,9 +318,6 @@ export default {
             event.preventDefault();
             Inertia.post(route("logout"));
         },
-    },
-    mounted() {
-        console.log(this.activeMenu);
     },
 };
 </script>
