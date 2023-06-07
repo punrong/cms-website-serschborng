@@ -1,6 +1,7 @@
 <script setup>
 import InputError from "@/components/InputError.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
+import NavigationBar from "../Front/components/NavigationBar.vue";
 
 const form = useForm({
     name: "",
@@ -18,6 +19,7 @@ const onSubmit = () => {
 </script>
 
 <template>
+    <NavigationBar/>
     <GuestLayout>
         <Head title="Register" />
         <div class="mb-2 text-center">

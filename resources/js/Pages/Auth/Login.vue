@@ -2,6 +2,7 @@
 // import Checkbox from "@/components/Checkbox.vue";
 import InputError from "@/components/InputError.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
+import NavigationBar from "../Front/components/NavigationBar.vue";
 
 defineProps({
     canResetPassword: Boolean,
@@ -22,6 +23,7 @@ const onSubmit = () => {
 </script>
 
 <template>
+    <NavigationBar/>
     <GuestLayout>
         <Head title="Log in" />
         <div class="mb-2 text-center">
