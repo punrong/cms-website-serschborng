@@ -10,14 +10,14 @@
                             <div
                                 class="p-3 text-center inline-flex items-center justify-center h-12 mt-5 mb-5"
                             >
-                                <img :src="featureData[0].image" class="h-20" />
+                                <img :src="feature[0].image" class="h-20" />
                             </div>
                             <h6 class="text-xl font-semibold">
-                                {{ featureData[0].title }}
+                                {{ feature[0].title }}
                             </h6>
                             <p
                                 class="mt-2 mb-4 text-gray-600"
-                                v-html="featureData[0].description"
+                                v-html="feature[0].description"
                             ></p>
                         </div>
                     </div>
@@ -30,14 +30,14 @@
                             <div
                                 class="p-3 text-center inline-flex items-center justify-center h-12 mt-5 mb-5"
                             >
-                                <img :src="featureData[1].image" class="h-20" />
+                                <img :src="feature[1].image" class="h-20" />
                             </div>
                             <h6 class="text-xl font-semibold">
-                                {{ featureData[1].title }}
+                                {{ feature[1].title }}
                             </h6>
                             <p
                                 class="mt-2 mb-4 text-gray-600"
-                                v-html="featureData[1].description"
+                                v-html="feature[1].description"
                             ></p>
                         </div>
                     </div>
@@ -50,14 +50,14 @@
                             <div
                                 class="p-3 text-center inline-flex items-center justify-center h-12 mt-5 mb-5"
                             >
-                                <img :src="featureData[2].image" class="h-20" />
+                                <img :src="feature[2].image" class="h-20" />
                             </div>
                             <h6 class="text-xl font-semibold">
-                                {{ featureData[2].title }}
+                                {{ feature[2].title }}
                             </h6>
                             <p
                                 class="mt-2 mb-4 text-gray-600"
-                                v-html="featureData[2].description"
+                                v-html="feature[2].description"
                             ></p>
                         </div>
                     </div>
@@ -71,11 +71,11 @@
                         <i class="fas fa-user-friends text-xl"></i>
                     </div>
                     <h3 class="text-3xl mb-2 font-semibold leading-normal">
-                        {{ aboutUsTextData.title }}
+                        {{ aboutUsLeftText.title }}
                     </h3>
                     <p
                         class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700 features-component"
-                        v-html="aboutUsTextData.description"
+                        v-html="aboutUsLeftText.description"
                     ></p>
                 </div>
                 <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
@@ -83,14 +83,14 @@
                         class="relative flex flex-col min-w-0 break-words bg-blue-600 w-full mb-6 shadow-lg rounded-lg"
                     >
                         <img
-                            :src="aboutUsCardData.image"
+                            :src="aboutUsCard.image"
                             class="w-full align-middle rounded-t-lg"
                         />
                         <blockquote class="relative p-8 mb-4">
                             <h4 class="text-xl font-bold text-white">
-                                {{ aboutUsCardData.title }}
+                                {{ aboutUsCard.title }}
                             </h4>
-                            <p class="text-md font-light mt-2 text-white" v-html="aboutUsCardData.description">
+                            <p class="text-md font-light mt-2 text-white" v-html="aboutUsCard.description">
                             </p>
                         </blockquote>
                     </div>
@@ -103,15 +103,15 @@
 import InputError from "@/components/InputError.vue";
 export default {
     props: {
-        featureData: {
+        feature: {
             type: Object,
             default: () => ({}),
         },
-        aboutUsTextData: {
+        aboutUsLeftText: {
             type: Object,
             default: () => ({}),
         },
-        aboutUsCardData: {
+        aboutUsCard: {
             type: Object,
             default: () => ({}),
         },

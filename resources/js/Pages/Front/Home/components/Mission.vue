@@ -5,7 +5,7 @@
                 <div class="w-full md:w-4/12 ml-auto mr-auto px-4">
                     <img
                         class="max-w-full rounded-lg shadow-lg"
-                        :src="ourMissionData.image"
+                        :src="ourMission.image"
                     />
                 </div>
                 <div class="w-full md:w-5/12 ml-auto mr-auto px-4">
@@ -16,11 +16,11 @@
                             <i class="fas fa-rocket text-xl"></i>
                         </div>
                         <h3 class="text-3xl font-semibold">
-                            {{ ourMissionData.title }}
+                            {{ ourMission.title }}
                         </h3>
                         <p
                             class="mt-4 text-lg leading-relaxed text-gray-600 mission-component"
-                            v-html="ourMissionData.description"
+                            v-html="ourMission.description"
                         ></p>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
 <script>
 export default {
     props: {
-        ourMissionData: {
+        ourMission: {
             type: Object,
             default: () => ({}),
         },

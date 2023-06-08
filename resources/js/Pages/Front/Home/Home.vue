@@ -2,40 +2,40 @@
     <div id="app" class="min-h-screen w-full">
         <main>
             <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting" />
-            <Carousel v-if="coverData" :coverData="this.coverData" />
+            <Carousel v-if="cover" :cover="this.cover" />
             <Features
-                v-if="featureData && aboutUsTextData && aboutUsCardData"
-                :featureData="this.featureData"
-                :aboutUsTextData="this.aboutUsTextData"
-                :aboutUsCardData="aboutUsCardData"
+                v-if="feature && aboutUsLeftText && aboutUsCard"
+                :feature="this.feature"
+                :aboutUsLeftText="this.aboutUsLeftText"
+                :aboutUsCard="aboutUsCard"
             />
-            <Mission v-if="ourMissionData" :ourMissionData="ourMissionData" />
+            <Mission v-if="ourMission" :ourMission="ourMission" />
             <Testimonial
-                v-if="testimonialTitleData && testimonialItemData"
-                :testimonialTitleData="testimonialTitleData"
-                :testimonialItemData="testimonialItemData"
+                v-if="testimonialTitle && testimonialItem"
+                :testimonialTitle="testimonialTitle"
+                :testimonialItem="testimonialItem"
             />
             <Team
-                v-if="ourHeroTitleData && ourHeroItemData"
-                :ourHeroTitleData="ourHeroTitleData"
-                :ourHeroItemData="ourHeroItemData"
+                v-if="ourTeamTitle && ourTeamItem"
+                :ourTeamTitle="ourTeamTitle"
+                :ourTeamItem="ourTeamItem"
             />
             <OurRecentWorks
-                v-if="ourRecentWorkTitleData && ourRecentWorkItemData"
-                :ourRecentWorkTitleData="ourRecentWorkTitleData"
-                :ourRecentWorkItemData="ourRecentWorkItemData"
+                v-if="ourRecentWorkTitle && ourRecentWorkItem"
+                :ourRecentWorkTitle="ourRecentWorkTitle"
+                :ourRecentWorkItem="ourRecentWorkItem"
             />
             <BlogPost
-                v-if="blogPostTitleData && blogPostItemData"
-                :blogPostTitleData="blogPostTitleData"
-                :blogPostItemData="blogPostItemData"
+                v-if="blogTitle && blogItem"
+                :blogTitle="blogTitle"
+                :blogItem="blogItem"
             />
             <Services
-                v-if="ourServiceTitleData && ourServiceItemData"
-                :ourServiceTitleData="ourServiceTitleData"
-                :ourServiceItemData="ourServiceItemData"
+                v-if="ourServiceTitle && ourServiceItem"
+                :ourServiceTitle="ourServiceTitle"
+                :ourServiceItem="ourServiceItem"
             />
-            <Contact v-if="joinUsData" :joinUsData="this.joinUsData" />
+            <Contact v-if="joinUs" :joinUs="this.joinUs" />
             <Footer v-if="pageSetting" :pageSetting="this.pageSetting" />
         </main>
     </div>
@@ -72,22 +72,22 @@ export default {
     data() {
         return {
             pageSetting: null,
-            coverData: null,
-            joinUsData: null,
-            featureData: null,
-            aboutUsTextData: null,
-            aboutUsCardData: null,
-            ourMissionData: null,
-            ourHeroTitleData: null,
-            ourHeroItemData: null,
-            ourServiceTitleData: null,
-            ourServiceItemData: null,
-            blogPostTitleData: null,
-            blogPostItemData: null,
-            testimonialTitleData: null,
-            testimonialItemData: null,
-            ourRecentWorkTitleData: null,
-            ourRecentWorkItemData: null,
+            cover: null,
+            joinUs: null,
+            feature: null,
+            aboutUsLeftText: null,
+            aboutUsCard: null,
+            ourMission: null,
+            ourTeamTitle: null,
+            ourTeamItem: null,
+            ourServiceTitle: null,
+            ourServiceItem: null,
+            blogTitle: null,
+            blogItem: null,
+            testimonialTitle: null,
+            testimonialItem: null,
+            ourRecentWorkTitle: null,
+            ourRecentWorkItem: null,
         };
     },
     methods: {
@@ -97,83 +97,83 @@ export default {
             });
         },
         getCoverData() {
-            axios.get(route("public.getCoverData")).then((res) => {
-                this.coverData = res.data;
+            axios.get(route("public.getHomeCover")).then((res) => {
+                this.cover = res.data;
             });
         },
         getJoinUsData() {
-            axios.get(route("public.getJoinUsData")).then((res) => {
-                this.joinUsData = res.data;
+            axios.get(route("public.getHomeJoinUs")).then((res) => {
+                this.joinUs = res.data;
             });
         },
         getFeatureData() {
-            axios.get(route("public.getFeatureData")).then((res) => {
-                this.featureData = res.data;
+            axios.get(route("public.getHomeFeatures")).then((res) => {
+                this.feature = res.data;
             });
         },
         getAboutUsTextData() {
-            axios.get(route("public.getAboutUsTextData")).then((res) => {
-                this.aboutUsTextData = res.data;
+            axios.get(route("public.getHomeAboutUsLeftText")).then((res) => {
+                this.aboutUsLeftText = res.data;
             });
         },
         getAboutUsCardData() {
-            axios.get(route("public.getAboutUsCardData")).then((res) => {
-                this.aboutUsCardData = res.data;
+            axios.get(route("public.getHomeAboutUsCard")).then((res) => {
+                this.aboutUsCard = res.data;
             });
         },
         getOurMissionData() {
-            axios.get(route("public.getOurMissionData")).then((res) => {
-                this.ourMissionData = res.data;
+            axios.get(route("public.getHomeOurMission")).then((res) => {
+                this.ourMission = res.data;
             });
         },
         getOurHeroTitleData() {
-            axios.get(route("public.getOurHeroTitleData")).then((res) => {
-                this.ourHeroTitleData = res.data;
+            axios.get(route("public.getHomeOurTeamTitle")).then((res) => {
+                this.ourTeamTitle = res.data;
             });
         },
         getOurHeroItemData() {
-            axios.get(route("public.getOurHeroItemData")).then((res) => {
-                this.ourHeroItemData = res.data;
+            axios.get(route("public.getHomeOurTeamItem")).then((res) => {
+                this.ourTeamItem = res.data;
             });
         },
         getOurServiceTitleData() {
-            axios.get(route("public.getOurServiceTitleData")).then((res) => {
-                this.ourServiceTitleData = res.data;
+            axios.get(route("public.getHomeOurServiceTitle")).then((res) => {
+                this.ourServiceTitle = res.data;
             });
         },
         getOurServiceItemData() {
-            axios.get(route("public.getOurServiceItemData")).then((res) => {
-                this.ourServiceItemData = res.data;
+            axios.get(route("public.getHomeOurServiceItem")).then((res) => {
+                this.ourServiceItem = res.data;
             });
         },
         getBlogPostTitleData() {
-            axios.get(route("public.getBlogPostTitleData")).then((res) => {
-                this.blogPostTitleData = res.data;
+            axios.get(route("public.getBlogTitle")).then((res) => {
+                this.blogTitle = res.data;
             });
         },
         getBlogPostItemData() {
-            axios.get(route("public.getBlogPostThreeItemData")).then((res) => {
-                this.blogPostItemData = res.data;
+            axios.get(route("public.getBlogItem")).then((res) => {
+                this.blogItem = res.data;
             });
         },
         getTestimonialTitleData() {
-            axios.get(route("public.getTestimonialTitleData")).then((res) => {
-                this.testimonialTitleData = res.data;
+            axios.get(route("public.getHomeTestimonialTitle")).then((res) => {
+                this.testimonialTitle = res.data;
             });
         },
         getTestimonialItemData() {
-            axios.get(route("public.getTestimonialItemData")).then((res) => {
-                this.testimonialItemData = res.data;
+            axios.get(route("public.getHomeTestimonialItem")).then((res) => {
+                this.testimonialItem = res.data;
             });
         },
         getOurRecentWorkTitleData() {
-            axios.get(route("public.getOurRecentWorkTitleData")).then((res) => {
-                this.ourRecentWorkTitleData = res.data;
+            axios.get(route("public.getHomeOurRecentWorkTitle")).then((res) => {
+                this.ourRecentWorkTitle = res.data;
             });
         },
         getOurRecentWorkItemData() {
-            axios.get(route("public.getOurRecentWorkItemData")).then((res) => {
-                this.ourRecentWorkItemData = res.data;
+            axios.get(route("public.getHomeOurRecentWorkItem")).then((res) => {
+                this.ourRecentWorkItem = res.data;
             });
         },
     },

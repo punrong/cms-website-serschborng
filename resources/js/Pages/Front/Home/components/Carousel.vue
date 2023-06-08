@@ -5,7 +5,7 @@
     >
         <div
             class="absolute top-0 w-full h-full bg-center bg-cover"
-            :style="`background-image: url('${coverData.image}')`"
+            :style="`background-image: url('${cover.image}')`"
         >
             <span
                 id="blackOverlay"
@@ -19,11 +19,11 @@
                 >
                     <div>
                         <h1 class="text-white font-semibold text-5xl">
-                            {{ coverData.title }}
+                            {{ cover.title }}
                         </h1>
                         <p
                             class="mt-4 text-lg text-gray-300"
-                            v-html="coverData.description"
+                            v-html="cover.description"
                         ></p>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
 <script>
 export default {
     props: {
-        coverData: {
+        cover: {
             type: Object,
             default: () => ({}),
         },

@@ -10,12 +10,12 @@
                     class="max-w-max text-center ltr:sm:text-left rtl:sm:text-right"
                 >
                     <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-                        {{ testimonialTitleData.title }}
+                        {{ testimonialTitle.title }}
                     </h2>
 
                     <p
                         class="mt-4 text-gray-500"
-                        v-html="testimonialTitleData.description"
+                        v-html="testimonialTitle.description"
                     ></p>
 
                     <div class="hidden justify-center lg:mt-8 lg:flex lg:gap-4">
@@ -66,8 +66,8 @@
                         <div class="swiper-wrapper">
                             <div
                                 v-for="(
-                                    testimonialItem, index
-                                ) in testimonialItemData"
+                                    testimonial, index
+                                ) in testimonialItem"
                                 :key="index"
                                 class="swiper-slide"
                             >
@@ -78,7 +78,7 @@
                                         class="w-9/12 sm:w-7/12 md:w-6/12 lg:w-6/12"
                                     >
                                         <img
-                                            :src="testimonialItem.image"
+                                            :src="testimonial.image"
                                             class="shadow-lg rounded-full"
                                         />
                                     </div>
@@ -87,13 +87,13 @@
                                             <p
                                                 class="text-2xl font-bold text-blue-600 sm:text-3xl"
                                             >
-                                                {{ testimonialItem.title }}
+                                                {{ testimonial.title }}
                                             </p>
 
                                             <p
                                                 class="mt-4 leading-relaxed text-gray-500"
                                                 v-html="
-                                                    testimonialItem.description
+                                                    testimonial.description
                                                 "
                                             ></p>
                                         </div>
@@ -156,11 +156,11 @@ import Swiper from "swiper";
 import "swiper/swiper-bundle.min.css";
 export default {
     props: {
-        testimonialTitleData: {
+        testimonialTitle: {
             type: Object,
             default: () => ({}),
         },
-        testimonialItemData: {
+        testimonialItem: {
             type: Object,
             default: () => ({}),
         },

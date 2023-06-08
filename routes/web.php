@@ -25,42 +25,42 @@ use App\Http\Controllers\Front\MenuController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Front/Home/Home');
-})->name('home');
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
 
-Route::group(['prefix' => 'public/api'], function () {
-    Route::get('get/cover/data', [PublicController::class, 'getCoverData'])->name('public.getCoverData');
-    Route::get('get/page-settings/data', [PublicController::class, 'getPageSettingData'])->name('public.getPageSettingData');
-    Route::get('get/join-us/data', [PublicController::class, 'getJoinUsData'])->name('public.getJoinUsData');
-    Route::get('get/feature/data', [PublicController::class, 'getFeatureData'])->name('public.getFeatureData');
-    Route::get('get/about-us-text/data', [PublicController::class, 'getAboutUsTextData'])->name('public.getAboutUsTextData');
-    Route::get('get/about-us-card/data', [PublicController::class, 'getAboutUsCardData'])->name('public.getAboutUsCardData');
-    Route::get('get/mission/data', [PublicController::class, 'getOurMissionData'])->name('public.getOurMissionData');
-    Route::get('get/our-hero-title/data', [PublicController::class, 'getOurHeroTitleData'])->name('public.getOurHeroTitleData');
-    Route::get('get/our-hero-item/data', [PublicController::class, 'getOurHeroItemData'])->name('public.getOurHeroItemData');
-    Route::get('get/our-service-title/data', [PublicController::class, 'getOurServiceTitleData'])->name('public.getOurServiceTitleData');
-    Route::get('get/our-service-item/data', [PublicController::class, 'getOurServiceItemData'])->name('public.getOurServiceItemData');
-    Route::get('get/our-blog-title/data', [PublicController::class, 'getBlogPostTitleData'])->name('public.getBlogPostTitleData');
-    Route::get('get/our-blog-item-three/data', [PublicController::class, 'getBlogPostThreeItemData'])->name('public.getBlogPostThreeItemData');
-    Route::get('get/our-blog-item-all/data', [PublicController::class, 'getBlogPostAllItemData'])->name('public.getBlogPostAllItemData');
-    Route::get('get/testimonial-title/data', [PublicController::class, 'getTestimonialTitleData'])->name('public.getTestimonialTitleData');
-    Route::get('get/testimonial-item/data', [PublicController::class, 'getTestimonialItemData'])->name('public.getTestimonialItemData');
-    Route::get('get/our-recent-work-title/data', [PublicController::class, 'getOurRecentWorkTitleData'])->name('public.getOurRecentWorkTitleData');
-    Route::get('get/our-recent-work-item/data', [PublicController::class, 'getOurRecentWorkItemData'])->name('public.getOurRecentWorkItemData');
-});
+// Frontend Menu
 
-Route::group(['prefix' => 'menu/api'], function () {
-    Route::get('get/about-us', [MenuController::class, 'getAboutUs'])->name('menu.about-us');
-    Route::get('get/mentorship', [MenuController::class, 'getMentorship'])->name('menu.mentorship');
-    Route::get('get/opportunities', [MenuController::class, 'getOpportunities'])->name('menu.opportunities');
-    Route::get('get/blog', [MenuController::class, 'getBlog'])->name('menu.blog');
+Route::get('/', function () {
+    return Inertia::render('Front/Home/Home');
+})->name('home');
+Route::get('about-us', [MenuController::class, 'getAboutUs'])->name('menu.about-us');
+Route::get('mentorship', [MenuController::class, 'getMentorship'])->name('menu.mentorship');
+Route::get('opportunities', [MenuController::class, 'getOpportunities'])->name('menu.opportunities');
+Route::get('blog', [MenuController::class, 'getBlog'])->name('menu.blog');
+
+Route::group(['prefix' => 'public/api'], function () {
+    Route::get('get/page-settings/data', [PublicController::class, 'getPageSettingData'])->name('public.getPageSettingData');
+    Route::get('blog-title', [PublicController::class, 'getBlogTitle'])->name('public.getBlogTitle');
+    Route::get('blog-item', [PublicController::class, 'getBlogItem'])->name('public.getBlogItem');
+    Route::group(['prefix' => 'get/home'], function () {
+        Route::get('cover', [PublicController::class, 'getHomeCover'])->name('public.getHomeCover');
+        Route::get('join-us', [PublicController::class, 'getHomeJoinUs'])->name('public.getHomeJoinUs');
+        Route::get('features', [PublicController::class, 'getHomeFeatures'])->name('public.getHomeFeatures');
+        Route::get('about-us-left-text', [PublicController::class, 'getHomeAboutUsLeftText'])->name('public.getHomeAboutUsLeftText');
+        Route::get('about-us-card', [PublicController::class, 'getHomeAboutUsCard'])->name('public.getHomeAboutUsCard');
+        Route::get('our-mission', [PublicController::class, 'getHomeOurMission'])->name('public.getHomeOurMission');
+        Route::get('our-team-title', [PublicController::class, 'getHomeOurTeamTitle'])->name('public.getHomeOurTeamTitle');
+        Route::get('our-our-item', [PublicController::class, 'getHomeOurTeamItem'])->name('public.getHomeOurTeamItem');
+        Route::get('our-service-title', [PublicController::class, 'getHomeOurServiceTitle'])->name('public.getHomeOurServiceTitle');
+        Route::get('our-service-item', [PublicController::class, 'getHomeOurServiceItem'])->name('public.getHomeOurServiceItem');
+        Route::get('testimonial-title', [PublicController::class, 'getHomeTestimonialTitle'])->name('public.getHomeTestimonialTitle');
+        Route::get('testimonial-item', [PublicController::class, 'getHomeTestimonialItem'])->name('public.getHomeTestimonialItem');
+        Route::get('our-recent-work-title', [PublicController::class, 'getHomeOurRecentWorkTitle'])->name('public.getHomeOurRecentWorkTitle');
+        Route::get('our-recent-work-item', [PublicController::class, 'getHomeOurRecentWorkItem'])->name('public.getHomeOurRecentWorkItem');
+    });
 });
 
 // Join Our Networks
