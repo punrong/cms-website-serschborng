@@ -48,7 +48,8 @@ Route::group(['prefix' => 'public/api'], function () {
     Route::get('get/our-service-title/data', [PublicController::class, 'getOurServiceTitleData'])->name('public.getOurServiceTitleData');
     Route::get('get/our-service-item/data', [PublicController::class, 'getOurServiceItemData'])->name('public.getOurServiceItemData');
     Route::get('get/our-blog-title/data', [PublicController::class, 'getBlogPostTitleData'])->name('public.getBlogPostTitleData');
-    Route::get('get/our-blog-item/data', [PublicController::class, 'getBlogPostItemData'])->name('public.getBlogPostItemData');
+    Route::get('get/our-blog-item-three/data', [PublicController::class, 'getBlogPostThreeItemData'])->name('public.getBlogPostThreeItemData');
+    Route::get('get/our-blog-item-all/data', [PublicController::class, 'getBlogPostAllItemData'])->name('public.getBlogPostAllItemData');
     Route::get('get/testimonial-title/data', [PublicController::class, 'getTestimonialTitleData'])->name('public.getTestimonialTitleData');
     Route::get('get/testimonial-item/data', [PublicController::class, 'getTestimonialItemData'])->name('public.getTestimonialItemData');
     Route::get('get/our-recent-work-title/data', [PublicController::class, 'getOurRecentWorkTitleData'])->name('public.getOurRecentWorkTitleData');

@@ -36,7 +36,7 @@
         </div>
         <div class="text-center">
             <a
-                href="#"
+                :href="route('menu.blog')"
                 class="inline-block rounded-full text-xl font-semibold leading-normal text-blue-500 transition duration-150 ease-in-out hover:underline focus:outline-none focus:ring-0 active:text-blue-500"
             >
                 See all articles

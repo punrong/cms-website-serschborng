@@ -70,4 +70,11 @@ class Post extends Model
         }
         return $posts;
     }
+    public static function getPaginatePostByCategory($category_id, $paginate_number){
+        $posts = Post::where('category_id', $category_id)->where('status','ACT')->orderBy('sequence')->paginate($paginate_number);
+        foreach($posts as $post){
+            $post->image = $post->image ? asset($post->image) : null;
+        }
+        return $posts;
+    }
 }

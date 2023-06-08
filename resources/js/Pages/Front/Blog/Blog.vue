@@ -1,65 +1,94 @@
 <template>
     <div class="min-h-screen w-full">
         <main>
-        <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting" :activeMenu="activeMenu"/>
-        <section class="pb-20 bg-gray-300 -mt-24">
-        <div class="container mx-auto px-4">
-            <div v-if="aboutUsTextData && aboutUsCardData" class="flex flex-wrap items-center mt-20">
-                <div class="w-full md:w-5/12 px-4 mr-auto ml-auto">
-                    <div
-                        class="text-gray-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-gray-100"
-                    >
-                        <i class="fas fa-user-friends text-xl"></i>
+            <NavigationBar
+                v-if="pageSetting"
+                :pageSetting="this.pageSetting"
+                :activeMenu="activeMenu"
+            />
+            <Carousel v-if="coverData" :coverData="this.coverData" />
+            <div class="bg-white pt-14 pb-14">
+                <div
+                    v-if="blogPostTitleData"
+                    class="flex flex-wrap justify-center text-center mb-10"
+                >
+                    <div class="w-full lg:w-6/12 px-4">
+                        <h2 class="text-4xl font-semibold">
+                            {{ blogPostTitleData.title }}
+                        </h2>
+                        <p
+                            class="text-lg leading-relaxed text-gray-600"
+                            v-html="blogPostTitleData.description"
+                        ></p>
                     </div>
-                    <h3 class="text-3xl mb-2 font-semibold leading-normal">
-                        {{ aboutUsTextData.title }}
-                    </h3>
-                    <p
-                        class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700 features-component"
-                        v-html="aboutUsTextData.description"
-                    ></p>
                 </div>
-                <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
+                <div
+                    v-if="blogPostItemData"
+                    class="grid grid-cols-1 sm:grid-cols-3 gap-4 m-5"
+                >
                     <div
-                        class="relative flex flex-col min-w-0 break-words bg-blue-600 w-full mb-6 shadow-lg rounded-lg"
+                        v-for="(blogPostItem, index) in blogPostItemData"
+                        :key="index"
+                        class="block rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
                     >
-                        <img
-                            :src="aboutUsCardData.image"
-                            class="w-full align-middle rounded-t-lg"
-                        />
-                        <blockquote class="relative p-8 mb-4">
-                            <h4 class="text-xl font-bold text-white">
-                                {{ aboutUsCardData.title }}
-                            </h4>
-                            <p class="text-md font-light mt-2 text-white" v-html="aboutUsCardData.description">
+                        <a href="#!">
+                            <img
+                                class="rounded-t-lg"
+                                :src="blogPostItem.image"
+                            />
+                        </a>
+                        <div class="p-6">
+                            <h5
+                                class="mb-2 text-xl font-bold leading-tight text-neutral-800 dark:text-neutral-50"
+                            >
+                                {{ blogPostItem.title }}
+                            </h5>
+                            <p
+                                class="mb-4 text-base text-neutral-600 dark:text-neutral-200"
+                            >
+                                {{ blogPostItem.description }}
                             </p>
-                        </blockquote>
+                        </div>
                     </div>
                 </div>
+                <Pagination :data="blogs" />
             </div>
-        </div>
-    </section>
-        <Footer v-if="pageSetting" :pageSetting="this.pageSetting" />
-    </main>
+            <Footer v-if="pageSetting" :pageSetting="this.pageSetting" />
+        </main>
     </div>
 </template>
 
 <script>
 import axios from "axios";
+import Carousel from "../home/components/Carousel.vue";
 import NavigationBar from "../components/NavigationBar.vue";
 import Footer from "../components/Footer.vue";
+import Pagination from "./components/Pagination.vue";
 export default {
     name: "App",
     components: {
+        Carousel,
+        Pagination,
         NavigationBar,
         Footer,
     },
+    props: {
+        blogs: {
+            type: Object,
+            default: () => ({}),
+        },
+        blogCover: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
     data() {
         return {
+            coverData: null,
             pageSetting: null,
-            aboutUsCardData: null,
-            aboutUsTextData: null,
-            activeMenu: 'blog',
+            blogPostTitleData: null,
+            blogPostItemData: null,
+            activeMenu: "blog",
         };
     },
     methods: {
@@ -68,21 +97,35 @@ export default {
                 this.pageSetting = res.data;
             });
         },
-        getAboutUsTextData() {
-            axios.get(route("public.getAboutUsTextData")).then((res) => {
-                this.aboutUsTextData = res.data;
-            });
+        getBlogPostTitleData() {
+            axios
+                .get(
+                    route("public.getBlogPostTitleData")
+                )
+                .then((res) => {
+                    this.blogPostTitleData = res.data;
+                });
         },
-        getAboutUsCardData() {
-            axios.get(route("public.getAboutUsCardData")).then((res) => {
-                this.aboutUsCardData = res.data;
+        getBlogPostItemData() {
+            axios.get(route("public.getBlogPostAllItemData")).then((res) => {
+                this.blogPostItemData = res.data.data; // Assign the retrieved data to your component's items array
+                this.blogPostItemData.forEach((item) => {
+                    item.description =
+                        item.description.replace(/<[^>]+>/g, "").slice(0, 255) +
+                        "...";
+                });
             });
         },
     },
     mounted() {
-        this.getPageSetting()
-        this.getAboutUsTextData()
-        this.getAboutUsCardData()
+        this.getPageSetting();
+        this.getBlogPostTitleData();
+        this.coverData = this.blogCover
+        this.blogPostItemData = this.blogs.data;
+        this.blogPostItemData.forEach((item) => {
+            item.description =
+                item.description.replace(/<[^>]+>/g, "").slice(0, 255) + "...";
+        });
     },
 };
 </script>

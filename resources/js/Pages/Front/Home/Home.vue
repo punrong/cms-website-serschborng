@@ -152,7 +152,7 @@ export default {
             });
         },
         getBlogPostItemData() {
-            axios.get(route("public.getBlogPostItemData")).then((res) => {
+            axios.get(route("public.getBlogPostThreeItemData")).then((res) => {
                 this.blogPostItemData = res.data;
             });
         },

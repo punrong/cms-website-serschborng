@@ -66,7 +66,7 @@ class PublicController extends Controller
         return Post::getFirstPostByCategory($blogPostTitleId);
     }
 
-    public function getBlogPostItemData(){
+    public function getBlogPostThreeItemData(){
         $blogPostItemId = Category::where('code', 'BLOG_ITEM')->value('id');
         return Post::getTopThreePostByCategory($blogPostItemId);
     }
