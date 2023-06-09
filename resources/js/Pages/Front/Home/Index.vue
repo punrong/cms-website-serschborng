@@ -20,12 +20,12 @@
                 :ourTeamTitle="ourTeamTitle"
                 :ourTeamItem="ourTeamItem"
             />
-            <OurRecentWorks
-                v-if="ourRecentWorkTitle && ourRecentWorkItem"
-                :ourRecentWorkTitle="ourRecentWorkTitle"
-                :ourRecentWorkItem="ourRecentWorkItem"
+            <RecentWorks
+                v-if="recentWorkTitle && recentWorkItem"
+                :recentWorkTitle="recentWorkTitle"
+                :recentWorkItem="recentWorkItem"
             />
-            <BlogPost
+            <Blog
                 v-if="blogTitle && blogItem"
                 :blogTitle="blogTitle"
                 :blogItem="blogItem"
@@ -46,12 +46,12 @@ import axios from "axios";
 import Mission from "./components/Mission.vue";
 import Contact from "./components/Contact.vue";
 import Features from "./components/Features.vue";
-import Carousel from "./components/Carousel.vue";
+import Carousel from "../components/Carousel.vue";
 import Services from "./components/Services.vue";
 import Team from "./components/Team.vue";
-import BlogPost from "./components/BlogPost.vue";
+import Blog from "./components/Blog.vue";
 import Testimonial from "./components/Testimonial.vue";
-import OurRecentWorks from "./components/OurRecentWorks.vue"
+import RecentWorks from "./components/RecentWorks.vue"
 import NavigationBar from "../components/NavigationBar.vue";
 import Footer from "../components/Footer.vue";
 export default {
@@ -65,9 +65,9 @@ export default {
         Team,
         NavigationBar,
         Footer,
-        BlogPost,
+        Blog,
         Testimonial,
-        OurRecentWorks,
+        RecentWorks,
     },
     data() {
         return {
@@ -86,8 +86,8 @@ export default {
             blogItem: null,
             testimonialTitle: null,
             testimonialItem: null,
-            ourRecentWorkTitle: null,
-            ourRecentWorkItem: null,
+            recentWorkTitle: null,
+            recentWorkItem: null,
         };
     },
     methods: {
@@ -168,12 +168,12 @@ export default {
         },
         getOurRecentWorkTitleData() {
             axios.get(route("public.getHomeOurRecentWorkTitle")).then((res) => {
-                this.ourRecentWorkTitle = res.data;
+                this.recentWorkTitle = res.data;
             });
         },
         getOurRecentWorkItemData() {
             axios.get(route("public.getHomeOurRecentWorkItem")).then((res) => {
-                this.ourRecentWorkItem = res.data;
+                this.recentWorkItem = res.data;
             });
         },
     },

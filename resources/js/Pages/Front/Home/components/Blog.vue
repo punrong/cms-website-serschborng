@@ -17,21 +17,21 @@
                 :key="index"
                 class="block rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
             >
-                <a href="#!">
+                <a href="#" @click="readBlog(blog.id)">
                     <img class="rounded-t-lg" :src="blog.image" />
+                    <div class="p-6">
+                        <h5
+                            class="mb-2 text-xl font-bold leading-tight text-neutral-800 dark:text-neutral-50"
+                        >
+                            {{ blog.title }}
+                        </h5>
+                        <p
+                            class="mb-4 text-base text-neutral-600 dark:text-neutral-200"
+                        >
+                            {{ blog.description }}
+                        </p>
+                    </div>
                 </a>
-                <div class="p-6">
-                    <h5
-                        class="mb-2 text-xl font-bold leading-tight text-neutral-800 dark:text-neutral-50"
-                    >
-                        {{ blog.title }}
-                    </h5>
-                    <p
-                        class="mb-4 text-base text-neutral-600 dark:text-neutral-200"
-                    >
-                        {{ blog.description }}
-                    </p>
-                </div>
             </div>
         </div>
         <div class="text-center">
@@ -47,6 +47,7 @@
 
 <script>
 import { Ripple, initTE } from "tw-elements";
+import { Inertia } from "@inertiajs/inertia";
 export default {
     props: {
         blogTitle: {
@@ -56,6 +57,11 @@ export default {
         blogItem: {
             type: Object,
             default: () => ({}),
+        },
+    },
+    methods: {
+        readBlog(id) {
+            Inertia.get(route("public.readBlog", id));
         },
     },
     mounted() {

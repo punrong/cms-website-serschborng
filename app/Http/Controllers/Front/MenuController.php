@@ -8,21 +8,21 @@ use App\Models\Post;
 class MenuController extends Controller
 {
     public function getAboutUs(){
-        return Inertia::render('Front/AboutUs/AboutUs');
+        return Inertia::render('Front/AboutUs/Index');
     }
     public function getMentorship(){
-        return Inertia::render('Front/Mentorship/Mentorship');
+        return Inertia::render('Front/Mentorship/Index');
     }
     public function getOpportunities(){
-        return Inertia::render('Front/Opportunities/Opportunities');
+        return Inertia::render('Front/Opportunities/Index');
     }
     public function getBlog(){
         $blogPostItemId = Category::where('code', 'BLOG_ITEM')->value('id');
         $blogCoverId = Category::where('code', 'MENU_BLOG_COVER')->value('id');
-        $blogs = Post::getPaginatePostByCategory($blogPostItemId, 10);
+        $blogs = Post::getPaginatePostByCategory($blogPostItemId, 6);
         $blogCover = Post::getFirstPostByCategory($blogCoverId);
         return Inertia::render(
-            'Front/Blog/Blog',
+            'Front/Blog/Index',
             [
                 'blogs' => $blogs,
                 'blogCover' => $blogCover

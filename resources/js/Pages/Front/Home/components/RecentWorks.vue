@@ -10,17 +10,17 @@
                     class="max-w-max text-center ltr:sm:text-left rtl:sm:text-right"
                 >
                     <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-                        {{ ourRecentWorkTitle.title }}
+                        {{ recentWorkTitle.title }}
                     </h2>
 
                     <p
                         class="mt-4 text-gray-500"
-                        v-html="ourRecentWorkTitle.description"
+                        v-html="recentWorkTitle.description"
                     ></p>
 
                     <div class="hidden justify-center lg:mt-8 lg:flex lg:gap-4">
                         <button
-                            class="prev-button-our-recent-work rounded-full border border-blue-600 p-3 text-blue-600 hover:bg-blue-600 hover:text-white"
+                            class="prev-button-recent-work rounded-full border border-blue-600 p-3 text-blue-600 hover:bg-blue-600 hover:text-white"
                         >
                             <span class="sr-only">Previous Slide</span>
                             <svg
@@ -40,7 +40,7 @@
                         </button>
 
                         <button
-                            class="next-button-our-recent-work rounded-full border border-blue-600 p-3 text-blue-600 hover:bg-blue-600 hover:text-white"
+                            class="next-button-recent-work rounded-full border border-blue-600 p-3 text-blue-600 hover:bg-blue-600 hover:text-white"
                         >
                             <span class="sr-only">Next Slide</span>
                             <svg
@@ -62,12 +62,12 @@
                 </div>
 
                 <div class="-mx-6 lg:col-span-2 lg:mx-0">
-                    <div class="swiper-container-our-recent-work !overflow-hidden">
+                    <div class="swiper-container-recent-work !overflow-hidden">
                         <div class="swiper-wrapper">
                             <div
                                 v-for="(
-                                    ourRecentWork, index
-                                ) in ourRecentWorkItem"
+                                    recentWork, index
+                                ) in recentWorkItem"
                                 :key="index"
                                 class="swiper-slide"
                             >
@@ -78,7 +78,7 @@
                                         class="w-9/12 sm:w-7/12 md:w-6/12 lg:w-6/12"
                                     >
                                         <img
-                                            :src="ourRecentWork.image"
+                                            :src="recentWork.image"
                                             class="shadow-lg rounded-full"
                                         />
                                     </div>
@@ -87,13 +87,13 @@
                                             <p
                                                 class="text-2xl font-bold text-blue-600 sm:text-3xl"
                                             >
-                                                {{ ourRecentWork.title }}
+                                                {{ recentWork.title }}
                                             </p>
 
                                             <p
                                                 class="mt-4 leading-relaxed text-gray-500"
                                                 v-html="
-                                                    ourRecentWork.description
+                                                    recentWork.description
                                                 "
                                             ></p>
                                         </div>
@@ -108,7 +108,7 @@
             <div class="mt-8 flex justify-center gap-4 lg:hidden">
                 <button
                     aria-label="Previous slide"
-                    class="prev-button-our-recent-work rounded-full border border-blue-600 p-4 text-blue-600 hover:bg-blue-600 hover:text-white"
+                    class="prev-button-recent-work rounded-full border border-blue-600 p-4 text-blue-600 hover:bg-blue-600 hover:text-white"
                 >
                     <svg
                         class="h-5 w-5 -rotate-180 transform"
@@ -128,7 +128,7 @@
 
                 <button
                     aria-label="Next slide"
-                    class="next-button-our-recent-work rounded-full border border-blue-600 p-4 text-blue-600 hover:bg-blue-600 hover:text-white"
+                    class="next-button-recent-work rounded-full border border-blue-600 p-4 text-blue-600 hover:bg-blue-600 hover:text-white"
                 >
                     <svg
                         class="h-5 w-5"
@@ -156,11 +156,11 @@ import Swiper from "swiper";
 import "swiper/swiper-bundle.min.css";
 export default {
     props: {
-        ourRecentWorkTitle: {
+        recentWorkTitle: {
             type: Object,
             default: () => ({}),
         },
-        ourRecentWorkItem: {
+        recentWorkItem: {
             type: Object,
             default: () => ({}),
         },
@@ -169,7 +169,7 @@ export default {
         // Call the initTE function to initialize the "tw-elements" library
         initTE({ Ripple });
 
-        new Swiper(".swiper-container-our-recent-work", {
+        new Swiper(".swiper-container-recent-work", {
             loop: true,
             slidesPerView: 1,
             spaceBetween: 32,
@@ -187,8 +187,8 @@ export default {
                 },
             },
             navigation: {
-                nextEl: ".next-button-our-recent-work",
-                prevEl: ".prev-button-our-recent-work",
+                nextEl: ".next-button-recent-work",
+                prevEl: ".prev-button-recent-work",
             },
         });
     },
