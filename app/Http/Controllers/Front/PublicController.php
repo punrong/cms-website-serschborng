@@ -4,6 +4,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\PageSetting;
+use Inertia\Inertia;
+use Carbon\Carbon;
 
 class PublicController extends Controller
 {
@@ -61,16 +63,6 @@ class PublicController extends Controller
         return Post::getTopThreePostByCategory($ourServiceItemCategoryId);
     }
 
-    public function getBlogTitle(){
-        $blogPostTitleCategoryId = Category::where('code', 'BLOG_TITLE')->value('id');
-        return Post::getFirstPostByCategory($blogPostTitleCategoryId);
-    }
-
-    public function getBlogItem(){
-        $blogPostItemCategoryId = Category::where('code', 'BLOG_ITEM')->value('id');
-        return Post::getTopThreePostByCategory($blogPostItemCategoryId);
-    }
-
     public function getHomeTestimonialTitle(){
         $testimonialTitleCategoryId = Category::where('code', 'HOME_TESTIMONIAL_TITLE')->value('id');
         return Post::getFirstPostByCategory($testimonialTitleCategoryId);
@@ -89,5 +81,24 @@ class PublicController extends Controller
     public function getHomeOurRecentWorkItem(){
         $recentWorkItemCategoryId = Category::where('code', 'HOME_RECENT_WORK_ITEM')->value('id');
         return Post::getAllPostByCategory($recentWorkItemCategoryId);
+    }
+
+    public function getBlogTitle(){
+        $blogPostTitleCategoryId = Category::where('code', 'BLOG_TITLE')->value('id');
+        return Post::getFirstPostByCategory($blogPostTitleCategoryId);
+    }
+
+    public function getBlogItem(){
+        $blogPostItemCategoryId = Category::where('code', 'BLOG_ITEM')->value('id');
+        return Post::getTopThreePostByCategory($blogPostItemCategoryId);
+    }
+
+    public function readBlog(Post $post){
+        $post->image = $post->image ? asset($post->image) : null;
+        $post->publisher = $post->updated_by ? $post->updater->name : $post->creator->name;
+        $post->publish_date = $post->updated_at ? Carbon::parse($post->updated_at)->toDateString() : Carbon::parse($post->created_at)->toDateString();
+        return Inertia::render('Front/Blog/Detail', [
+            'blog' => $post,
+        ]);
     }
 }

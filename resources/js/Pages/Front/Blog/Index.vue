@@ -31,24 +31,21 @@
                         :key="index"
                         class="block rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
                     >
-                        <a href="#!">
-                            <img
-                                class="rounded-t-lg"
-                                :src="blog.image"
-                            />
+                        <a href="#" @click="readBlog(blog.id)">
+                            <img class="rounded-t-lg" :src="blog.image" />
+                            <div class="p-6">
+                                <h5
+                                    class="mb-2 text-xl font-bold leading-tight text-neutral-800 dark:text-neutral-50"
+                                >
+                                    {{ blog.title }}
+                                </h5>
+                                <p
+                                    class="mb-4 text-base text-neutral-600 dark:text-neutral-200"
+                                >
+                                    {{ blog.description }}
+                                </p>
+                            </div>
                         </a>
-                        <div class="p-6">
-                            <h5
-                                class="mb-2 text-xl font-bold leading-tight text-neutral-800 dark:text-neutral-50"
-                            >
-                                {{ blog.title }}
-                            </h5>
-                            <p
-                                class="mb-4 text-base text-neutral-600 dark:text-neutral-200"
-                            >
-                                {{ blog.description }}
-                            </p>
-                        </div>
                     </div>
                 </div>
                 <Pagination :data="blogs" />
@@ -60,10 +57,11 @@
 
 <script>
 import axios from "axios";
-import Carousel from "../home/components/Carousel.vue";
+import Carousel from "../components/Carousel.vue";
 import NavigationBar from "../components/NavigationBar.vue";
 import Footer from "../components/Footer.vue";
 import Pagination from "./components/Pagination.vue";
+import { Inertia } from "@inertiajs/inertia";
 export default {
     name: "App",
     components: {
@@ -97,19 +95,18 @@ export default {
             });
         },
         getBlogPostTitleData() {
-            axios
-                .get(
-                    route("public.getBlogTitle")
-                )
-                .then((res) => {
-                    this.blogTitle = res.data;
-                });
+            axios.get(route("public.getBlogTitle")).then((res) => {
+                this.blogTitle = res.data;
+            });
+        },
+        readBlog(id) {
+            Inertia.get(route("public.readBlog", id));
         },
     },
     mounted() {
         this.getPageSetting();
         this.getBlogPostTitleData();
-        this.blogItem = this.blogs.data
+        this.blogItem = this.blogs.data;
         this.blogItem.forEach((item) => {
             item.description =
                 item.description.replace(/<[^>]+>/g, "").slice(0, 255) + "...";

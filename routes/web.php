@@ -32,19 +32,20 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 // Frontend Menu
-
 Route::get('/', function () {
-    return Inertia::render('Front/Home/Home');
+    return Inertia::render('Front/Home/Index');
 })->name('home');
 Route::get('about-us', [MenuController::class, 'getAboutUs'])->name('menu.about-us');
 Route::get('mentorship', [MenuController::class, 'getMentorship'])->name('menu.mentorship');
 Route::get('opportunities', [MenuController::class, 'getOpportunities'])->name('menu.opportunities');
 Route::get('blog', [MenuController::class, 'getBlog'])->name('menu.blog');
 
+// Frontend API
 Route::group(['prefix' => 'public/api'], function () {
     Route::get('get/page-settings/data', [PublicController::class, 'getPageSettingData'])->name('public.getPageSettingData');
     Route::get('blog-title', [PublicController::class, 'getBlogTitle'])->name('public.getBlogTitle');
     Route::get('blog-item', [PublicController::class, 'getBlogItem'])->name('public.getBlogItem');
+    Route::get('read-blog/{post}', [PublicController::class, 'readBlog'])->name('public.readBlog');
     Route::group(['prefix' => 'get/home'], function () {
         Route::get('cover', [PublicController::class, 'getHomeCover'])->name('public.getHomeCover');
         Route::get('join-us', [PublicController::class, 'getHomeJoinUs'])->name('public.getHomeJoinUs');
