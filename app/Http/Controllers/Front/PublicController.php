@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\PageSetting;
 use Inertia\Inertia;
 use Carbon\Carbon;
+use App\Models\PostHasMentors;
 
 class PublicController extends Controller
 {
@@ -105,8 +106,16 @@ class PublicController extends Controller
         $post->image = $post->image ? asset($post->image) : null;
         $post->publisher = $post->updated_by ? $post->updater->name : $post->creator->name;
         $post->publish_date = $post->updated_at ? Carbon::parse($post->updated_at)->toDateString() : Carbon::parse($post->created_at)->toDateString();
+
+        $opportunitiesMentorTitleCategoryId = Category::where('code', 'OPPORTUNITIES_MENTOR_TITLE')->value('id');
+        $opportunitiesMentorTitle = Post::getFirstPostByCategory($opportunitiesMentorTitleCategoryId);
+
+        $mentorList = PostHasMentors::getMentorListByOpportunity($post->id);
+
         return Inertia::render('Front/Opportunities/Detail', [
             'opportunity' => $post,
+            'opportunitiesMentorTitle' => $opportunitiesMentorTitle,
+            'mentorList' => $mentorList
         ]);
     }
 }

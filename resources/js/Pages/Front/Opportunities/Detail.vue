@@ -7,7 +7,7 @@
                 :activeMenu="activeMenu"
             />
             <Carousel v-if="opportunity" :opportunity="this.opportunity" />
-            <div v-if="opportunity" class="bg-white pt-14 pb-14">
+            <div v-if="opportunity" class="bg-white pt-14">
                 <div class="flex flex-wrap justify-center mb-10">
                     <div class="w-full lg:w-6/12 px-4">
                         <div class="text-center">
@@ -25,6 +25,38 @@
                             class="mt-4 text-lg leading-relaxed text-gray-600 opportunity-content"
                             v-html="opportunity.description"
                         ></p>
+                    </div>
+                </div>
+            </div>
+            <div
+                v-if="mentorList.length > 0"
+                class="flex flex-wrap justify-center text-center"
+            >
+                <div class="w-full lg:w-6/12">
+                    <h2 class="text-4xl font-semibold">
+                        {{ opportunitiesMentorTitle.title }}
+                    </h2>
+                    <p
+                        class="text-lg leading-relaxed text-gray-600"
+                        v-html="opportunitiesMentorTitle.description"
+                    ></p>
+                </div>
+            </div>
+            <div v-if="mentorList" class="flex flex-wrap justify-center">
+                <div
+                    v-for="(mentor, index) in mentorList"
+                    :key="index"
+                    class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-4"
+                >
+                    <div class="text-center">
+                        <img
+                            :src="mentor.image"
+                            class="mx-auto mb-4 w-full h-max rounded-lg h-[200px] object-cover"
+                            :alt="mentor.name"
+                        />
+                        <h5 class="mb-2 text-xl font-medium leading-tight">
+                            {{ mentor.name }}
+                        </h5>
                     </div>
                 </div>
             </div>
@@ -51,6 +83,14 @@ export default {
             type: Object,
             default: () => ({}),
         },
+        opportunitiesMentorTitle: {
+            type: Object,
+            default: () => ({}),
+        },
+        mentorList: {
+            type: Object,
+            default: () => ({}),
+        },
     },
     data() {
         return {
@@ -70,6 +110,7 @@ export default {
     },
     mounted() {
         this.getPageSetting();
+        console.log(this.mentorList)
     },
 };
 </script>

@@ -34,10 +34,10 @@ class Post extends Model
 
     public static function getPostMentors($postId)
     {
-        $permissionIdList = Post::getPostMentorIdList($postId);
-        $permissionNameList = Mentor::whereIn('id', $permissionIdList)->where('status', 'ACT')->pluck('name')->toArray();
-        if ($permissionNameList)
-            return implode(', ', $permissionNameList);
+        $mentorIdList = Post::getPostMentorIdList($postId);
+        $mentorNameList = Mentor::whereIn('id', $mentorIdList)->where('status', 'ACT')->pluck('name')->toArray();
+        if ($mentorNameList)
+            return implode(', ', $mentorNameList);
         return;
     }
 
