@@ -1,64 +1,96 @@
 <template>
     <div class="min-h-screen w-full">
         <main>
-        <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting" :activeMenu="activeMenu" />
-        <section class="pb-20 bg-gray-300 -mt-24">
-        <div class="container mx-auto px-4">
-            <div v-if="aboutUsLeftText && aboutUsCard" class="flex flex-wrap items-center mt-20">
-                <div class="w-full md:w-5/12 px-4 mr-auto ml-auto">
-                    <div
-                        class="text-gray-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-gray-100"
-                    >
-                        <i class="fas fa-user-friends text-xl"></i>
-                    </div>
-                    <h3 class="text-3xl mb-2 font-semibold leading-normal">
-                        {{ aboutUsLeftText.title }}
-                    </h3>
-                    <p
-                        class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700 features-component"
-                        v-html="aboutUsLeftText.description"
-                    ></p>
-                </div>
-                <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
-                    <div
-                        class="relative flex flex-col min-w-0 break-words bg-blue-600 w-full mb-6 shadow-lg rounded-lg"
-                    >
-                        <img
-                            :src="aboutUsCard.image"
-                            class="w-full align-middle rounded-t-lg"
-                        />
-                        <blockquote class="relative p-8 mb-4">
-                            <h4 class="text-xl font-bold text-white">
-                                {{ aboutUsCard.title }}
-                            </h4>
-                            <p class="text-md font-light mt-2 text-white" v-html="aboutUsCard.description">
-                            </p>
-                        </blockquote>
+            <NavigationBar
+                v-if="pageSetting"
+                :pageSetting="this.pageSetting"
+                :activeMenu="activeMenu"
+            />
+            <Carousel
+                v-if="opportunitiesCover"
+                :cover="this.opportunitiesCover"
+            />
+            <div class="bg-white pt-14 pb-14">
+                <div
+                    v-if="opportunitiesPageTitle"
+                    class="flex flex-wrap justify-center text-center mb-10"
+                >
+                    <div class="w-full lg:w-6/12 px-4">
+                        <h2 class="text-4xl font-semibold">
+                            {{ opportunitiesPageTitle.title }}
+                        </h2>
+                        <p
+                            class="text-lg leading-relaxed text-gray-600"
+                            v-html="opportunitiesPageTitle.description"
+                        ></p>
                     </div>
                 </div>
+                <div
+                    v-if="opportunityItem"
+                    class="grid grid-cols-1 sm:grid-cols-3 gap-4 m-5"
+                >
+                    <div
+                        v-for="(opportunity, index) in opportunityItem"
+                        :key="index"
+                        class="block rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
+                    >
+                        <a href="#" @click="readOpportunity(opportunity.id)">
+                            <img class="rounded-t-lg" :src="opportunity.image" />
+                            <div class="p-6">
+                                <h5
+                                    class="mb-2 text-xl font-bold leading-tight text-neutral-800 dark:text-neutral-50"
+                                >
+                                    {{ opportunity.title }}
+                                </h5>
+                                <p
+                                    class="mb-4 text-base text-neutral-600 dark:text-neutral-200"
+                                >
+                                    {{ opportunity.description }}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <Pagination :data="opportunities" />
             </div>
-        </div>
-    </section>
-        <Footer v-if="pageSetting" :pageSetting="this.pageSetting" />
-    </main>
+            <Footer v-if="pageSetting" :pageSetting="this.pageSetting" />
+        </main>
     </div>
 </template>
 
 <script>
 import axios from "axios";
 import NavigationBar from "../components/NavigationBar.vue";
+import Carousel from "../components/Carousel.vue";
+import Pagination from "../components/Pagination.vue";
 import Footer from "../components/Footer.vue";
+import { Inertia } from "@inertiajs/inertia";
 export default {
     name: "App",
     components: {
         NavigationBar,
+        Carousel,
+        Pagination,
         Footer,
+    },
+    props: {
+        opportunitiesCover: {
+            type: Object,
+            default: () => ({}),
+        },
+        opportunities: {
+            type: Object,
+            default: () => ({}),
+        },
+        opportunitiesPageTitle: {
+            type: Object,
+            default: () => ({})
+        }
     },
     data() {
         return {
             pageSetting: null,
-            aboutUsCard: null,
-            aboutUsLeftText: null,
+            opportunityItem: null,
             activeMenu: "opportunities",
         };
     },
@@ -68,21 +100,17 @@ export default {
                 this.pageSetting = res.data;
             });
         },
-        getAboutUsTextData() {
-            axios.get(route("public.getHomeAboutUsLeftText")).then((res) => {
-                this.aboutUsLeftText = res.data;
-            });
-        },
-        getAboutUsCardData() {
-            axios.get(route("public.getHomeAboutUsCard")).then((res) => {
-                this.aboutUsCard = res.data;
-            });
+        readOpportunity(id) {
+            Inertia.get(route("public.readOpportunity", id));
         },
     },
     mounted() {
-        this.getPageSetting()
-        this.getAboutUsTextData()
-        this.getAboutUsCardData()
+        this.getPageSetting();
+        this.opportunityItem = this.opportunities.data;
+        this.opportunityItem.forEach((item) => {
+            item.description =
+                item.description.replace(/<[^>]+>/g, "").slice(0, 255) + "...";
+        });
     },
 };
 </script>

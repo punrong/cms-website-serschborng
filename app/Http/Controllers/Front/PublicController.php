@@ -101,4 +101,12 @@ class PublicController extends Controller
             'blog' => $post,
         ]);
     }
+    public function readOpportunity(Post $post){
+        $post->image = $post->image ? asset($post->image) : null;
+        $post->publisher = $post->updated_by ? $post->updater->name : $post->creator->name;
+        $post->publish_date = $post->updated_at ? Carbon::parse($post->updated_at)->toDateString() : Carbon::parse($post->created_at)->toDateString();
+        return Inertia::render('Front/Opportunities/Detail', [
+            'opportunity' => $post,
+        ]);
+    }
 }
