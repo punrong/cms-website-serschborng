@@ -9,16 +9,16 @@
             <Carousel v-if="blogCover" :cover="this.blogCover" />
             <div class="bg-white pt-14 pb-14">
                 <div
-                    v-if="blogTitle"
+                    v-if="blogPageTitle"
                     class="flex flex-wrap justify-center text-center mb-10"
                 >
                     <div class="w-full lg:w-6/12 px-4">
                         <h2 class="text-4xl font-semibold">
-                            {{ blogTitle.title }}
+                            {{ blogPageTitle.title }}
                         </h2>
                         <p
                             class="text-lg leading-relaxed text-gray-600"
-                            v-html="blogTitle.description"
+                            v-html="blogPageTitle.description"
                         ></p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ import axios from "axios";
 import Carousel from "../components/Carousel.vue";
 import NavigationBar from "../components/NavigationBar.vue";
 import Footer from "../components/Footer.vue";
-import Pagination from "./components/Pagination.vue";
+import Pagination from "../components/Pagination.vue";
 import { Inertia } from "@inertiajs/inertia";
 export default {
     name: "App",
@@ -79,11 +79,14 @@ export default {
             type: Object,
             default: () => ({}),
         },
+        blogPageTitle: {
+            type: Object,
+            default: () => ({}),
+        }
     },
     data() {
         return {
             pageSetting: null,
-            blogTitle: null,
             blogItem: null,
             activeMenu: "blog",
         };
@@ -94,18 +97,12 @@ export default {
                 this.pageSetting = res.data;
             });
         },
-        getBlogPostTitleData() {
-            axios.get(route("public.getBlogTitle")).then((res) => {
-                this.blogTitle = res.data;
-            });
-        },
         readBlog(id) {
             Inertia.get(route("public.readBlog", id));
         },
     },
     mounted() {
         this.getPageSetting();
-        this.getBlogPostTitleData();
         this.blogItem = this.blogs.data;
         this.blogItem.forEach((item) => {
             item.description =
