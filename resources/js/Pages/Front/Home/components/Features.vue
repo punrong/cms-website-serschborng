@@ -100,7 +100,6 @@
     </section>
 </template>
 <script>
-import InputError from "@/components/InputError.vue";
 export default {
     props: {
         feature: {
@@ -115,9 +114,6 @@ export default {
             type: Object,
             default: () => ({}),
         },
-    },
-    components: {
-        InputError,
     },
 };
 </script>
