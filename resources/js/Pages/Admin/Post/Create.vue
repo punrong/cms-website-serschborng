@@ -230,9 +230,9 @@ export default {
         updateEditorData(editorData) {
             this.formData.description = editorData;
         },
-        getMentorList() {
+        getMentorListAsArray() {
             axios
-                .get(route("mentor.getMentorList"))
+                .get(route("mentor.getMentorListAsArray"))
                 .then((res) => {
                     this.mentorList = res.data;
                 })
@@ -248,7 +248,7 @@ export default {
     },
     mounted() {
         this.getCategoryList();
-        this.getMentorList();
+        this.getMentorListAsArray();
     },
 };
 </script>
