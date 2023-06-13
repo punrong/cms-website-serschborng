@@ -157,4 +157,8 @@ class UserController extends Controller
             $user->image = null;
         }
     }
+
+    public function getMenteeListAsObject(){
+        return User::getMenteeListAsObject();
+    }
 }

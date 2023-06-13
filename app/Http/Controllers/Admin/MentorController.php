@@ -107,8 +107,12 @@ class MentorController extends Controller
             ]);
     }
 
-    public function getMentorList(){
-        return Mentor::getMentorList();
+    public function getMentorListAsArray(){
+        return Mentor::getMentorListAsArray();
+    }
+
+    public function getMentorListAsObject(){
+        return Mentor::getMentorListAsObject();
     }
 
     private function validateRequest($request, $mentor = null)

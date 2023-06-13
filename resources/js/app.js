@@ -1,6 +1,6 @@
 import "tw-elements";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCircleArrowLeft, faSignOut, faHouse, faTableColumns, faUsers, faUniversalAccess, faPeopleRoof, faMailBulk, faGear, faLayerGroup, faPersonChalkboard, faUser, faCaretDown, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft, faSignOut, faHouse, faTableColumns, faUsers, faUniversalAccess, faPeopleRoof, faMailBulk, faGear, faLayerGroup, faPersonChalkboard, faUser, faCaretDown, faEnvelope, faPhone, faCalendarCheck, faNetworkWired } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp, h } from 'vue';
 import { createInertiaApp, Head } from '@inertiajs/inertia-vue3';
@@ -28,7 +28,7 @@ import SwiperCore, { Navigation, Pagination } from 'swiper';
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Sers Chborng';
 const formKitInputPlugin = createFormKitInputsPlugin();
 
-library.add(faHouse, faCircleArrowLeft, faSignOut, faTableColumns, faUsers, faUniversalAccess, faPeopleRoof, faMailBulk, faGear, faLayerGroup, faPersonChalkboard, faUser, faCaretDown, faEnvelope, faPhone);
+library.add(faHouse, faCircleArrowLeft, faSignOut, faTableColumns, faUsers, faUniversalAccess, faPeopleRoof, faMailBulk, faGear, faLayerGroup, faPersonChalkboard, faUser, faCaretDown, faEnvelope, faPhone, faCalendarCheck, faNetworkWired);
 
 SwiperCore.use([Navigation, Pagination]);
 

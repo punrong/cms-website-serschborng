@@ -156,4 +156,9 @@ class PostController extends Controller
             $post->image = null;
         }
     }
+
+    public function getOpportunityListAsObject(){
+        $category_id = Category::where('code', 'OPPORTUNITIES_ITEM')->value('id');
+        return Post::getOpportunityListAsObject($category_id);
+    }
 }

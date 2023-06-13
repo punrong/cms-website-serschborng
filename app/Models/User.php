@@ -76,4 +76,12 @@ class User extends Authenticatable
         $roleId = ModelHasRoles::where('model_id', $userId)->value('role_id');
         return Role::where('id', $roleId)->value('name');
     }
+
+    public static function getUsername($userId){
+        return User::where('id', $userId)->value('name');
+    }
+
+    public static function getMenteeListAsObject(){
+        return User::where('status', 'ACT')->orderBy('id', 'asc')->pluck('name', 'id');
+    }
 }

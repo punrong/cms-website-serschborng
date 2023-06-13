@@ -87,6 +87,30 @@ export default {
                     can: true,
                 },
                 {
+                    title: "Posts",
+                    icon: "fa-solid fa-mail-bulk",
+                    route: route("post.index"),
+                    can: res.data.can.posts,
+                },
+                {
+                    title: "Categories",
+                    icon: "fa-solid fa-layer-group",
+                    route: route("category.index"),
+                    can: res.data.can.categories,
+                },
+                {
+                    title: "Mentors",
+                    icon: "fa-solid fa-person-chalkboard",
+                    route: route("mentor.index"),
+                    can: res.data.can.mentors,
+                },
+                {
+                    title: "Appointments",
+                    icon: "fa-solid fa-calendar-check",
+                    route: route("appointment.index"),
+                    can: res.data.can.appointments,
+                },
+                {
                     title: "Users",
                     icon: "fa-solid fa-users",
                     route: route("user.index"),
@@ -105,26 +129,8 @@ export default {
                     can: res.data.can.roles,
                 },
                 {
-                    title: "Posts",
-                    icon: "fa-solid fa-mail-bulk",
-                    route: route("post.index"),
-                    can: res.data.can.posts,
-                },
-                {
-                    title: "Mentors",
-                    icon: "fa-solid fa-person-chalkboard",
-                    route: route("mentor.index"),
-                    can: res.data.can.mentors,
-                },
-                {
-                    title: "Categories",
-                    icon: "fa-solid fa-layer-group",
-                    route: route("category.index"),
-                    can: res.data.can.categories,
-                },
-                {
                     title: "Join Our Networks",
-                    icon: "fa-solid fa-gear",
+                    icon: "fa-solid fa-network-wired",
                     route: route("join-our-networks.index"),
                     can: res.data.can.join_our_networks,
                 },

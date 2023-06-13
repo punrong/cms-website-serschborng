@@ -117,7 +117,7 @@ class RoleController extends Controller
             'name' => ['required','string','max:255'],
             'status' => ['required'],
             'code' => ['required','string', isset($role) ? 'unique:roles,code,' . $role->id . ',id' : 'unique:roles'],
-            'sequence' => ['numeric','integer','min:1'],
+            // 'sequence' => ['numeric','integer','min:1'],
         ]);
     }
 

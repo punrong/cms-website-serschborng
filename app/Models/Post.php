@@ -93,4 +93,12 @@ class Post extends Model
         }
         return $posts;
     }
+
+    public static function getPostTitle($postId){
+        return Post::where('id', $postId)->value('title');
+    }
+
+    public static function getOpportunityListAsObject($category_id){
+        return Post::where('category_id', $category_id)->where('status', 'ACT')->orderBy('id', 'asc')->pluck('title', 'id');
+    }
 }

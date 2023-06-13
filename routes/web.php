@@ -67,7 +67,8 @@ Route::group(['prefix' => 'public/api'], function () {
     });
 });
 
-Route::resource('appointment', AppointmentController::class);
+// Appointment
+Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
 
 // Join Our Networks
 Route::post('/join-our-networks', [JoinOurNetworkController::class, 'store'])->name('join-our-networks.store');
@@ -100,6 +101,7 @@ Route::group([
     Route::group(['prefix' => 'user/api'], function () {
         Route::delete('delete/multiple', [UserController::class, 'deleteMultipleRecord'])->name('user.deleteMultipleRecord');
         Route::get('get/user/data', [UserController::class, 'getUserData'])->name('user.getData');
+        Route::get('get/menteelist/object', [UserController::class, 'getMenteeListAsObject'])->name('user.getMenteeListAsObject');
     });
 
     // Role
@@ -123,6 +125,7 @@ Route::group([
     Route::group(['prefix' => 'post/api'], function () {
         Route::delete('delete/multiple', [PostController::class, 'deleteMultipleRecord'])->name('post.deleteMultipleRecord');
         Route::get('get/post/data', [PostController::class, 'getPostData'])->name('post.getData');
+        Route::get('get/opportunitylist/object', [PostController::class, 'getOpportunityListAsObject'])->name('post.getOpportunityListAsObject');
     });
 
     // Category
@@ -139,6 +142,14 @@ Route::group([
     Route::group(['prefix' => 'mentor/api'], function () {
         Route::delete('delete/multiple', [MentorController::class, 'deleteMultipleRecord'])->name('mentor.deleteMultipleRecord');
         Route::get('get/mentor/data', [MentorController::class, 'getMentorData'])->name('mentor.getData');
-        Route::get('get/mentorlist', [MentorController::class, 'getMentorList'])->name('mentor.getMentorList');
+        Route::get('get/mentorlist/array', [MentorController::class, 'getMentorListAsArray'])->name('mentor.getMentorListAsArray');
+        Route::get('get/mentorlist/object', [MentorController::class, 'getMentorListAsObject'])->name('mentor.getMentorListAsObject');
+    });
+
+    //Appointment
+    Route::resource('appointment', AppointmentController::class)->except(['store']);
+    Route::group(['prefix' => 'appointment/api'], function () {
+        Route::delete('delete/multiple', [AppointmentController::class, 'deleteMultipleRecord'])->name('appointment.deleteMultipleRecord');
+        Route::get('get/appointment/data', [AppointmentController::class, 'getAppointmentData'])->name('appointment.getData');
     });
 });

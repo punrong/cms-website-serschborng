@@ -18,8 +18,12 @@ class Mentor extends Model
         'updated_by'
     ];
 
-    public static function getMentorList(){
+    public static function getMentorListAsArray(){
         return Mentor::select( 'name', 'id as value')->where('status', 'ACT')->orderBy('id', 'asc')->get();
+    }
+
+    public static function getMentorListAsObject(){
+        return Mentor::where('status', 'ACT')->orderBy('id', 'asc')->pluck('name', 'id');
     }
 
     public static function getPaginateMentorList($paginate_number){
@@ -28,5 +32,9 @@ class Mentor extends Model
             $mentor->image = $mentor->image ? asset($mentor->image) : null;
         }
         return $mentors;
+    }
+
+    public static function getMentorName($mentorId){
+        return Mentor::where('id', $mentorId)->value('name');
     }
 }
