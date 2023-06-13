@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Front\MenuController;
+use App\Http\Controllers\Admin\AppointmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,6 +66,8 @@ Route::group(['prefix' => 'public/api'], function () {
         Route::get('our-recent-work-item', [PublicController::class, 'getHomeOurRecentWorkItem'])->name('public.getHomeOurRecentWorkItem');
     });
 });
+
+Route::resource('appointment', AppointmentController::class);
 
 // Join Our Networks
 Route::post('/join-our-networks', [JoinOurNetworkController::class, 'store'])->name('join-our-networks.store');

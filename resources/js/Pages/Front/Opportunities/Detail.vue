@@ -48,28 +48,131 @@
                     :key="index"
                     class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4 mb-4"
                 >
-                    <a href="#" @click="readMentorBackground(mentor.id)">
-                        <div class="bg-white rounded-lg shadow p-4">
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <a href="#" @click="readMentorBackground(mentor.id)">
                             <img
                                 :src="mentor.image"
                                 :alt="mentor.name"
                                 class="w-full rounded-lg h-[200px] object-cover mb-4"
                             />
-                            <div class="flex justify-between">
-                                <h3 class="font-bold mb-2">
+                        </a>
+                        <div class="flex justify-between">
+                            <a
+                                href="#"
+                                @click="readMentorBackground(mentor.id)"
+                            >
+                                <h3 class="font-bold mb-2 hover:underline">
                                     {{ mentor.name }}
                                 </h3>
-                                <a
-                                    href="#"
-                                    class="ml-2 text-blue-500 hover:underline"
-                                >
-                                    Request an appointment
-                                </a>
-                            </div>
+                            </a>
+                            <a
+                                href="#"
+                                @click="
+                                    $page.props.auth.user
+                                        ? requestAppointment(mentor)
+                                        : showNotLogInDialog(mentor)
+                                "
+                                class="ml-2 text-blue-500 hover:underline"
+                            >
+                                Request an appointment
+                            </a>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
+            <Dialog
+                v-model:visible="appointmentDialogVisibile"
+                modal
+                :header="dialogHeader"
+                :style="{ width: '50vw' }"
+                :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+            >
+                <FormKit
+                    type="form"
+                    v-model="formData"
+                    @submit="onSubmit"
+                    :actions="false"
+                    :config="{
+                        classes: {
+                            label: 'block mb-1 font-bold text-base',
+                            input: 'w-full rounded-md py-2',
+                            help: 'text-xs text-gray-500',
+                            message: 'text-red-500 text-sm font-bold',
+                            messages: 'pt-2',
+                        },
+                    }"
+                >
+                    <div class="grid grid-cols-2 gap-x-4">
+                        <FormKit
+                            type="select"
+                            label="Method *"
+                            :options="methods"
+                            name="method"
+                            validation="required"
+                            :classes="{
+                                outer: 'pb-4',
+                                input: 'border border-gray-400 px-2 mb-1',
+                            }"
+                        />
+                        <div class="pb-4 px-2 mb-1">
+                            <FormKit
+                                type="datetime-local"
+                                label="Date and Time *"
+                                name="appointment_datetime"
+                                validation="required"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
+                            <InputError
+                                class="text-red-500 text-sm font-bold"
+                                :message="errorMsg"
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <FormKit
+                            type="textarea"
+                            label="Description *"
+                            name="description"
+                            validation="required"
+                            :classes="{
+                                outer: 'pb-4',
+                                input: 'border border-gray-400 px-2 mb-1',
+                            }"
+                        />
+                    </div>
+                    <div class="flex justify-end">
+                        <FormKit
+                            type="button"
+                            label="Cancel"
+                            @click="appointmentDialogVisibile = false"
+                            :classes="{
+                                outer: 'm-0 text-right',
+                                input: '$reset rounded-md py-2 bg-gray-500 text-white font-bold px-3 w-auto mb-2',
+                            }"
+                        />
+                        <FormKit
+                            type="submit"
+                            label="Submit"
+                            :classes="{
+                                outer: 'm-0 text-right',
+                                input: '$reset rounded-md py-2 bg-blue-500 text-white font-bold px-3 w-auto ml-5 mb-2',
+                            }"
+                        />
+                    </div>
+                </FormKit>
+            </Dialog>
+            <Dialog
+                v-model:visible="notLogInDialogVisible"
+                modal
+                :header="dialogHeader"
+                :style="{ width: '50vw' }"
+                :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+            >
+                <p>Please log in first</p>
+            </Dialog>
             <Footer v-if="pageSetting" :pageSetting="this.pageSetting" />
         </main>
     </div>
@@ -81,12 +184,15 @@ import Carousel from "./components/Carousel.vue";
 import NavigationBar from "../components/NavigationBar.vue";
 import Footer from "../components/Footer.vue";
 import { Inertia } from "@inertiajs/inertia";
+import InputError from "@/components/InputError.vue";
+
 export default {
     name: "App",
     components: {
         NavigationBar,
         Carousel,
         Footer,
+        InputError,
     },
     props: {
         opportunity: {
@@ -106,6 +212,26 @@ export default {
         return {
             pageSetting: null,
             activeMenu: "opportunities",
+            appointmentDialogVisibile: false,
+            notLogInDialogVisible: false,
+            formData: {
+                mentee: this.$page.props.auth.user
+                    ? this.$page.props.auth.user.id
+                    : null,
+                mentor: null,
+                method: "ZOOM",
+                status: "PND",
+                description: null,
+                appointment_datetime: null,
+                opportunity_id: this.opportunity.id
+            },
+            methods: {
+                ZOOM: "ZOOM",
+                EMAIL: "EMAIL",
+                IN_PERSON: "IN_PERSON",
+            },
+            dialogHeader: null,
+            errorMsg: null,
         };
     },
     methods: {
@@ -116,6 +242,33 @@ export default {
         },
         readMentorBackground(id) {
             Inertia.get(route("public.readMentorBackground", id));
+        },
+        requestAppointment(mentor) {
+            this.appointmentDialogVisibile = true;
+            this.formData.mentor = mentor.id;
+            this.dialogHeader = "Request an appointment with " + mentor.name;
+        },
+        showNotLogInDialog(mentor) {
+            this.notLogInDialogVisible = true;
+            this.dialogHeader = "Request an appointment with " + mentor.name;
+        },
+        onSubmit() {
+            axios
+                .post(route("appointment.store"), this.formData)
+                .then((res) => {
+                    if (res.data.success)
+                        this.appointmentDialogVisibile = false
+                })
+                .catch((err) => {
+                    if (err.response.status === 422)
+                        this.errorMsg = err.response.data.message;
+                    this.$toast.add({
+                        severity: "error",
+                        summary: "Error Message",
+                        detail: err.response.data.message,
+                        life: 3000,
+                    });
+                });
         },
     },
     mounted() {
