@@ -175,6 +175,7 @@
             </Dialog>
             <Footer v-if="pageSetting" :pageSetting="this.pageSetting" />
         </main>
+        <Toast />
     </div>
 </template>
 
@@ -215,15 +216,15 @@ export default {
             appointmentDialogVisibile: false,
             notLogInDialogVisible: false,
             formData: {
-                mentee: this.$page.props.auth.user
+                mentee_id: this.$page.props.auth.user
                     ? this.$page.props.auth.user.id
                     : null,
-                mentor: null,
+                mentor_id: null,
                 method: "ZOOM",
                 status: "PND",
                 description: null,
                 appointment_datetime: null,
-                opportunity_id: this.opportunity.id
+                opportunity_id: this.opportunity.id,
             },
             methods: {
                 ZOOM: "ZOOM",
@@ -245,7 +246,7 @@ export default {
         },
         requestAppointment(mentor) {
             this.appointmentDialogVisibile = true;
-            this.formData.mentor = mentor.id;
+            this.formData.mentor_id = mentor.id;
             this.dialogHeader = "Request an appointment with " + mentor.name;
         },
         showNotLogInDialog(mentor) {
@@ -256,8 +257,15 @@ export default {
             axios
                 .post(route("appointment.store"), this.formData)
                 .then((res) => {
-                    if (res.data.success)
-                        this.appointmentDialogVisibile = false
+                    if (res.data.success) {
+                        this.$toast.add({
+                            severity: "success",
+                            summary: "Appointment requested",
+                            detail: "Your request has been sent",
+                            life: 4000,
+                        });
+                        this.appointmentDialogVisibile = false;
+                    }
                 })
                 .catch((err) => {
                     if (err.response.status === 422)

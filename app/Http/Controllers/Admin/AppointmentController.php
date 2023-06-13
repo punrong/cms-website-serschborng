@@ -18,7 +18,7 @@ class AppointmentController extends Controller
     public function __construct()
     {
         $this->middleware('can:appointment list', ['only' => ['index', 'show']]);
-        $this->middleware('can:appointment create', ['only' => ['create', 'store']]);
+        $this->middleware('can:appointment create', ['only' => ['create']]);
         $this->middleware('can:appointment edit', ['only' => ['edit', 'update']]);
         $this->middleware('can:appointment delete', ['only' => ['destroy']]);
     }

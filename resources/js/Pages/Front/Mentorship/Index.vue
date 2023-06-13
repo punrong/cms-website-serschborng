@@ -98,21 +98,21 @@
                                 }"
                             />
                             <div class="pb-4 px-2 mb-1">
-                            <FormKit
-                                type="datetime-local"
-                                label="Date and Time *"
-                                name="appointment_datetime"
-                                validation="required"
-                                :classes="{
-                                    outer: 'pb-4',
-                                    input: 'border border-gray-400 px-2 mb-1',
-                                }"
-                            />
-                            <InputError
-                                class="text-red-500 text-sm font-bold"
-                                :message="errorMsg"
-                            />
-                        </div>
+                                <FormKit
+                                    type="datetime-local"
+                                    label="Date and Time *"
+                                    name="appointment_datetime"
+                                    validation="required"
+                                    :classes="{
+                                        outer: 'pb-4',
+                                        input: 'border border-gray-400 px-2 mb-1',
+                                    }"
+                                />
+                                <InputError
+                                    class="text-red-500 text-sm font-bold"
+                                    :message="errorMsg"
+                                />
+                            </div>
                         </div>
                         <div>
                             <FormKit
@@ -161,6 +161,7 @@
             </div>
             <Footer v-if="pageSetting" :pageSetting="this.pageSetting" />
         </main>
+        <Toast />
     </div>
 </template>
 
@@ -180,7 +181,7 @@ export default {
         Carousel,
         Pagination,
         Footer,
-        InputError
+        InputError,
     },
     props: {
         mentorshipCover: {
@@ -204,10 +205,12 @@ export default {
             appointmentDialogVisibile: false,
             notLogInDialogVisible: false,
             formData: {
-                mentee: this.$page.props.auth.user ? this.$page.props.auth.user.id : null,
-                mentor: null,
+                mentee_id: this.$page.props.auth.user
+                    ? this.$page.props.auth.user.id
+                    : null,
+                mentor_id: null,
                 method: "ZOOM",
-                status: 'PND',
+                status: "PND",
                 description: null,
                 appointment_datetime: null,
             },
@@ -231,7 +234,7 @@ export default {
         },
         requestAppointment(mentor) {
             this.appointmentDialogVisibile = true;
-            this.formData.mentor = mentor.id
+            this.formData.mentor_id = mentor.id;
             this.dialogHeader = "Request an appointment with " + mentor.name;
         },
         showNotLogInDialog(mentor) {
@@ -242,8 +245,15 @@ export default {
             axios
                 .post(route("appointment.store"), this.formData)
                 .then((res) => {
-                    if (res.data.success)
-                        this.appointmentDialogVisibile = false
+                    if (res.data.success) {
+                        this.$toast.add({
+                            severity: "success",
+                            summary: "Appointment requested",
+                            detail: "Your request has been sent",
+                            life: 4000,
+                        });
+                        this.appointmentDialogVisibile = false;
+                    }
                 })
                 .catch((err) => {
                     if (err.response.status === 422)
