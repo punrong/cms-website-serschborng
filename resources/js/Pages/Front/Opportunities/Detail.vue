@@ -42,22 +42,32 @@
                     ></p>
                 </div>
             </div>
-            <div v-if="mentorList" class="flex flex-wrap justify-center">
+            <div v-if="mentorList" class="flex flex-wrap -mx-4 p-4">
                 <div
                     v-for="(mentor, index) in mentorList"
                     :key="index"
-                    class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-4"
+                    class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4 mb-4"
                 >
-                    <div class="text-center">
-                        <img
-                            :src="mentor.image"
-                            class="mx-auto mb-4 w-full rounded-lg h-[200px] object-cover"
-                            :alt="mentor.name"
-                        />
-                        <h5 class="mb-2 text-xl font-medium leading-tight">
-                            {{ mentor.name }}
-                        </h5>
-                    </div>
+                    <a href="#" @click="readMentorBackground(mentor.id)">
+                        <div class="bg-white rounded-lg shadow p-4">
+                            <img
+                                :src="mentor.image"
+                                :alt="mentor.name"
+                                class="w-full rounded-lg h-[200px] object-cover mb-4"
+                            />
+                            <div class="flex justify-between">
+                                <h3 class="font-bold mb-2">
+                                    {{ mentor.name }}
+                                </h3>
+                                <a
+                                    href="#"
+                                    class="ml-2 text-blue-500 hover:underline"
+                                >
+                                    Request an appointment
+                                </a>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
             <Footer v-if="pageSetting" :pageSetting="this.pageSetting" />
@@ -103,6 +113,9 @@ export default {
             axios.get(route("public.getPageSettingData")).then((res) => {
                 this.pageSetting = res.data;
             });
+        },
+        readMentorBackground(id) {
+            Inertia.get(route("public.readMentorBackground", id));
         },
     },
     mounted() {
