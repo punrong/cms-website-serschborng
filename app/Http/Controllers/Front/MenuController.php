@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Mentor;
 
 class MenuController extends Controller
 {
@@ -30,18 +31,30 @@ class MenuController extends Controller
     }
     public function getMentorship()
     {
-        return Inertia::render('Front/Mentorship/Index');
+        $mentorshipCoverCategoryId = Category::where('code', 'MENTORSHIP_COVER')->value('id');
+        $mentorshipCover = Post::getFirstPostByCategory($mentorshipCoverCategoryId);
+
+        $mentorshipPageTitleCategoryId = Category::where('code', 'MENTORSHIP_TITLE')->value('id');
+        $mentorshipPageTitle = Post::getFirstPostByCategory($mentorshipPageTitleCategoryId);
+
+        $mentors = Mentor::getPaginateMentorList(8);
+
+        return Inertia::render('Front/Mentorship/Index', [
+            'mentorshipCover' => $mentorshipCover,
+            'mentors' => $mentors,
+            'mentorshipPageTitle' => $mentorshipPageTitle
+        ]);
     }
     public function getOpportunities()
     {
         $opportunitiesCoverCategoryId = Category::where('code', 'OPPORTUNITIES_MENU_COVER')->value('id');
         $opportunitiesCover = Post::getFirstPostByCategory($opportunitiesCoverCategoryId);
 
-        $opportunitiesCategoryId = Category::where('code', 'OPPORTUNITIES_TITLE')->value('id');
-        $opportunitiesPageTitle = Post::getFirstPostByCategory($opportunitiesCategoryId);
+        $opportunitiesPageTitleCategoryId = Category::where('code', 'OPPORTUNITIES_TITLE')->value('id');
+        $opportunitiesPageTitle = Post::getFirstPostByCategory($opportunitiesPageTitleCategoryId);
 
-        $opportunitiesCategoryId = Category::where('code', 'OPPORTUNITIES_ITEM')->value('id');
-        $opportunities = Post::getPaginatePostByCategory($opportunitiesCategoryId, 6);
+        $opportunitiesItemCategoryId = Category::where('code', 'OPPORTUNITIES_ITEM')->value('id');
+        $opportunities = Post::getPaginatePostByCategory($opportunitiesItemCategoryId, 6);
 
         return Inertia::render('Front/Opportunities/Index', [
             'opportunitiesCover' => $opportunitiesCover,

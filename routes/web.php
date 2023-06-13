@@ -47,6 +47,7 @@ Route::group(['prefix' => 'public/api'], function () {
     Route::get('blog-item', [PublicController::class, 'getBlogItem'])->name('public.getBlogItem');
     Route::get('read-blog/{post}', [PublicController::class, 'readBlog'])->name('public.readBlog');
     Route::get('read-opportunity/{post}', [PublicController::class, 'readOpportunity'])->name('public.readOpportunity');
+    Route::get('read-mentor-background/{mentor}', [PublicController::class, 'readMentorBackground'])->name('public.readMentorBackground');
     Route::group(['prefix' => 'get/home'], function () {
         Route::get('cover', [PublicController::class, 'getHomeCover'])->name('public.getHomeCover');
         Route::get('join-us', [PublicController::class, 'getHomeJoinUs'])->name('public.getHomeJoinUs');

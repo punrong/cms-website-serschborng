@@ -21,4 +21,12 @@ class Mentor extends Model
     public static function getMentorList(){
         return Mentor::select( 'name', 'id as value')->where('status', 'ACT')->orderBy('id', 'asc')->get();
     }
+
+    public static function getPaginateMentorList($paginate_number){
+        $mentors = Mentor::where('status', 'ACT')->paginate($paginate_number);
+        foreach ($mentors as $mentor) {
+            $mentor->image = $mentor->image ? asset($mentor->image) : null;
+        }
+        return $mentors;
+    }
 }

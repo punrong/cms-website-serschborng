@@ -7,6 +7,7 @@ use App\Models\PageSetting;
 use Inertia\Inertia;
 use Carbon\Carbon;
 use App\Models\PostHasMentors;
+use App\Models\Mentor;
 
 class PublicController extends Controller
 {
@@ -102,6 +103,7 @@ class PublicController extends Controller
             'blog' => $post,
         ]);
     }
+
     public function readOpportunity(Post $post){
         $post->image = $post->image ? asset($post->image) : null;
         $post->publisher = $post->updated_by ? $post->updater->name : $post->creator->name;
@@ -116,6 +118,13 @@ class PublicController extends Controller
             'opportunity' => $post,
             'opportunitiesMentorTitle' => $opportunitiesMentorTitle,
             'mentorList' => $mentorList
+        ]);
+    }
+
+    public function readMentorBackground(Mentor $mentor){
+        $mentor->image = $mentor->image ? asset($mentor->image) : null;
+        return Inertia::render('Front/Mentorship/Detail', [
+            'mentor' => $mentor,
         ]);
     }
 }
