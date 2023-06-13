@@ -51,7 +51,7 @@
                     <div class="text-center">
                         <img
                             :src="mentor.image"
-                            class="mx-auto mb-4 w-full h-max rounded-lg h-[200px] object-cover"
+                            class="mx-auto mb-4 w-full rounded-lg h-[200px] object-cover"
                             :alt="mentor.name"
                         />
                         <h5 class="mb-2 text-xl font-medium leading-tight">
@@ -104,13 +104,9 @@ export default {
                 this.pageSetting = res.data;
             });
         },
-        readBlog(id) {
-            Inertia.get(route("public.readBlog", id));
-        },
     },
     mounted() {
         this.getPageSetting();
-        console.log(this.mentorList)
     },
 };
 </script>

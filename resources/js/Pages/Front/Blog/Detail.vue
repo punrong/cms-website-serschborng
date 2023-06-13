@@ -64,9 +64,6 @@ export default {
                 this.pageSetting = res.data;
             });
         },
-        readBlog(id) {
-            Inertia.get(route("public.readBlog", id));
-        },
     },
     mounted() {
         this.getPageSetting();
