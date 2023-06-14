@@ -62,7 +62,6 @@ class AuthenticatedSessionController extends Controller
             'mentors' => Auth::user()->can('mentor list'),
             'page_settings' => Auth::user()->can('page-settings list'),
             'join_our_networks' => Auth::user()->can('join-our-networks list'),
-            'appointments' => Auth::user()->can('appointment list'),
         ]];
     }
 }

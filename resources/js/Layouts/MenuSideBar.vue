@@ -108,7 +108,7 @@ export default {
                     title: "Appointments",
                     icon: "fa-solid fa-calendar-check",
                     route: route("appointment.index"),
-                    can: res.data.can.appointments,
+                    can: true,
                 },
                 {
                     title: "Users",

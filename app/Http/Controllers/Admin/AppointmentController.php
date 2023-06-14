@@ -17,7 +17,6 @@ class AppointmentController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:appointment list', ['only' => ['index', 'show']]);
         $this->middleware('can:appointment create', ['only' => ['create']]);
         $this->middleware('can:appointment edit', ['only' => ['edit', 'update']]);
         $this->middleware('can:appointment delete', ['only' => ['destroy']]);
@@ -39,10 +38,16 @@ class AppointmentController extends Controller
         $sortField = $request->sortField ?? 'id';
         $sortOrder = $request->sortOrder ?? 'desc';
 
-        return response()->json([
-            'success' => true,
-            'payload' => PrimevueDatatables::of(Appointment::with('mentee')->with('mentor')->with('opportunity')->select('id', 'mentee_id', 'mentor_id', 'status', 'method', 'opportunity_id', 'appointment_datetime')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
-        ]);
+        if(Auth::user()->can('appointment create') || Auth::user()->can('appointment edit') || Auth::user()->can('appointment delete'))
+            return response()->json([
+                'success' => true,
+                'payload' => PrimevueDatatables::of(Appointment::with('mentee')->with('mentor')->with('opportunity')->select('id', 'mentee_id', 'mentor_id', 'status', 'method', 'opportunity_id', 'appointment_datetime')->where('status', '!=', 'DEL')->orderBy($sortField, $sortOrder))->make()
+            ]);
+        else
+            return response()->json([
+                'success' => true,
+                'payload' => PrimevueDatatables::of(Appointment::with('mentee')->with('mentor')->with('opportunity')->select('id', 'mentee_id', 'mentor_id', 'status', 'method', 'opportunity_id', 'appointment_datetime')->where('status', '!=', 'DEL')->where('mentee_id',Auth::user()->id)->orderBy($sortField, $sortOrder))->make()
+            ]);
     }
 
     public function create()

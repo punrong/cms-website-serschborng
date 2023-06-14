@@ -68,7 +68,9 @@ Route::group(['prefix' => 'public/api'], function () {
 });
 
 // Appointment
+Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment.index');
 Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
+Route::get('/appointment/{appointment}', [AppointmentController::class, 'show'])->name('appointment.show');
 
 // Join Our Networks
 Route::post('/join-our-networks', [JoinOurNetworkController::class, 'store'])->name('join-our-networks.store');
@@ -147,7 +149,7 @@ Route::group([
     });
 
     //Appointment
-    Route::resource('appointment', AppointmentController::class)->except(['store']);
+    Route::resource('appointment', AppointmentController::class)->except(['index','store', 'show']);
     Route::group(['prefix' => 'appointment/api'], function () {
         Route::delete('delete/multiple', [AppointmentController::class, 'deleteMultipleRecord'])->name('appointment.deleteMultipleRecord');
         Route::get('get/appointment/data', [AppointmentController::class, 'getAppointmentData'])->name('appointment.getData');
