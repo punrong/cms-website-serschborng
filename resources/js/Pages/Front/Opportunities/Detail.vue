@@ -42,7 +42,7 @@
                     ></p>
                 </div>
             </div>
-            <div v-if="mentorList" class="flex flex-wrap -mx-4 p-4">
+            <div v-if="mentorList" class="flex flex-wrap -mx-4 p-4 justify-center items-center">
                 <div
                     v-for="(mentor, index) in mentorList"
                     :key="index"
@@ -147,7 +147,7 @@
                         <FormKit
                             type="button"
                             label="Cancel"
-                            @click="appointmentDialogVisibile = false"
+                            @click="closeAppointmentRequest"
                             :classes="{
                                 outer: 'm-0 text-right',
                                 input: '$reset rounded-md py-2 bg-gray-500 text-white font-bold px-3 w-auto mb-2',
@@ -253,6 +253,10 @@ export default {
             this.notLogInDialogVisible = true;
             this.dialogHeader = "Request an appointment with " + mentor.name;
         },
+        closeAppointmentRequest(){
+            this.appointmentDialogVisibile = false  
+            this.errorMsg = null
+        },
         onSubmit() {
             axios
                 .post(route("appointment.store"), this.formData)
@@ -264,6 +268,7 @@ export default {
                             detail: "Your request has been sent",
                             life: 4000,
                         });
+                        this.errorMsg = null
                         this.appointmentDialogVisibile = false;
                     }
                 })
