@@ -130,7 +130,7 @@
                         </div>
                         <FormKit
                             type="submit"
-                            label="Create"
+                            label="Update"
                             :classes="{
                                 outer: 'm-0 text-right',
                                 input: '$reset rounded-md py-2 bg-blue-500 text-white font-bold px-3 w-auto mb-2',
