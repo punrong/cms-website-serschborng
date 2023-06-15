@@ -37,4 +37,8 @@ class Mentor extends Model
     public static function getMentorName($mentorId){
         return Mentor::where('id', $mentorId)->value('name');
     }
+
+    public static function getMentorEmail($mentorId){
+        return Mentor::where('id', $mentorId)->value('email');
+    }
 }

@@ -84,4 +84,8 @@ class User extends Authenticatable
     public static function getMenteeListAsObject(){
         return User::where('status', 'ACT')->orderBy('id', 'asc')->pluck('name', 'id');
     }
+
+    public static function getUserEmail($userId){
+        return User::where('id', $userId)->value('email');
+    }
 }

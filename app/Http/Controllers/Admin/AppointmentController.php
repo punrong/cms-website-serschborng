@@ -12,6 +12,10 @@ use Savannabits\PrimevueDatatables\PrimevueDatatables;
 use Illuminate\Http\JsonResponse;
 use App\Models\Mentor;
 use App\Models\Post;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MenteeRequestConfirmationMail;
+Use App\Mail\MentorRequestAppointmentMail;
+use App\Mail\AppointmentAcceptedMail;
 
 class AppointmentController extends Controller
 {
@@ -60,10 +64,19 @@ class AppointmentController extends Controller
         $this->validateRequest($request);
         $appointment = new Appointment();
         $this->assignValue($request, $appointment);
-        if ($appointment->save())
+        if ($appointment->save()){
+            // Mentee
+            $menteeRecipientEmail = User::getUserEmail($appointment->mentee_id);
+            Mail::to($menteeRecipientEmail)->send(new MenteeRequestConfirmationMail($appointment));
+
+            // Mentor
+            $mentorRecipientEmail = Mentor::getMentorEmail($appointment->mentor_id);
+            Mail::to($mentorRecipientEmail)->send(new MentorRequestAppointmentMail($appointment));
+
             return response()->json([
                 'success' => true,
             ]);
+        }
     }
 
     public function show(Appointment $appointment)
@@ -89,12 +102,20 @@ class AppointmentController extends Controller
 
     public function update(Appointment $appointment, Request $request)
     {
+        $isAppointmentNewlyAccepted = $request->status == 'ACP' && $appointment->status != 'ACP';
         $this->validateRequest($request, $appointment);
         $this->assignValue($request, $appointment);
-        if ($appointment->save())
+        if ($appointment->save()){
+            if($isAppointmentNewlyAccepted){
+                // Mentee
+                $menteeRecipientEmail = User::getUserEmail($appointment->mentee_id);
+                $mentorRecipientEmail = Mentor::getMentorEmail($appointment->mentor_id);
+                Mail::to($menteeRecipientEmail)->cc($mentorRecipientEmail)->send(new AppointmentAcceptedMail($appointment));
+            }
             return response()->json([
                 'success' => true,
             ]);
+        }
     }
 
     public function destroy(Appointment $appointment)
