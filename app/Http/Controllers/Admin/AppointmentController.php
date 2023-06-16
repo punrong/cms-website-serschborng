@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MenteeRequestConfirmationMail;
 Use App\Mail\MentorRequestAppointmentMail;
 use App\Mail\AppointmentAcceptedMail;
+use App\Mail\AppointmentRejectedMail;
 
 class AppointmentController extends Controller
 {
@@ -103,15 +104,16 @@ class AppointmentController extends Controller
     public function update(Appointment $appointment, Request $request)
     {
         $isAppointmentNewlyAccepted = $request->status == 'ACP' && $appointment->status != 'ACP';
+        $isAppointmentNewlyRejected = $request->status == 'REJ' && $appointment->status != 'REJ';
         $this->validateRequest($request, $appointment);
         $this->assignValue($request, $appointment);
         if ($appointment->save()){
-            if($isAppointmentNewlyAccepted){
-                // Mentee
-                $menteeRecipientEmail = User::getUserEmail($appointment->mentee_id);
-                $mentorRecipientEmail = Mentor::getMentorEmail($appointment->mentor_id);
+            $menteeRecipientEmail = User::getUserEmail($appointment->mentee_id);
+            $mentorRecipientEmail = Mentor::getMentorEmail($appointment->mentor_id);
+            if($isAppointmentNewlyAccepted)
                 Mail::to($menteeRecipientEmail)->cc($mentorRecipientEmail)->send(new AppointmentAcceptedMail($appointment));
-            }
+            if($isAppointmentNewlyRejected)
+                Mail::to($menteeRecipientEmail)->send(new AppointmentRejectedMail($appointment));
             return response()->json([
                 'success' => true,
             ]);
