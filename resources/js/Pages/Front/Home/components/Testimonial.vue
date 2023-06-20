@@ -170,7 +170,7 @@ export default {
         initTE({ Ripple });
 
         new Swiper(".swiper-container-testimonial", {
-            loop: true,
+            loop: false,
             slidesPerView: 1,
             spaceBetween: 32,
             autoplay: {
