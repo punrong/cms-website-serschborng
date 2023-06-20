@@ -7,23 +7,7 @@
             class="absolute top-0 w-full h-full bg-center bg-cover"
             :style="`background-image: url('${mentor.image}')`"
         >
-            <span
-                id="blackOverlay"
-                class="w-full h-full absolute opacity-75 bg-black"
-            ></span>
-        </div>
-        <div class="container relative mx-auto">
-            <div class="items-center flex flex-wrap">
-                <div
-                    class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center mt-9 sm:mt-0"
-                >
-                    <div>
-                        <h1 class="text-white font-semibold text-5xl">
-                            {{ mentor.name }}
-                        </h1>
-                    </div>
-                </div>
-            </div>
+            <span id="blackOverlay" class="w-full h-full absolute"></span>
         </div>
     </div>
 </template>
