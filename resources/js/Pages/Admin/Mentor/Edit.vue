@@ -96,7 +96,7 @@
                         />
                         <div class="pb-4 mb-1">
                             <span class="block mb-1 font-bold text-base"
-                                >Description</span
+                                >Mentor's Background *</span
                             >
                             <Editor
                                 :content="formData.description"

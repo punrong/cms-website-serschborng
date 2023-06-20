@@ -6,7 +6,13 @@
                 :pageSetting="this.pageSetting"
                 :activeMenu="activeMenu"
             />
-            <Carousel v-if="mentorshipCover" :cover="this.mentorshipCover" />
+            <Carousel
+                v-if="mentorshipCover"
+                :cover="this.mentorshipCover"
+                :hasCoverBtn="true"
+                :coverBtnLabel="coverBtnLabel"
+                @coverBtnClicked="openMentorRegisterDialog"
+            />
             <div class="bg-white pt-14 pb-14">
                 <div
                     v-if="mentorshipPageTitle"
@@ -22,7 +28,10 @@
                         ></p>
                     </div>
                 </div>
-                <div v-if="mentorItem" class="flex flex-wrap -mx-4 p-4 justify-center items-center">
+                <div
+                    v-if="mentorItem"
+                    class="flex flex-wrap -mx-4 p-4 justify-center items-center"
+                >
                     <div
                         v-for="(mentor, index) in mentorItem"
                         :key="index"
@@ -72,8 +81,8 @@
                 >
                     <FormKit
                         type="form"
-                        v-model="formData"
-                        @submit="onSubmit"
+                        v-model="appointmentData"
+                        @submit="onAppointmentSubmit"
                         :actions="false"
                         :config="{
                             classes: {
@@ -148,6 +157,103 @@
                     </FormKit>
                 </Dialog>
                 <Dialog
+                    v-model:visible="registerDialogVisibile"
+                    modal
+                    header="Mentor Registration"
+                    :style="{ width: '50vw' }"
+                    :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+                >
+                    <FormKit
+                        type="form"
+                        v-model="registerData"
+                        @submit="onRegistrationSubmit"
+                        :actions="false"
+                        :config="{
+                            classes: {
+                                label: 'block mb-1 font-bold text-base',
+                                input: 'w-full rounded-md py-2',
+                                help: 'text-xs text-gray-500',
+                                message: 'text-red-500 text-sm font-bold',
+                                messages: 'pt-2',
+                            },
+                        }"
+                    >
+                        <div class="grid grid-cols-3 gap-x-4">
+                            <FormKit
+                                type="text"
+                                label="Name *"
+                                name="name"
+                                validation="required"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
+                            <FormKit
+                                type="email"
+                                label="Email *"
+                                name="email"
+                                validation="required|email"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
+                            <FormKit
+                                type="tel"
+                                label="Phone number"
+                                name="phone_number"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
+                        </div>
+                        <FormKit
+                            type="image"
+                            label="Image"
+                            name="image"
+                            accept=".jpg,.png,.jepg"
+                            :classes="{
+                                outer: 'pb-4',
+                                input: 'border border-gray-400 px-2 mb-1',
+                            }"
+                        />
+                        <div class="pb-4 mb-1">
+                            <span class="block mb-1 font-bold text-base"
+                                >Mentor's Background *</span
+                            >
+                            <Editor
+                                :content="registerData.description"
+                                @updateEditorData="updateEditorData"
+                            />
+                            <InputError
+                                class="text-red-500 text-sm font-bold"
+                                :message="errorMsg"
+                            />
+                        </div>
+                        <div class="flex justify-end">
+                            <FormKit
+                                type="button"
+                                label="Cancel"
+                                @click="closeRegisterRequest"
+                                :classes="{
+                                    outer: 'm-0 text-right',
+                                    input: '$reset rounded-md py-2 bg-gray-500 text-white font-bold px-3 w-auto mb-2',
+                                }"
+                            />
+                            <FormKit
+                                type="submit"
+                                label="Register"
+                                :classes="{
+                                    outer: 'm-0 text-right',
+                                    input: '$reset rounded-md py-2 bg-blue-500 text-white font-bold px-3 w-auto ml-5 mb-2',
+                                }"
+                            />
+                        </div>
+                    </FormKit>
+                </Dialog>
+                <Dialog
                     v-model:visible="notLogInDialogVisible"
                     modal
                     :header="dialogHeader"
@@ -173,6 +279,7 @@ import Pagination from "../components/Pagination.vue";
 import Footer from "../components/Footer.vue";
 import { Inertia } from "@inertiajs/inertia";
 import InputError from "@/components/InputError.vue";
+import Editor from "@/components/Editor.vue";
 
 export default {
     name: "App",
@@ -182,6 +289,7 @@ export default {
         Pagination,
         Footer,
         InputError,
+        Editor,
     },
     props: {
         mentorshipCover: {
@@ -203,8 +311,9 @@ export default {
             mentorItem: null,
             activeMenu: "mentorship",
             appointmentDialogVisibile: false,
+            registerDialogVisibile: false,
             notLogInDialogVisible: false,
-            formData: {
+            appointmentData: {
                 mentee_id: this.$page.props.auth.user
                     ? this.$page.props.auth.user.id
                     : null,
@@ -214,6 +323,14 @@ export default {
                 description: null,
                 appointment_datetime: null,
             },
+            registerData: {
+                name: null,
+                status: "PND",
+                email: null,
+                image: null,
+                phone_number: "",
+                description: "",
+            },
             methods: {
                 ZOOM: "ZOOM",
                 EMAIL: "EMAIL",
@@ -221,6 +338,7 @@ export default {
             },
             dialogHeader: null,
             errorMsg: null,
+            coverBtnLabel: "Become our mentor now",
         };
     },
     methods: {
@@ -234,20 +352,27 @@ export default {
         },
         requestAppointment(mentor) {
             this.appointmentDialogVisibile = true;
-            this.formData.mentor_id = mentor.id;
+            this.appointmentData.mentor_id = mentor.id;
             this.dialogHeader = "Request an appointment with " + mentor.name;
+        },
+        closeAppointmentRequest() {
+            this.appointmentDialogVisibile = false;
+            this.errorMsg = null;
         },
         showNotLogInDialog(mentor) {
             this.notLogInDialogVisible = true;
             this.dialogHeader = "Request an appointment with " + mentor.name;
         },
-        closeAppointmentRequest(){
-            this.appointmentDialogVisibile = false  
-            this.errorMsg = null
+        openMentorRegisterDialog() {
+            this.registerDialogVisibile = true;
         },
-        onSubmit() {
+        closeRegisterRequest() {
+            this.registerDialogVisibile = false;
+            this.errorMsg = null;
+        },
+        onAppointmentSubmit() {
             axios
-                .post(route("appointment.store"), this.formData)
+                .post(route("appointment.store"), this.appointmentData)
                 .then((res) => {
                     if (res.data.success) {
                         this.$toast.add({
@@ -256,7 +381,7 @@ export default {
                             detail: "Your request has been sent",
                             life: 4000,
                         });
-                        this.errorMsg = null
+                        this.errorMsg = null;
                         this.appointmentDialogVisibile = false;
                     }
                 })
@@ -271,6 +396,35 @@ export default {
                     });
                 });
         },
+        onRegistrationSubmit() {
+            axios
+                .post(route("mentor.storeRegistration"), this.registerData)
+                .then((res) => {
+                    if (res.data.success) {
+                        this.$toast.add({
+                            severity: "success",
+                            summary: "Mentor Registration Requested",
+                            detail: "Please wait for admin's approval",
+                            life: 4000,
+                        });
+                        this.errorMsg = null;
+                        this.registerDialogVisibile = false;
+                    }
+                })
+                .catch((err) => {
+                    if (err.response.status === 422)
+                        this.errorMsg = err.response.data.message;
+                    this.$toast.add({
+                        severity: "error",
+                        summary: "Error Message",
+                        detail: err.response.data.message,
+                        life: 3000,
+                    });
+                });
+        },
+        updateEditorData(editorData) {
+            this.registerData.description = editorData;
+        },
     },
     mounted() {
         this.getPageSetting();
@@ -282,3 +436,20 @@ export default {
     },
 };
 </script>
+<style>
+button.formkit-file-item-remove {
+    background-color: rgb(239 68 68) !important;
+    border-radius: 0.375rem !important;
+    color: rgb(255 255 255) !important;
+    font-weight: 700 !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    width: auto !important;
+    margin-top: 0.5rem !important;
+}
+img.formkit-file-item-image{
+    max-width: 20% !important;
+}
+</style>

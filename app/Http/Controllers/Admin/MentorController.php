@@ -47,6 +47,16 @@ class MentorController extends Controller
         return Inertia::render('Admin/Mentor/Create');
     }
 
+    public function storeRegistration(Request $request){
+        $this->validateRequest($request);
+        $mentor = new Mentor();
+        $this->assignValue($request, $mentor);
+        if ($mentor->save())
+            return response()->json([
+                'success' => true,
+            ]);
+    }
+
     public function store(Request $request)
     {
         $this->validateRequest($request);
@@ -120,7 +130,7 @@ class MentorController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', isset($mentor) ? 'unique:mentors,email,' . $mentor->id . ',id' : 'unique:mentors'],
-            'phone_number' => ['string', 'max:20', isset($mentor) ? 'unique:mentors,phone_number,' . $mentor->id . ',id' : 'unique:mentors', 'regex:/^\d{9,10}$/'],
+            // 'phone_number' => ['string', 'max:20', isset($mentor) ? 'unique:mentors,phone_number,' . $mentor->id . ',id' : 'unique:mentors', 'regex:/^\d{9,10}$/'],
             'status' => 'required',
             'image' => 'max:2048',
             'description' => ['required', 'string'],

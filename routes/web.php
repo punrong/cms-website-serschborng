@@ -75,6 +75,9 @@ Route::get('/appointment/{appointment}', [AppointmentController::class, 'show'])
 // Join Our Networks
 Route::post('/join-our-networks', [JoinOurNetworkController::class, 'store'])->name('join-our-networks.store');
 
+// Mentor
+Route::post('/mentor/register/store', [MentorController::class, 'storeRegistration'])->name('mentor.storeRegistration');
+
 Route::group([
     'prefix' => 'admin',
     'middleware' => ['auth'],
