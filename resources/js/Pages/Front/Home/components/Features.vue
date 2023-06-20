@@ -74,7 +74,7 @@
                         {{ aboutUsLeftText.title }}
                     </h3>
                     <p
-                        class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700 features-component"
+                        class="text-lg leading-relaxed mt-4 mb-4 text-gray-700 features-component"
                         v-html="aboutUsLeftText.description"
                     ></p>
                 </div>
@@ -90,7 +90,7 @@
                             <h4 class="text-xl font-bold text-white">
                                 {{ aboutUsCard.title }}
                             </h4>
-                            <p class="text-md font-light mt-2 text-white" v-html="aboutUsCard.description">
+                            <p class="text-md mt-2 text-white" v-html="aboutUsCard.description">
                             </p>
                         </blockquote>
                     </div>
