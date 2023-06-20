@@ -52,6 +52,7 @@ class PageSettingController extends Controller
             'email' => ['required', 'string', 'email', 'max:255'],
             'phone_number' => ['string', 'max:20','regex:/^\d{9,10}$/'],
             'facebook' => ['required', 'string', 'max:255'],
+            'instagram' => ['required', 'string', 'max:255'],
             'logo' => 'max:2048',
             'favicon' => 'max:2048',
             'description' => ['required', 'string'],
@@ -65,6 +66,7 @@ class PageSettingController extends Controller
         $pageSetting->email = $request->email;
         $pageSetting->copyrights = $request->copyrights;
         $pageSetting->facebook = $request->facebook;
+        $pageSetting->instagram = $request->instagram;
         $pageSetting->phone_number = $request->phone_number;
         $pageSetting->description = $request->description;
         $pageSetting->updated_by = Auth::user()->id;

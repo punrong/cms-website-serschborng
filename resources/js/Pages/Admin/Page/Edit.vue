@@ -86,6 +86,16 @@
                             />
                             <FormKit
                                 type="text"
+                                label="Instagram Link *"
+                                name="instagram"
+                                validation="required"
+                                :classes="{
+                                    outer: 'pb-4',
+                                    input: 'border border-gray-400 px-2 mb-1',
+                                }"
+                            />
+                            <FormKit
+                                type="text"
                                 label="Copyrights *"
                                 name="copyrights"
                                 validation="required"
@@ -176,6 +186,7 @@ export default {
             formData.append("name", this.formData.name);
             formData.append("email", this.formData.email);
             formData.append("facebook", this.formData.facebook);
+            formData.append("instagram", this.formData.instagram);
             formData.append("phone_number", this.formData.phone_number);
             formData.append("copyrights", this.formData.copyrights);
             formData.append("description", this.formData.description);

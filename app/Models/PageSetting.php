@@ -14,6 +14,7 @@ class PageSetting extends Model
         'phone_number',
         'description',
         'facebook',
+        'instagram',
         'logo',
         'copyrights',
         'updated_by'
