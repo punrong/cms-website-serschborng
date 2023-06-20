@@ -2,7 +2,7 @@
     <div id="app" class="min-h-screen w-full">
         <main>
             <NavigationBar v-if="pageSetting" :pageSetting="this.pageSetting" />
-            <Carousel v-if="cover" :cover="this.cover" />
+            <Carousel v-if="cover" :cover="this.cover" :hasCoverBtn="!this.$page.props.auth.user" :coverBtnLabel="coverBtnLabel"  @coverBtnClicked="register"/>
             <Features
                 v-if="feature && aboutUsLeftText && aboutUsCard"
                 :feature="this.feature"
@@ -54,6 +54,8 @@ import Testimonial from "./components/Testimonial.vue";
 import RecentWorks from "./components/RecentWorks.vue"
 import NavigationBar from "../components/NavigationBar.vue";
 import Footer from "../components/Footer.vue";
+import { Inertia } from "@inertiajs/inertia";
+
 export default {
     name: "Sers Chborng",
     components: {
@@ -88,6 +90,7 @@ export default {
             testimonialItem: null,
             recentWorkTitle: null,
             recentWorkItem: null,
+            coverBtnLabel: 'Subscribe Now',
         };
     },
     methods: {
@@ -176,6 +179,9 @@ export default {
                 this.recentWorkItem = res.data;
             });
         },
+        register(){
+            Inertia.visit(route('register'));
+        }
     },
     mounted() {
         this.getPageSetting();
