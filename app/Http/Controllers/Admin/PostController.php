@@ -129,6 +129,7 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->status = $request->status;
         $post->category_id = $request->category_id;
+        $post->author = $request->author;
         $post->sequence = $request->sequence ?? $request->sequence;
         if(isset($post->id))
             $post->updated_by = Auth::user()->id;
