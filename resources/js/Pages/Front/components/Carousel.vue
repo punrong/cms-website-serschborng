@@ -32,7 +32,7 @@
                             :label="coverBtnLabel"
                             :classes="{
                                 outer: 'm-0 text-center mt-5',
-                                input: 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white text-xl font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-14',
+                                input: 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white text-xl font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-14 rounded-lg',
                             }"
                         />
                     </div>
