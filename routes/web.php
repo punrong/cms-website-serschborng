@@ -68,9 +68,13 @@ Route::group(['prefix' => 'public/api'], function () {
 });
 
 // Appointment
-Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment.index');
-Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
-Route::get('/appointment/{appointment}', [AppointmentController::class, 'show'])->name('appointment.show');
+Route::group([
+    'middleware' => ['auth'],
+], function () {
+    Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment.index');
+    Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
+    Route::get('/appointment/{appointment}', [AppointmentController::class, 'show'])->name('appointment.show');
+});
 
 // Join Our Networks
 Route::post('/join-our-networks', [JoinOurNetworkController::class, 'store'])->name('join-our-networks.store');
