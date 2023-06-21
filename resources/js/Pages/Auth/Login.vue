@@ -1,41 +1,3 @@
-<script setup>
-// import Checkbox from "@/components/Checkbox.vue";
-import { defineProps, ref, onMounted } from "vue";
-import InputError from "@/components/InputError.vue";
-import { Link, useForm } from "@inertiajs/inertia-vue3";
-import NavigationBar from "../Front/components/NavigationBar.vue";
-import Footer from "../Front/components/Footer.vue";
-import axios from "axios";
-
-defineProps({
-    canResetPassword: Boolean,
-    status: String,
-});
-
-const pageSetting = ref({});
-
-const form = useForm({
-    email: "",
-    password: "",
-    remember: false,
-});
-
-const onSubmit = () => {
-    form.post(route("login"), {
-        onFinish: () => form.reset("password"),
-    });
-};
-
-onMounted(async () => {
-    try {
-        const response = await axios.get(route("public.getPageSettingData"));
-        pageSetting.value = response.data;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
-});
-</script>
-
 <template>
     <NavigationBar />
     <GuestLayout>
@@ -62,6 +24,7 @@ onMounted(async () => {
         </div>
         <FormKit
             type="form"
+            v-model="formData"
             @submit="onSubmit"
             :actions="false"
             :config="{
@@ -77,7 +40,7 @@ onMounted(async () => {
             <FormKit
                 type="email"
                 label="Email"
-                v-model="form.email"
+                name="email"
                 validation="required|email"
                 :classes="{
                     outer: 'mt-1 block w-full',
@@ -87,7 +50,7 @@ onMounted(async () => {
 
             <InputError
                 class="mt-1 text-red-500 text-sm font-bold"
-                :message="form.errors.email"
+                :message="$page.props.errors.email"
             />
 
             <FormKit
@@ -95,7 +58,6 @@ onMounted(async () => {
                 name="password"
                 label="Password"
                 validation="required"
-                v-model="form.password"
                 :classes="{
                     outer: 'mt-4 block w-full',
                 }"
@@ -119,9 +81,9 @@ onMounted(async () => {
                 <FormKit
                     type="submit"
                     label="Log In"
-                    :disabled="form.processing"
+                    :disabled="formProcessing"
                     :classes="{
-                        outer: form.processing
+                        outer: formProcessing
                             ? 'm-0 text-right ml-4 opacity-25'
                             : 'm-0 text-right ml-4',
                         input: 'bg-blue-500 hover:bg-blue-800 text-white font-bold px-3 w-auto mb-2 ',
@@ -132,3 +94,62 @@ onMounted(async () => {
     </GuestLayout>
     <Footer v-if="pageSetting" :pageSetting="pageSetting" />
 </template>
+<script>
+// import Checkbox from "@/components/Checkbox.vue";
+import InputError from "@/components/InputError.vue";
+import { Link } from "@inertiajs/inertia-vue3";
+import NavigationBar from "../Front/components/NavigationBar.vue";
+import Footer from "../Front/components/Footer.vue";
+import axios from "axios";
+import { Inertia } from "@inertiajs/inertia";
+
+export default {
+    name: "Sers Chborng",
+    components: {
+        NavigationBar,
+        Footer,
+        InputError,
+        Link,
+    },
+    props: {
+        canResetPassword: {
+            type: Boolean,
+            default: false,
+        },
+        status: {
+            type: String,
+            default: "",
+        },
+    },
+    data() {
+        return {
+            pageSetting: null,
+            formData: {
+                email: "",
+                password: "",
+                remember: false,
+            },
+            formProcessing: false,
+        };
+    },
+    methods: {
+        getPageSetting() {
+            axios.get(route("public.getPageSettingData")).then((res) => {
+                this.pageSetting = res.data;
+            });
+        },
+        onSubmit() {
+            this.formProcessing = true;
+            Inertia.post(route("login"), this.formData, {
+                onFinish: (visit) => {
+                    this.formData.password = "";
+                    this.formProcessing = false;
+                },
+            });
+        },
+    },
+    mounted() {
+        this.getPageSetting();
+    },
+};
+</script>

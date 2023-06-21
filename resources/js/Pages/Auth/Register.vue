@@ -1,37 +1,3 @@
-<script setup>
-import { ref, onMounted } from "vue";
-import InputError from "@/components/InputError.vue";
-import { Link, useForm } from "@inertiajs/inertia-vue3";
-import NavigationBar from "../Front/components/NavigationBar.vue";
-import Footer from "../Front/components/Footer.vue";
-import axios from "axios";
-
-const form = useForm({
-    name: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-    terms: false,
-});
-
-const pageSetting = ref({});
-
-const onSubmit = () => {
-    form.post(route("register"), {
-        onFinish: () => form.reset("password", "password_confirmation"),
-    });
-};
-
-onMounted(async () => {
-    try {
-        const response = await axios.get(route("public.getPageSettingData"));
-        pageSetting.value = response.data;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
-});
-</script>
-
 <template>
     <NavigationBar />
     <GuestLayout>
@@ -47,6 +13,7 @@ onMounted(async () => {
         </div>
         <FormKit
             type="form"
+            v-model="formData"
             @submit="onSubmit"
             :actions="false"
             :config="{
@@ -62,7 +29,7 @@ onMounted(async () => {
             <FormKit
                 type="text"
                 label="Name"
-                v-model="form.name"
+                name="name"
                 validation="required"
                 :classes="{
                     outer: 'mt-1 block w-full',
@@ -73,7 +40,7 @@ onMounted(async () => {
             <FormKit
                 type="email"
                 label="Email"
-                v-model="form.email"
+                name="email"
                 validation="required|email"
                 :classes="{
                     outer: 'mt-4 block w-full',
@@ -83,24 +50,28 @@ onMounted(async () => {
 
             <InputError
                 class="mt-1 text-red-500 text-sm font-bold"
-                :message="form.errors.email"
+                :message="$page.props.errors.email"
             />
             <FormKit type="group">
                 <FormKit
                     type="password"
                     name="password"
                     label="Password"
+                    v-model="formData.password"
                     validation="required"
-                    v-model="form.password"
                     :classes="{
                         outer: 'mt-4 block w-full',
                     }"
+                />
+                <InputError
+                    class="mt-1 text-red-500 text-sm font-bold"
+                    :message="$page.props.errors.password"
                 />
                 <FormKit
                     type="password"
                     name="password_confirm"
                     label="Confirm password"
-                    v-model="form.password_confirmation"
+                    v-model="formData.password_confirmation"
                     help="Confirm your new password"
                     validation="required|confirm"
                     validation-label="Password confirmation"
@@ -120,9 +91,9 @@ onMounted(async () => {
                 <FormKit
                     type="submit"
                     label="Register"
-                    :disabled="form.processing"
+                    :disabled="formProcessing"
                     :classes="{
-                        outer: form.processing
+                        outer: formProcessing
                             ? 'm-0 text-right ml-4 opacity-25'
                             : 'm-0 text-right ml-4',
                         input: 'bg-blue-500 hover:bg-blue-800 text-white font-bold px-3 w-auto mb-2 ',
@@ -133,3 +104,54 @@ onMounted(async () => {
     </GuestLayout>
     <Footer v-if="pageSetting" :pageSetting="pageSetting" />
 </template>
+<script>
+import InputError from "@/components/InputError.vue";
+import { Link } from "@inertiajs/inertia-vue3";
+import NavigationBar from "../Front/components/NavigationBar.vue";
+import Footer from "../Front/components/Footer.vue";
+import axios from "axios";
+import { Inertia } from "@inertiajs/inertia";
+
+export default {
+    name: "Sers Chborng",
+    components: {
+        NavigationBar,
+        Footer,
+        InputError,
+        Link,
+    },
+    data() {
+        return {
+            pageSetting: null,
+            formData: {
+                name: "",
+                email: "",
+                password: "",
+                password_confirmation: "",
+                terms: false,
+            },
+            formProcessing: false,
+        };
+    },
+    methods: {
+        getPageSetting() {
+            axios.get(route("public.getPageSettingData")).then((res) => {
+                this.pageSetting = res.data;
+            });
+        },
+        onSubmit() {
+            this.formProcessing = true;
+            Inertia.post(route("register"), this.formData, {
+                onFinish: (visit) => {
+                    this.formData.password = "";
+                    this.formData.password_confirmation = "";
+                    this.formProcessing = false;
+                },
+            });
+        },
+    },
+    mounted() {
+        this.getPageSetting();
+    },
+};
+</script>
