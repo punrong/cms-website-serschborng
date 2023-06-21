@@ -1,7 +1,10 @@
 <script setup>
+import { ref, onMounted } from "vue";
 import InputError from "@/components/InputError.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 import NavigationBar from "../Front/components/NavigationBar.vue";
+import Footer from "../Front/components/Footer.vue";
+import axios from "axios";
 
 const form = useForm({
     name: "",
@@ -11,15 +14,26 @@ const form = useForm({
     terms: false,
 });
 
+const pageSetting = ref({});
+
 const onSubmit = () => {
     form.post(route("register"), {
         onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
+
+onMounted(async () => {
+    try {
+        const response = await axios.get(route("public.getPageSettingData"));
+        pageSetting.value = response.data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+});
 </script>
 
 <template>
-    <NavigationBar/>
+    <NavigationBar />
     <GuestLayout>
         <Head title="Register" />
         <div class="mb-2 text-center">
@@ -108,11 +122,14 @@ const onSubmit = () => {
                     label="Register"
                     :disabled="form.processing"
                     :classes="{
-                        outer: form.processing ? 'm-0 text-right ml-4 opacity-25' : 'm-0 text-right ml-4',
+                        outer: form.processing
+                            ? 'm-0 text-right ml-4 opacity-25'
+                            : 'm-0 text-right ml-4',
                         input: 'bg-blue-500 hover:bg-blue-800 text-white font-bold px-3 w-auto mb-2 ',
                     }"
                 />
             </div>
         </FormKit>
     </GuestLayout>
+    <Footer v-if="pageSetting" :pageSetting="pageSetting" />
 </template>

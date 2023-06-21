@@ -1,13 +1,18 @@
 <script setup>
 // import Checkbox from "@/components/Checkbox.vue";
+import { defineProps, ref, onMounted } from "vue";
 import InputError from "@/components/InputError.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 import NavigationBar from "../Front/components/NavigationBar.vue";
+import Footer from "../Front/components/Footer.vue";
+import axios from "axios";
 
 defineProps({
     canResetPassword: Boolean,
     status: String,
 });
+
+const pageSetting = ref({});
 
 const form = useForm({
     email: "",
@@ -20,10 +25,19 @@ const onSubmit = () => {
         onFinish: () => form.reset("password"),
     });
 };
+
+onMounted(async () => {
+    try {
+        const response = await axios.get(route("public.getPageSettingData"));
+        pageSetting.value = response.data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+});
 </script>
 
 <template>
-    <NavigationBar/>
+    <NavigationBar />
     <GuestLayout>
         <Head title="Log in" />
         <div class="mb-2 text-center">
@@ -116,4 +130,5 @@ const onSubmit = () => {
             </div>
         </FormKit>
     </GuestLayout>
+    <Footer v-if="pageSetting" :pageSetting="pageSetting" />
 </template>
