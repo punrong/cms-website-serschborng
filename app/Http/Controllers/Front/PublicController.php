@@ -130,7 +130,7 @@ class PublicController extends Controller
         $post->publisher = $post->updated_by ? $post->updater->name : $post->creator->name;
         $post->publish_date = $post->updated_at ? Carbon::parse($post->updated_at)->toDateString() : Carbon::parse($post->created_at)->toDateString();
 
-        $opportunitiesMentorTitleCategoryId = Category::where('code', 'OPPORTUNITIES_MENTOR_TITLE')->value('id');
+        $opportunitiesMentorTitleCategoryId = Category::where('code', 'MENTORSHIP_TITLE')->value('id');
         $opportunitiesMentorTitle = Post::getFirstPostByCategory($opportunitiesMentorTitleCategoryId);
 
         $mentorList = PostHasMentors::getMentorListByOpportunity($post->id);
