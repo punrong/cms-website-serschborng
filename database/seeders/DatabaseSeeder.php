@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(BasicAdminPermissionSeeder::class);
-        $this->call(PostSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(PageSettingSeeder::class);
     }
 }
