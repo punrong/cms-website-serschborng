@@ -16,7 +16,7 @@
             <div class="bg-white pt-14 pb-14">
                 <div
                     v-if="mentorshipPageTitle"
-                    class="flex flex-wrap justify-center text-center mb-10"
+                    class="flex flex-wrap justify-center text-center"
                 >
                     <div class="w-full lg:w-6/12 px-4">
                         <h2 class="text-4xl font-semibold">
