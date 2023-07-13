@@ -55,13 +55,12 @@ class BasicAdminPermissionSeeder extends Seeder
             Permission::create(['name' => $permission, 'status' => 'ACT']);
         }
 
-        Role::create(['name' => 'Public Users', 'status' => 'ACT', 'code' => 'PUB']);
-
         $adminRole = Role::create(['name' => 'Admin', 'status' => 'ACT', 'code' => 'ADM']);
         foreach ($permissions as $permission) {
             $adminRole->givePermissionTo($permission);
         }
         $superAdminRole = Role::create(['name' => 'Super Admin', 'status' => 'ACT', 'code' => 'SUP']);
+        Role::create(['name' => 'Public Users', 'status' => 'ACT', 'code' => 'PUB']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
         // create demo users
         $user = \App\Models\User::factory()->create([
