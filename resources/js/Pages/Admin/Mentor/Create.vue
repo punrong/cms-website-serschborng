@@ -146,6 +146,7 @@ export default {
             },
             statuses: {
                 ACT: "ACTIVE",
+                PND: "PENDING",
                 DSBL: "DISABLED",
             },
             errorMsg: null,

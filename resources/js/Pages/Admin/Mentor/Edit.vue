@@ -139,6 +139,7 @@ export default {
             formData: {},
             statuses: {
                 ACT: "ACTIVE",
+                PND: "PENDING",
                 DSBL: "DISABLED",
             },
             errorMsg: null,
