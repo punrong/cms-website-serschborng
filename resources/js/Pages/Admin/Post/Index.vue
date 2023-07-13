@@ -111,7 +111,7 @@
                         <template #body="slotProps">
                             <Button
                                 icon="pi pi-eye"
-                                class="p-button-rounded"
+                                class="p-button-rounded bg-[#0078d4]"
                                 style="margin-right: 5px"
                                 @click="show(slotProps.data.id)"
                             />
