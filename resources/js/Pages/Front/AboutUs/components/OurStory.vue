@@ -1,5 +1,5 @@
 <template>
-    <section class="p-14 bg-gray-300">
+    <section class="pt-14 pb-14 bg-gray-300">
         <div class="mx-auto px-4">
             <div class="flex flex-wrap justify-center">
                 <div class="w-full px-4">
