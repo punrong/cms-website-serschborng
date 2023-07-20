@@ -1,8 +1,8 @@
 <template>
     <section class="p-14 bg-gray-300">
-        <div class="container mx-auto px-4">
+        <div class="mx-auto px-4">
             <div class="flex flex-wrap justify-center">
-                <div class="w-full lg:w-6/12 px-4">
+                <div class="w-full px-4">
                     <h2 class="text-4xl font-semibold text-center">
                         {{ ourStory.title }}
                     </h2>

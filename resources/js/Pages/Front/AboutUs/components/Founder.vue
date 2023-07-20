@@ -1,6 +1,6 @@
 <template>
     <section class="relative p-20 bg-white">
-        <div class="container mx-auto px-4">
+        <div class="mx-auto px-4">
             <div class="items-center flex flex-wrap">
                 <div class="w-full md:w-4/12 ml-auto mr-auto px-4">
                     <img
@@ -8,7 +8,7 @@
                         :src="ourFounder.image"
                     />
                 </div>
-                <div class="w-full md:w-5/12 ml-auto mr-auto px-4">
+                <div class="w-full ml-auto mr-auto px-4">
                     <div class="md:pr-12 mt-6 md:mt-0">
                         <div
                             class="text-blue-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-blue-300"

@@ -211,7 +211,7 @@
                         </div>
                         <FormKit
                             type="image"
-                            label="Image"
+                            label="Image (2MB max)"
                             name="image"
                             accept=".jpg,.png,.jepg"
                             :classes="{
