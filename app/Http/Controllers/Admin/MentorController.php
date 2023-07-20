@@ -144,10 +144,12 @@ class MentorController extends Controller
         $mentor->status = $request->status;
         $mentor->phone_number = $request->phone_number;
         $mentor->description = $request->description;
-        if(isset($mentor->id))
-            $mentor->updated_by = Auth::user()->id;
-        else
-            $mentor->created_by = Auth::user()->id;
+        if(Auth::check()){
+            if(isset($mentor->id))
+                $mentor->updated_by = Auth::user()->id;
+            else
+                $mentor->created_by = Auth::user()->id;
+        }
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
