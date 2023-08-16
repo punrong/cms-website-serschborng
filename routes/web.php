@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Front\MenuController;
 use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\MyMentorProfileController;
+use App\Http\Controllers\Admin\MyAppointmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,9 +73,7 @@ Route::group(['prefix' => 'public/api'], function () {
 Route::group([
     'middleware' => ['auth'],
 ], function () {
-    Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment.index');
     Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
-    Route::get('/appointment/{appointment}', [AppointmentController::class, 'show'])->name('appointment.show');
 });
 
 // Join Our Networks
@@ -163,9 +162,15 @@ Route::group([
     });
 
     //Appointment
-    Route::resource('appointment', AppointmentController::class)->except(['index','store', 'show']);
+    Route::resource('appointment', AppointmentController::class)->except(['store']);
     Route::group(['prefix' => 'appointment/api'], function () {
         Route::delete('delete/multiple', [AppointmentController::class, 'deleteMultipleRecord'])->name('appointment.deleteMultipleRecord');
         Route::get('get/appointment/data', [AppointmentController::class, 'getAppointmentData'])->name('appointment.getData');
+    });
+
+    // My Appointment
+    Route::resource('my-appointment', MyAppointmentController::class)->except(['create', 'store', 'destroy', 'edit', 'update']);;
+    Route::group(['prefix' => 'my-appointment/api'], function () {
+        Route::get('get/appointment/data', [MyAppointmentController::class, 'getAppointmentData'])->name('my-appointment.getData');
     });
 });
