@@ -105,6 +105,12 @@ export default {
                     can: res.data.can.mentors,
                 },
                 {
+                    title: "Your Mentor Profile",
+                    icon: "fa-solid fa-person-chalkboard",
+                    route: route("my-mentor-profile.index"),
+                    can: !res.data.can.mentors,
+                },
+                {
                     title: "Appointments",
                     icon: "fa-solid fa-calendar-check",
                     route: route("appointment.index"),

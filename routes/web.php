@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Front\MenuController;
 use App\Http\Controllers\Admin\AppointmentController;
+use App\Http\Controllers\Admin\MyMentorProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -153,6 +154,12 @@ Route::group([
         Route::get('get/mentor/data', [MentorController::class, 'getMentorData'])->name('mentor.getData');
         Route::get('get/mentorlist/array', [MentorController::class, 'getMentorListAsArray'])->name('mentor.getMentorListAsArray');
         Route::get('get/mentorlist/object', [MentorController::class, 'getMentorListAsObject'])->name('mentor.getMentorListAsObject');
+    });
+
+    // My Mentor Profile
+    Route::resource('my-mentor-profile', MyMentorProfileController::class)->except(['create', 'store', 'destroy']);;
+    Route::group(['prefix' => 'my-mentor-profile/api'], function () {
+        Route::get('get/mentor/data', [MyMentorProfileController::class, 'getMentorData'])->name('my-mentor-profile.getData');
     });
 
     //Appointment
